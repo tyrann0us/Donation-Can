@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation_can/view/scripts.js"></script>
+<script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation-can/view/scripts.js"></script>
 
 <div class="wrap">
 	<h2>Donation Can Settings</h2>

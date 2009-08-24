@@ -44,7 +44,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<input type="hidden" name="item_name" value="<?php echo $goal['name']; ?>"/>
 			<input type="hidden" name="item_number" value="<?php echo $goal['id']; ?>"/>
 			<input type="hidden" name="cmd" value=" _donations"/>
-			<input type="hidden" name="notify_url" value="<?php bloginfo('url');?>/wp-content/plugins/donation_can/callback.php"/>
+			<input type="hidden" name="notify_url" value="<?php bloginfo('url');?>/wp-content/plugins/donation-can/callback.php"/>
 			<input type="hidden" name="currency_code" value="<?php echo $general_settings["currency_code"];?>" />
 
 			<!-- A set of fields that are defined in the plugin settings -->			

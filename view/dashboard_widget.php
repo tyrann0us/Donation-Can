@@ -98,7 +98,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <?php if ($paypal_account == null || $paypal_account == "") : ?>
 	<!-- Empty Slate (PayPal Settings not defined) -->
 	<div class="donation_can_notice">
-		You haven't set up your PayPal account information yet. <a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can/model/settings/settings.php">Click here to do it now</a>.
+		You haven't set up your PayPal account information yet. <a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php">Click here to do it now</a>.
 	</div>
 <?php else : ?>
 	<p>Using PayPal account: <strong><?php echo $paypal_account; ?></strong></p>
@@ -114,6 +114,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 </p>
 
 <p class="textright">
-	<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can/model/settings/settings.php" class="button rbutton">Change Settings</a>
+	<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php" class="button rbutton">Change Settings</a>
 	<a href="<?php echo bloginfo("url");?>/wp-admin/admin.php?page=goals.php" class="button rbutton">Update Goals</a>
 </p>

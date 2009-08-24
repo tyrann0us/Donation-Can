@@ -37,7 +37,7 @@ require("theme_methods.php");
 
 // Adds the style sheet definition to head
 function donation_can_head_filter() {
-	echo '<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/donation_can/view/style.css"/>';
+	echo '<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/donation-can/view/style.css"/>';
 	
 	// Add the custom style created in settings
 	$options = get_option("donation_can_general");
