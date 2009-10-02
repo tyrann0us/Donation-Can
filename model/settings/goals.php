@@ -30,7 +30,7 @@ function donation_can_goals_menu() {
 		$causes[$id] = $cause;
 		
 		update_option("donation_can_causes", $causes);
-		render_user_notification("Updated goal: " . $id);
+		render_user_notification(__("Updated goal:", "donation_can") . " " . $id);
 	}
 
 	// Remove cause
@@ -39,7 +39,7 @@ function donation_can_goals_menu() {
 		unset($causes[$id]);
 
 		update_option("donation_can_causes", $causes);
-		render_user_notification("Deleted goal: " . $id);
+		render_user_notification(__("Deleted goal:", "donation_can") . " " . $id);
 	}
 	
 	if (isset($_GET["edit"])) {

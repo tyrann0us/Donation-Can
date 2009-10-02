@@ -22,12 +22,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<!-- Empty Slate: Shown if no goals have been set up -->
 	<div class="donation_can_notice">
-		You haven't set up any goals yet. Start by <a href="<?php bloginfo("url");?>/wp-admin/admin.php?page=add_goal.php">creating your first one.</a>
+		<?php _e("You haven't set up any goals yet.", "donation_can");?> 
+		<a href="<?php bloginfo("url");?>/wp-admin/admin.php?page=add_goal.php"><?php _e("Start by creating your first one.", "donation_can");?></a>
 	</div>
 
 <?php else : ?>
 
-	<p class="sub">Latest Donations</p>
+	<p class="sub"><?php _e("Latest Donations", "donation_can");?></p>
 
 	<div class="table">
 		<table>
@@ -35,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<?php if (empty($donations)) : ?>
 					<tr class="first">
 						<td class="first">
-							No donations yet.
+							<?php _e("No donations yet.", "donation_can");?>
 						</td>
 					</tr>
 				<?php else : ?>
@@ -53,7 +54,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	</div>
 
 
-	<p class="sub">Goal Progress</p>
+	<p class="sub"><?php _e("Goal Progress", "donation_can");?></p>
 
 	<div class="table">
 		<table>
@@ -79,7 +80,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<?php endforeach; ?>
 		
 			<tr class="total">
-				<td class="b">TOTAL</td>
+				<td class="b"><?php _e("TOTAL", "donation_can");?></td>
 				<?php
 					if ($total_goal == 0) {
 						$percent = 0;
@@ -98,10 +99,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <?php if ($paypal_account == null || $paypal_account == "") : ?>
 	<!-- Empty Slate (PayPal Settings not defined) -->
 	<div class="donation_can_notice">
-		You haven't set up your PayPal account information yet. <a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php">Click here to do it now</a>.
+		<?php _e("You haven't set up your PayPal account information yet.", "donation_can");?> 
+		<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can/model/settings/settings.php"><?php _e("Click here to do it now.", "donation_can");?></a>
 	</div>
 <?php else : ?>
-	<p>Using PayPal account: <strong><?php echo $paypal_account; ?></strong></p>
+	<p><?php _e("Using PayPal account:", "donation_can");?> <strong><?php echo $paypal_account; ?></strong></p>
 <?php endif; ?>
 
 <p>
@@ -114,6 +116,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 </p>
 
 <p class="textright">
-	<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php" class="button rbutton">Change Settings</a>
-	<a href="<?php echo bloginfo("url");?>/wp-admin/admin.php?page=goals.php" class="button rbutton">Update Goals</a>
+	<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can/model/settings/settings.php" class="button rbutton"><?php _e("Change Settings", "donation_can");?></a>
+	<a href="<?php echo bloginfo("url");?>/wp-admin/admin.php?page=goals.php" class="button rbutton"><?php _e("Update Goals", "donation_can");?></a>
 </p>

@@ -29,24 +29,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<thead>
 			<tr>
 				<th scope="col" class="manage-column column-cb check-column"><input type="checkbox"/></th>
-				<th scope="col" class="manage-column goal-id-column">Goal ID</th>
-				<th scope="col" class="manage-column">Goal info</th>
-				<th scope="col" class="manage-column goal-sum-column">Goal</th>
+				<th scope="col" class="manage-column goal-id-column"><?php _e("Goal ID", "donation_can");?></th>
+				<th scope="col" class="manage-column"><?php _e("Goal info", "donation_can");?></th>
+				<th scope="col" class="manage-column goal-sum-column"><?php _e("Goal", "donation_can");?></th>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
 				<th scope="col" class="manage-column column-cb check-column"><input type="checkbox"/></th>
-				<th scope="col" class="manage-column goal-id-column">Goal ID</th>
-				<th scope="col" class="manage-column">Name</th>
-				<th scope="col" class="manage-column">Goal</th>
+				<th scope="col" class="manage-column goal-id-column"><?php _e("Goal ID", "donation_can");?></th>
+				<th scope="col" class="manage-column"><?php _e("Name", "donation_can");?></th>
+				<th scope="col" class="manage-column"><?php _e("Goal", "donation_can");?></th>
 			</tr>
 		</tfoot>
 		<tbody>
 		
 		<script type="text/javascript">
 			function delete_goal(id) {
-				var agree = confirm("Are you sure you want to delete goal "+id+"?");
+				var agree = confirm("<?php _e("Are you sure you want to delete goal", "donation_can");?> "+id+"?");
 				if (agree) {
 					document.delete_cause.remove_cause.value = id;
 					document.delete_cause.submit();
@@ -64,13 +64,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					<?php echo $cause["description"]; ?>
 					<div class="row-actions">				
 						<span class="edit"><a href="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>&edit=<?php echo $id; ?>">Edit</a></span>
-						<span class="delete"> | <a href="#" onclick="return delete_goal('<?php echo $id; ?>');">Delete</a></span>
+						<span class="delete"> | <a href="#" onclick="return delete_goal('<?php echo $id; ?>');"><?php _e("Delete");?></a></span>
 					</div>
 				</td>
 				<td>
 					USD <?php echo $cause["donation_goal"];?>
 					<div class="row-actions">
-						<a href="admin.php?page=donations.php&filter_goal=<?php echo $id; ?>">View donations</a>
+						<a href="admin.php?page=donations.php&filter_goal=<?php echo $id; ?>"><?php _e("View donations", "donation_can");?></a>
 					</div>
 				</td>
 			</tr>

@@ -103,7 +103,7 @@ function donation_can_donation_progress($goal_id = "__all__", $show_title = true
  * @param $title			A custom title. If left empty, the name of the goal is used instead.
  */
 function donation_can_donation_form($goal_id, $show_progress = true, $show_description = true, 
-	$show_donations = false, $show_title = true, $title = "") {
+	$show_donations = false, $show_title = true, $title = "", $return = false) {
 		
 	$params = array(
 		"goal_id" => $goal_id,
@@ -122,8 +122,23 @@ function donation_can_donation_form($goal_id, $show_progress = true, $show_descr
 	);
 
 	$widget = new DonationWidget();
-	$widget->widget($args, $params);
 	
+	if ($return) {
+		return $widget->to_string($args, $params);
+	}
+	
+	$widget->widget($args, $params);
 }
+
+/**
+ * Returns the donation form as a string. 
+ *
+ * See donation_can_donation_form() above for documentation.
+ */
+function get_donation_can_donation_form($goal_id, $show_progress = true, $show_description = true, 
+	$show_donations = false, $show_title = true, $title = "") {
+	return donation_can_donation_form($goal_id, $show_progress, $show_description, $show_donations, $show_title, $title, true);
+}
+
 
 ?>

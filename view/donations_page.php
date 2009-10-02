@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<form method="post" name="filter_donations" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 		<div class="alignleft actions">
 			<select class="postform" name="filter_goal">
-				<option value="0">View all goals</option>
+				<option value="0"><?php _e("View all goals", "donation_can");?></option>
 				<?php foreach ($goals as $id => $goal) : ?>
 					<option value="<?php echo $id; ?>" <?php if ($filter_goal == $id) { echo "selected"; }?>><?php echo $goal["name"];?></option>
 				<?php endforeach; ?> 
@@ -65,26 +65,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<thead>
 			<tr>
 				<th scope="col" class="manage-column column-cb check-column"><input type="checkbox"/></th>
-				<th scope="col" class="manage-column">Date</th>
-				<th scope="col" class="manage-column goal-id-column">Goal ID</th>
-				<th scope="col" class="manage-column">Donor</th>
-				<th scope="col" class="manage-column goal-sum-column">Donation Sum</th>
+				<th scope="col" class="manage-column"><?php _e("Date");?></th>
+				<th scope="col" class="manage-column goal-id-column"><?php _e("Goal ID", "donation_can");?></th>
+				<th scope="col" class="manage-column"><?php _e("Donor", "donation_can");?></th>
+				<th scope="col" class="manage-column goal-sum-column"><?php _e("Donation Sum", "donation_can");?></th>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
 				<th scope="col" class="manage-column column-cb check-column"><input type="checkbox"/></th>
-				<th scope="col" class="manage-column">Date</th>
-				<th scope="col" class="manage-column goal-id-column">Goal ID</th>
-				<th scope="col" class="manage-column">Donor</th>
-				<th scope="col" class="manage-column goal-sum-column">Donation Sum</th>
+				<th scope="col" class="manage-column"><?php _e("Date");?></th>
+				<th scope="col" class="manage-column goal-id-column"><?php _e("Goal ID", "donation_can");?></th>
+				<th scope="col" class="manage-column"><?php _e("Donor", "donation_can");?></th>
+				<th scope="col" class="manage-column goal-sum-column"><?php _e("Donation Sum", "donation_can");?></th>
 			</tr>
 		</tfoot>
 		<tbody>
 		
 			<script type="text/javascript">
 				function delete_goal(id) {
-					var agree = confirm("Are you sure you want to delete goal "+id+"?");
+					var agree = confirm("<?php _e("Are you sure you want to delete goal", "donation_can");?> "+id+"?");
 					if (agree) {
 						document.delete_cause.remove_cause.value = id;
 						document.delete_cause.submit();

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Donation Can
-Version: 1.0
+Version: 1.1
 Plugin URI: http://jarkkolaine.com/plugins/donation-can
 Description: Donation Can lets you raise funds for multiple causes using your WordPress blog and PayPal account while tracking the progress of each cause separately. <a href="tools.php?page=donation-can/donation_can.php">Click here</a> to configure settings.
 Author: Jarkko Laine
@@ -37,7 +37,7 @@ require("theme_methods.php");
 
 // Adds the style sheet definition to head
 function donation_can_head_filter() {
-	echo '<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/donation-can/view/style.css"/>';
+	echo '<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/donation_can/view/style.css"/>';
 	
 	// Add the custom style created in settings
 	$options = get_option("donation_can_general");
@@ -48,7 +48,84 @@ function donation_can_head_filter() {
 	}
 }
 
+function donation_can_split_tag_to_array($tag) {
+	// Remove white space and possible <br />'s added by WordPress
+	$tag =  preg_replace('/[ \t\n]+/', ' ', $tag);
+	$tag = str_replace("<br />", "", $tag);
+
+	// Extract data from tag
+	$tag_data_array = explode(" ", $tag);
+	
+	return $tag_data_array;
+}
+
+function donation_can_parse_donation_can_tag($tag_data_array) {
+	$code = $tag_data_array[1];
+
+	// Initialize array with default values and replace them with passed parameters if there are any
+	$parameters = array("show_progress" => "true", "show_description" => "true", 
+		"show_donations" => "false", "show_title" => "true", "title" => "");
+	
+	if (count($tag_data_array) > 2) {
+		for ($i = 2; $i < count($tag_data_array); $i++) {
+			$data = explode("=", $tag_data_array[$i]);
+			$parameters[$data[0]] = $data[1];
+		}
+	}       
+
+	$widget_content = "<div class=\"donation-can_content-widget\">";
+	$widget_content .= get_donation_can_donation_form($code, 
+		strtolower($parameters["show_progress"]) == "true", 
+		strtolower($parameters["show_description"]) == "true",
+		strtolower($parameters["show_donations"]) == "true", 
+		strtolower($parameters["show_title"]) == "true", 
+		$parameters["title"]);
+	$widget_content .= "</div>";
+
+	return $widget_content;
+}
+
+/**
+ * The content filter replaces all donation can quick tags with a donation box.
+ */
+function donation_can_content_filter($content = "") {
+	$new_content = "";
+	$offset = 0;
+	
+	while ($offset < strlen($content)) {
+		$pos = strpos($content, "[", $offset);
+
+		if ($pos === false) {
+			// No more tags in content. Done.
+			$new_content = $new_content . substr($content, $offset);
+			break;
+		} else {
+			// Append the content since previous tag or beginning
+			$new_content = $new_content . substr($content, $offset, ($pos - $offset));
+
+			// Extract the tag
+			$end_pos = strpos($content, "]", $pos);
+			$tag = substr($content, $pos + 1, ($end_pos - $pos - 1));
+			
+			$tag_data_array = donation_can_split_tag_to_array($tag);
+			
+			// Handle the tag
+			if ($tag_data_array[0] == "donation-can") {
+				$new_content = $new_content . donation_can_parse_donation_can_tag($tag_data_array);
+			} else {
+				// Not a Donation Can tag -- ignore
+				$new_content = $new_content . "[$tag]";
+			}
+			
+			$offset = $end_pos + 1;
+		}
+	}
+	
+	return $new_content;
+}
+
 register_activation_hook(__FILE__, 'donation_can_install');
 add_filter("wp_head", "donation_can_head_filter");
+add_filter("the_content", "donation_can_content_filter");
 add_filter("admin_head", "donation_can_head_filter");
 ?>

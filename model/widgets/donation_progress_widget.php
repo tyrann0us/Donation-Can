@@ -52,6 +52,7 @@ class DonationProgressWidget extends WP_Widget {
 		
 		$current = $raised;
 		$target = $total_target;
+		
 		require(__FILE__ . "/../../../view/progress_bar.php");
 	
 		echo $after_widget;

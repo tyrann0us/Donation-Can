@@ -23,11 +23,11 @@ require("add_goal.php");
 require("donations.php");
 
 function donation_can_setup_admin_menus() {
-	add_menu_page('Donation Can', 'Donation Can', 9, __FILE__, 'donation_can_top_menu');
-	add_submenu_page(__FILE__, 'Donation Can Settings - General', 'General Settings', 9, __FILE__, 'donation_can_settings_page');
-	add_submenu_page(__FILE__, 'Donation Can Settings - Goals', 'Goals', 9, "goals.php", 'donation_can_goals_menu');
-	add_submenu_page(__FILE__, 'Donation Can Settings - Add New Goal', 'Add New Goal', 9, "add_goal.php", 'donation_can_add_goal_menu');
-	add_submenu_page(__FILE__, 'Donation Can Settings - Browse Donations', 'Donations', 9, "donations.php", 'donation_can_donations_menu');
+	add_menu_page(__('Donation Can', "donation_can"), __('Donation Can', "donation_can"), 9, __FILE__, 'donation_can_top_menu');
+	add_submenu_page(__FILE__, __('Donation Can Settings - General', "donation_can"), __('General Settings', "donation_can"), 9, __FILE__, 'donation_can_settings_page');
+	add_submenu_page(__FILE__, __('Donation Can Settings - Goals', "donation_can"), __('Goals', "donation_can"), 9, "goals.php", 'donation_can_goals_menu');
+	add_submenu_page(__FILE__, __('Donation Can Settings - Add New Goal', "donation_can"), __('Add New Goal', "donation_can"), 9, "add_goal.php", 'donation_can_add_goal_menu');
+	add_submenu_page(__FILE__, __('Donation Can Settings - Browse Donations', "donation_can"), __('Donations', "donation_can"), 9, "donations.php", 'donation_can_donations_menu');
 }
 
 function donation_can_top_menu() {

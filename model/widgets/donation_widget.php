@@ -26,6 +26,10 @@ class DonationWidget extends WP_Widget {
 	}
 
 	function widget($args, $instance) {
+		echo $this->to_string($args, $instance);
+	}
+
+	function to_string($args, $instance) {
 		extract($args);
 
 		$goal_id = esc_attr($instance["goal_id"]);
@@ -51,9 +55,19 @@ class DonationWidget extends WP_Widget {
 		
 		$raised_so_far = donation_can_get_total_raised_for_cause($goal_id);	
 			
-		echo $before_widget;
+		$out = "";
+			
+		$out .= $before_widget;
+		
+		// Use output buffering to get the widget HTML into the string rather than straight on screen
+		ob_start();
 		require(__FILE__ . "/../../../view/donation_form_single.php");
- 		echo $after_widget;
+		$out .= ob_get_contents();
+		ob_clean();
+
+ 		$out .= $after_widget;
+
+		return $out;
 	}
 
 	function update($new_instance, $old_instance) {

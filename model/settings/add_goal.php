@@ -30,11 +30,12 @@ function donation_can_add_goal_menu() {
 		$cause = donation_can_create_cause($_POST);
 		
 		if (isset($causes[$cause["id"]])) {
-			render_user_notification("<strong>Error:</strong> that goal id is already in use!");
+			render_user_notification("<strong>". __("Error", "donation-can") . ":</strong> " . __("That goal id is already in use!", "donation_can"));
 		} else {
 			$causes[$cause["id"]] = $cause;
 			update_option("donation_can_causes", $causes);
-			render_user_notification("Added goal: " . $cause["id"] . ". <a href=\"admin.php?page=goals.php\">Browse and edit goals</a>");
+			render_user_notification(__("Added goal:", "donation_can") . " " . $cause["id"] 
+				. ". <a href=\"admin.php?page=goals.php\">" . __("Browse and edit goals", "donation_can") . "</a>");
 		}
 	} 
 	

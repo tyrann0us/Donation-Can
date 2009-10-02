@@ -18,41 +18,41 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation-can/view/scripts.js"></script>
+<script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation_can/view/scripts.js"></script>
 
 <div class="wrap">
-	<h2>Donation Can Settings</h2>
+	<h2><?php _e("Donation Can Settings", "donation_can");?></h2>
 
 	<form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 		<input type="hidden" name="edit_settings" value="Y"/>
 
 		<table class="form-table">
 			<tr valign="top">
-				<th scope="row" valign="center">PayPal Email:</th>
+				<th scope="row" valign="center"><?php _e("PayPal Email:", "donation_can");?></th>
 				<td><input type="text" class="regular-text" name="paypal_email" value="<?php echo $general_settings["paypal_email"];?>" size="40"/>
-					<span class="description">Your PayPal account email. This is where the funds will be sent to.</span>
+					<span class="description"><?php _e("Your PayPal account email. This is where the funds will be sent to.", "donation_can");?></span>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" valign="center">Shipping:</th>
+				<th scope="row" valign="center"><?php _e("Shipping:", "donation_can");?></th>
 				<td>
-					<input type="radio" name="require_shipping" value="0" <?php if ($general_settings["require_shipping"] == '0') { echo "checked"; }?>> Prompt for an address but do not require one<br/>
-					<input type="radio" name="require_shipping" value="1" <?php if ($general_settings["require_shipping"] == '1') { echo "checked"; }?>> Do not prompt for an address<br/>
-					<input type="radio" name="require_shipping" value="2" <?php if ($general_settings["require_shipping"] == '2') { echo "checked"; }?>> Prompt for an address and require one
+					<input type="radio" name="require_shipping" value="0" <?php if ($general_settings["require_shipping"] == '0') { echo "checked"; }?>> <?php _e("Prompt for an address but do not require one", "donation_can");?><br/>
+					<input type="radio" name="require_shipping" value="1" <?php if ($general_settings["require_shipping"] == '1') { echo "checked"; }?>> <?php _e("Do not prompt for an address", "donation_can");?><br/>
+					<input type="radio" name="require_shipping" value="2" <?php if ($general_settings["require_shipping"] == '2') { echo "checked"; }?>> <?php _e("Prompt for an address and require one", "donation_can");?>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" valign="center">Prompt to include a note:</th>
+				<th scope="row" valign="center"><?php _e("Prompt to include a note:", "donation_can");?></th>
 				<td>
-					<input type="radio" name="ask_for_note" value="0" <?php if ($general_settings["ask_for_note"] == '0') { echo "checked"; }?>> Provide a text box and prompt for the note<br/>
-					<input type="radio" name="ask_for_note" value="1" <?php if ($general_settings["ask_for_note"] == '1') { echo "checked"; }?>> Hide the text box and the note
+					<input type="radio" name="ask_for_note" value="0" <?php if ($general_settings["ask_for_note"] == '0') { echo "checked"; }?>> <?php _e("Provide a text box and prompt for the note", "donation_can");?><br/>
+					<input type="radio" name="ask_for_note" value="1" <?php if ($general_settings["ask_for_note"] == '1') { echo "checked"; }?>> <?php _e("Hide the text box and the note", "donation_can");?>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" valign="center">Thank you page:</th>
+				<th scope="row" valign="center"><?php _e("Thank you page:", "donation_can");?></th>
 				<td>
 					<select name="return_page">
-						<option value="-1" <?php if ("-1" == $general_settings["return_page"]) { echo "selected";}?>>-- Use PayPal Default --</option>
+						<option value="-1" <?php if ("-1" == $general_settings["return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default", "donation_can");?> --</option>
 						<?php foreach ($pages as $page) : ?>
 							<option value="<?php echo $page->ID;?>" <?php if ($page->ID == $general_settings["return_page"]) { echo "selected";}?>><?php echo $page->post_title;?></option>
 						<?php endforeach; ?>
@@ -60,17 +60,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" valign="center">Text for continue button:</th>
+				<th scope="row" valign="center"><?php _e("Text for continue button:", "donation_can");?></th>
 				<td>
 					<input type="text" class="regular-text" name="continue_button_text" value="<?php echo $general_settings["continue_button_text"];?>" size="40"/>
-					<span class="description">Applies when thank you page URL is set to something else than "Use Paypal Default".</span>
+					<span class="description"><?php _e("Applies when thank you page URL is set to something else than 'Use Paypal Default'.", "donation_can");?></span>
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" valign="center">Payment cancelled page:</th>
+				<th scope="row" valign="center"><?php _e("Payment cancelled page:", "donation_can");?></th>
 				<td>
 					<select name="cancel_return_page">
-						<option value="-1" <?php if ("-1" == $general_settings["cancel_return_page"]) { echo "selected";}?>>-- Use PayPal Default --</option>
+						<option value="-1" <?php if ("-1" == $general_settings["cancel_return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default", "donation_can");?> --</option>
 						<?php foreach ($pages as $page) : ?>
 							<option value="<?php echo $page->ID;?>" <?php if ($page->ID == $general_settings["cancel_return_page"]) { echo "selected";}?>><?php echo $page->post_title;?></option>
 						<?php endforeach; ?>
@@ -78,23 +78,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				</td>
 			</tr>
 			<tr valign="top">
-				<th scope="row" valign="center">Logo to show on PayPal payment page:</th>
+				<th scope="row" valign="center"><?php _e("Logo to show on PayPal payment page:", "donation_can");?></th>
 				<td>
 					<input type="text" class="regular-text" name="logo_on_paypal_page" value="<?php echo $general_settings["logo_on_paypal_page"];?>" size="40"/>
-					<span class="description">(max. 750 x 90 px)</span>
+					<span class="description">(<?php _e("max. 750 x 90 px", "donation_can");?>)</span>
 				</td>
 				<!-- todo make uploadable -->
 			</tr>
 			<tr valign="top">
-				<th scope="row" valign="center">Notify by Email:</th>
+				<th scope="row" valign="center"><?php _e("Notify by Email:", "donation_can");?></th>
 				<td>
 					<input type="text" class="regular-text" name="notify_email" value="<?php echo $general_settings["notify_email"];?>" size="40"/>
-					<br/><span class="description">A comma separated list of email addresses that should be notified whenever someone makes a donation to any of the goals.</span>
+					<br/><span class="description"><?php _e("A comma separated list of email addresses that should be notified whenever someone makes a donation to any of the goals.", "donation_can");?></span>
 				</td>
 			</tr>
 
 			<tr valign="top">				
-				<th scope="row" valign="center">Donation options:</th>
+				<th scope="row" valign="center"><?php _e("Donation options:", "donation_can");?></th>
 				<td>
 					<div id="donation_sum_list">
 						<?php $id = 0; ?>
@@ -103,17 +103,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 								<div id="donation_sum_<?php echo $id; ?>">
 									<input type="text" class="regular-text" 
 										name="donation_sum_<?php echo $id; ?>" value="<?php echo $sum; ?>" size="40"/>
-									<a href="#" onClick="return removeFormTextField('donation_sum_list', 'donation_sum_<?php echo $id; ?>')">Remove</a>
+									<a href="#" onClick="return removeFormTextField('donation_sum_list', 'donation_sum_<?php echo $id; ?>')"><?php _e("Remove");?></a>
 								</div>
 								<?php $id++; ?>
 							<?php endforeach; ?>
 						<?php else : ?>
-							None yet. Click on "add new" below a few times to create some donation options (for example 5.00).
+							<?php _e('None yet. Click on "add new" below a few times to create some donation options (for example 5.00).', "donation_can");?>
 						<?php endif; ?>
 					</div>
 					<input type="hidden" name="donation_sum_num" 
 						value="<?php echo count($general_settings["donation_sums"]);?>" id="donation_sum_num"/>
-					<a href="#" onclick="return addFormTextField('donation_sum_num', 'donation_sum_list', 'donation_sum_');">Add new</a>					
+					<a href="#" onclick="return addFormTextField('donation_sum_num', 'donation_sum_list', 'donation_sum_');"><?php _e("Add new", "donation_can");?></a>					
 				</td>
 			</tr>
 			
@@ -130,7 +130,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			</script>
 			
 			<tr valign="top">				
-				<th scope="row" valign="center">Donation widget style:</th>
+				<th scope="row" valign="center"><?php _e("Donation widget style:", "donation_can");?></th>
 				<td>
 					<!--
 					<select name="style" onchange="toggleCustomStyleField(this);">
@@ -142,16 +142,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				-->
 					<textarea id="custom-style-field" name="custom" class="regular-text" style="width: 25em; height: 200px;"><?php echo $general_settings["custom"]; ?></textarea>
 					<br/>
-					<span class="description">You can use the following CSS classes to customize the looks of your donation widget:</span>
+					<span class="description"><?php _e("You can use the following CSS classes to customize the looks of your donation widget:", "donation_can");?></span>
 					<p>
 					<ul class="description">
-						<li><strong>.donation-can_donation-widget:</strong> the donation widget container</li>
-						<li><strong>.widgettitle:</strong> The title of the donation widget (usually goal name)</li>
-						<li><strong>.donation-can_goal-description:</strong> description of the goal in the donation widget</li>
-						<li><strong>.donation_meter:</strong> Holder for the donation status display (contains the progress bar and textual presentation)</li>
-						<li><strong>.donation_progress:</strong> A container for the donation progress bar item</li>
-						<li><strong>.donation_progress_container:</strong> A container for the bar inside the progress bar item</li>
-						<li><strong>.donation_progress_bar:</strong> The actual bar (fills .donation_progress_container according to current donation progress)</li>
+						<li><strong>.donation-can_donation-widget:</strong> <?php _e("the donation widget container", "donation_can");?></li>
+						<li><strong>.widgettitle:</strong> <?php _e("The title of the donation widget (usually goal name)", "donation_can");?></li>
+						<li><strong>.donation-can_goal-description:</strong> <?php _e("description of the goal in the donation widget", "donation_can");?></li>
+						<li><strong>.donation_meter:</strong> <?php _e("Holder for the donation status display (contains the progress bar and textual presentation)", "donation_can");?></li>
+						<li><strong>.donation_progress:</strong> <?php _e("A container for the donation progress bar item", "donation_can");?></li>
+						<li><strong>.donation_progress_container:</strong> <?php _e("A container for the bar inside the progress bar item", "donation_can");?></li>
+						<li><strong>.donation_progress_bar:</strong> <?php _e("The actual bar (fills .donation_progress_container according to current donation progress)", "donation_can");?></li>
 					</ul>
 					</p>
 				</td>

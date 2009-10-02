@@ -165,6 +165,7 @@ function donation_can_create_cause($post, $id = -1) {
 	$cancelled_return_page = attribute_escape($post["cancelled_return_page"]);
 	$continue_button_text = attribute_escape($post["continue_button_text"]);
 	$notify_email = attribute_escape($post["notify_email"]);
+	$allow_freeform_donation_sum = attribute_escape($post["allow_freeform_donation_sum"]);
 
 	$donation_sum_num = attribute_escape($post["donation_sum_num"]);
 	$donation_sums = array();
@@ -185,6 +186,7 @@ function donation_can_create_cause($post, $id = -1) {
 	$cause["continue_button_text"] = $continue_button_text; 
 	$cause["notify_email"] = $notify_email;
 	$cause["donation_sums"] = $donation_sums;
+	$cause["allow_freeform_donation_sum"] = $allow_freeform_donation_sum;
 
 	return $cause;
 }

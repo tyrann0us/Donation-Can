@@ -80,8 +80,7 @@ function donation_can_settings_page() {
 //		}
 		
 		update_option("donation_can_general", $general_settings);
-	
-		render_user_notification("Donation Can settings updated");	
+		render_user_notification(__("Donation Can settings updated", "donation_can"));
 	}
 
 

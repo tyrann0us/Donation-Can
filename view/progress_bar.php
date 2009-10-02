@@ -25,11 +25,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		$percentage = ($current / $target) * 100; 
 	}
 ?>
-<div class="donation_meter">
-	<div class="donation_progress">
-		<div class="donation_progress_container">
-			<div class="donation_progress_bar" style="width: <?php echo $percentage; ?>%;"></div>
+<div class="donation_meter ltr">
+	<?php if ($target == "") : ?>
+		$<?php echo $current; ?> <?php _e("raised", "donation_can");?>
+	<?php else : ?> 
+		<div class="donation_progress">
+			<div class="donation_progress_container">
+				<div class="donation_progress_bar" style="width: <?php echo $percentage; ?>%;"></div>
+			</div>
 		</div>
-	</div>
-	$<?php echo $current; ?> / $<?php echo $target; ?> raised
+		$<?php echo $current; ?> / $<?php echo $target; ?> <?php _e("raised", "donation_can");?>
+	<?php endif; ?>
 </div>
