@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Donation Can
-Version: 1.1
+Version: 1.2
 Plugin URI: http://jarkkolaine.com/plugins/donation-can
 Description: Donation Can lets you raise funds for multiple causes using your WordPress blog and PayPal account while tracking the progress of each cause separately. <a href="tools.php?page=donation-can/donation_can.php">Click here</a> to configure settings.
 Author: Jarkko Laine
@@ -37,7 +37,7 @@ require("theme_methods.php");
 
 // Adds the style sheet definition to head
 function donation_can_head_filter() {
-	echo '<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/donation_can/view/style.css"/>';
+	echo '<link rel="stylesheet" href="' . get_bloginfo('url') . '/wp-content/plugins/donation-can/view/style.css"/>';
 	
 	// Add the custom style created in settings
 	$options = get_option("donation_can_general");

@@ -86,6 +86,9 @@ Screenshots go here
 
 == Changelog ==
 
+= 1.2 =
+* Fixed a bug that caused some files (css, javascript) and links to not load
+
 = 1.1 =
 * Added an option that allows donors to specify the donation amount 
 * Added a tag [donation-can goal_id] that allows you to embed donation forms inside your posts and pages

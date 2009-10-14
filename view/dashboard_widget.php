@@ -100,7 +100,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<!-- Empty Slate (PayPal Settings not defined) -->
 	<div class="donation_can_notice">
 		<?php _e("You haven't set up your PayPal account information yet.", "donation_can");?> 
-		<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can/model/settings/settings.php"><?php _e("Click here to do it now.", "donation_can");?></a>
+		<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php"><?php _e("Click here to do it now.", "donation_can");?></a>
 	</div>
 <?php else : ?>
 	<p><?php _e("Using PayPal account:", "donation_can");?> <strong><?php echo $paypal_account; ?></strong></p>
@@ -116,6 +116,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 </p>
 
 <p class="textright">
-	<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can/model/settings/settings.php" class="button rbutton"><?php _e("Change Settings", "donation_can");?></a>
+	<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php" class="button rbutton"><?php _e("Change Settings", "donation_can");?></a>
 	<a href="<?php echo bloginfo("url");?>/wp-admin/admin.php?page=goals.php" class="button rbutton"><?php _e("Update Goals", "donation_can");?></a>
 </p>
