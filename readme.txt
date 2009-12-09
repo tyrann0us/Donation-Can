@@ -3,7 +3,7 @@ Contributors: jarkkolaine
 Donate link: http://jarkkolaine.com/plugins/donation-can
 Tags: donations, paypal, fundraising, money
 Requires at least: 2.8
-Tested up to: 2.8.4
+Tested up to: 2.8.6
 Stable tag: trunk
 
 Collect PayPal donations towards multiple goals on your blog and show the progress to your visitors using sidebar widgets.
@@ -85,6 +85,9 @@ Screenshots go here
 
 
 == Changelog ==
+
+= 1.3 =
+* Fixed the PayPal URL in PayPal payment confirmations to fix a problem with some web hosts that were unable to connect to the SSL protocol= 1.3 =
 
 = 1.2 =
 * Fixed a bug that caused some files (css, javascript) and links to not load

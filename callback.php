@@ -49,7 +49,7 @@ foreach ($_POST as $key => $value) {
 $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
 $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-$fp = fsockopen ('ssl://www.paypal.com', 443, $errno, $errstr, 30);
+$fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30);
 
 // assign posted variables to local variables
 $item_name = $_POST['item_name'];
@@ -79,7 +79,7 @@ w2log("fee: ".$fee);
 
 
 if (!$fp) {
-	w2log("Http error");
+	w2log("Http error, can't connect to ssl://www.paypal.com");
 } else {
 	fputs ($fp, $header . $req);
 	while (!feof($fp)) {

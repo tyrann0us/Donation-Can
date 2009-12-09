@@ -124,6 +124,17 @@ padding-top: 6px;
 	overflow: auto;
 }
 
+/* Default donation progress bar settings */
+
+.donation_meter div {
+	margin: 0px;
+	padding: 0px;
+}
+
+.donation_progress {
+	padding: 5px;
+}
+
 #donation-submit-div div.inside {
 	margin: 0px;
 	padding: 0px;
