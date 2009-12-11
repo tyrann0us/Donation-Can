@@ -86,6 +86,9 @@ Screenshots go here
 
 == Changelog ==
 
+= 1.3.1 =
+* Minor update to fix the user capabilities required for accessing settings pages.
+
 = 1.3 =
 * Fixed the PayPal URL in PayPal payment confirmations to fix a problem with some web hosts that were unable to connect to the SSL protocol= 1.3 =
 
