@@ -76,12 +76,7 @@ function donation_can_get_total_raised_for_cause($cause_id) {
 
     $general_settings = get_option("donation_can_general");
     if (!$general_settings["debug_mode"]) {
-        if ($goal_id != null) {
-            $query .= " AND ";
-        } else {
-            $query .= " WHERE ";
-        }
-        $query .= "sandbox = 0";
+        $query .= " AND sandbox = 0";
     }
     $query .= ";";
 

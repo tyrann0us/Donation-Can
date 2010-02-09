@@ -62,6 +62,9 @@ Screenshots go here
 
 == Changelog ==
 
+= 1.4.1 =
+* Quick update to fix a small mistake that had passed the testing unnoticed. Goal progress is now visible again.
+
 = 1.4 =
 * Improved PayPal IPN handling that should remove most (if not all) of the problems with payments not being stored to the database.
 * New setting for testing the plugin in PayPal Sandbox mode
@@ -72,7 +75,7 @@ Screenshots go here
 * Minor update to fix the user capabilities required for accessing settings pages.
 
 = 1.3 =
-* Fixed the PayPal URL in PayPal payment confirmations to fix a problem with some web hosts that were unable to connect to the SSL protocol= 1.3 =
+* Fixed the PayPal URL in PayPal payment confirmations to fix a problem with some web hosts that were unable to connect to the SSL protocol.
 
 = 1.2 =
 * Fixed a bug that caused some files (css, javascript) and links to not load
