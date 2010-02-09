@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,59 +23,60 @@ class DonationListWidget extends WP_Widget {
 	}
 
 	function widget($args, $instance) {
-		extract($args);
-		$goal_id = esc_attr($instance["goal_id"]);
-		$show_title = esc_attr($instance["show_title"]);
-		$title = esc_attr($instance["title"]);	
-		$show_donor_name = esc_attr($instance["show_donor_name"]);
-		$show_donation_sum = esc_attr($instance["show_donation_sum"]);
-	
-		$goals = get_option("donation_can_causes");
-	
-		$num_donations = esc_attr($instance["num_donations"]);
-		if ($num_donations == null || $num_donations == "") {
-			$num_donations = 5;
-		}
-			
-		if ($goal_id == "__all__") {
-			if ($title == null || $title == "") {
-				$title = "Latest Donations";
-			}
-			$donations = donation_can_get_donations(0, $num_donations);
-		} else {
-			$goal = $goals[$goal_id];
-			if ($title == null || $title == "") {
-				$title = "Latest Donations for " . $goal["name"];
-			}
-			$donations = donation_can_get_donations(0, $num_donations, $goal_id);
-		}
-		
-		echo $before_widget;
-		if ($show_title) {
-			echo $before_title . $title . $after_title;
-		}
-		
-		echo "<ul>";
-		foreach ($donations as $donation) {
-			?>
-			<li>
-				<?php if ($show_donor_name) : ?>
-					<?php echo $donation->payer_name; ?>
-					gave
-				<?php endif; ?>
-				<?php if ($show_donation_sum) : ?>
-					$<?php echo $donation->amount; ?>
-				<?php endif; ?>
-				<?php if ($goal_id == "__all__") : ?>
-					to "<?php echo $goals[$donation->cause_code]["name"]; ?>"
-				<?php endif; ?>
-			</li>
-			<?
-		}
-		echo "</ul>";
-		
-		echo $after_widget;
-	}
+            extract($args);
+            $goal_id = esc_attr($instance["goal_id"]);
+            $show_title = esc_attr($instance["show_title"]);
+            $title = esc_attr($instance["title"]);
+            $show_donor_name = esc_attr($instance["show_donor_name"]);
+            $show_donation_sum = esc_attr($instance["show_donation_sum"]);
+
+            $goals = get_option("donation_can_causes");
+
+            $num_donations = esc_attr($instance["num_donations"]);
+            if ($num_donations == null || $num_donations == "") {
+                    $num_donations = 5;
+            }
+
+            if ($goal_id == "__all__") {
+                if ($title == null || $title == "") {
+                        $title = "Latest Donations";
+                }
+                $donations = donation_can_get_donations(0, $num_donations);
+            } else {
+                $goal = $goals[$goal_id];
+                if ($title == null || $title == "") {
+                        $title = "Latest Donations for " . $goal["name"];
+                }
+                $donations = donation_can_get_donations(0, $num_donations, $goal_id);
+            }
+
+            echo $before_widget;
+            if ($show_title) {
+                echo $before_title . $title . $after_title;
+            }
+
+            echo "<ul>";
+            foreach ($donations as $donation) {
+                $donation_goal = $goals[$donation->cause_code];
+                $donation_currency = donation_can_get_currency_for_goal($donation_goal);
+
+                echo "<li>";
+                if ($show_donor_name) {
+                    echo $donation->payer_name . __(" donated ", "donation_can");
+                }
+                // TODO improve for localization!
+                if ($show_donation_sum) {
+                    echo $donation_currency . " " . $donation->amount;
+                }
+                if ($goal_id == "__all__") {
+                    echo __(" to ", "donation_can") . $goals[$donation->cause_code]["name"];
+                }
+                echo "</li>";
+            }
+            echo "</ul>";
+
+            echo $after_widget;
+        }
 
 	function update($new_instance, $old_instance) {
 		return $new_instance;

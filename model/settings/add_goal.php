@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,7 +22,9 @@ function donation_can_add_goal_menu() {
 	if ($causes == null) {
 		$causes = array();
 	}
-	
+
+        $currency = donation_can_get_current_currency();
+        
 	$pages = get_pages();
 	  
 	// Add a new cause

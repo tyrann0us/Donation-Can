@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -67,6 +67,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<th scope="col" class="manage-column column-cb check-column"><input type="checkbox"/></th>
 				<th scope="col" class="manage-column"><?php _e("Date");?></th>
 				<th scope="col" class="manage-column goal-id-column"><?php _e("Goal ID", "donation_can");?></th>
+				<th scope="col" class="manage-column"><?php _e("Donation type");?></th>
 				<th scope="col" class="manage-column"><?php _e("Donor", "donation_can");?></th>
 				<th scope="col" class="manage-column goal-sum-column"><?php _e("Donation Sum", "donation_can");?></th>
 			</tr>
@@ -76,6 +77,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<th scope="col" class="manage-column column-cb check-column"><input type="checkbox"/></th>
 				<th scope="col" class="manage-column"><?php _e("Date");?></th>
 				<th scope="col" class="manage-column goal-id-column"><?php _e("Goal ID", "donation_can");?></th>
+				<th scope="col" class="manage-column"><?php _e("Donation type");?></th>
 				<th scope="col" class="manage-column"><?php _e("Donor", "donation_can");?></th>
 				<th scope="col" class="manage-column goal-sum-column"><?php _e("Donation Sum", "donation_can");?></th>
 			</tr>
@@ -91,24 +93,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					}
 					return false;	
 				}
-			</script>		
+			</script>
 
 		    <?php foreach ($donations as $donation) : ?>
-				<tr>
-					<th scope="row" class="check-column"><input type="checkbox"/></th>
-					<td><?php echo $donation->time; ?></td>
-					<td><?php echo $donation->cause_code; ?></td>
-					<td>
-						<strong><?php echo $donation->payer_name; ?></strong><br/>
-						<?php echo $donation->payer_email; ?>
-					</td>
-					<td>
-						USD <?php echo $donation->amount ;?><br/>
-						<?php echo $donation->fee; ?>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-	
+                        <?php $currency = donation_can_get_currency_for_goal($goals[$donation->cause_code]); ?>
+                        <tr>
+                            <th scope="row" class="check-column"><input type="checkbox"/></th>
+                            <td><?php echo mysql2date(__('Y/m/d g:i:s A'), $donation->time); ?></td>
+                            <td><?php echo $donation->cause_code; ?></td>
+                            <td><?php echo ($donation->offline ? "Offline" : "PayPal"); ?></td>
+                            <td>
+                                <strong><?php echo $donation->payer_name; ?></strong><br/>
+                                <?php echo $donation->payer_email; ?>
+                            </td>
+                            <td>
+                                <?php echo $currency; ?> <?php echo $donation->amount ;?><br/>
+                                <?php echo $donation->fee; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+
 		</tbody>
 	</table>
 	

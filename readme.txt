@@ -3,7 +3,7 @@ Contributors: jarkkolaine
 Donate link: http://jarkkolaine.com/plugins/donation-can
 Tags: donations, paypal, fundraising, money
 Requires at least: 2.8
-Tested up to: 2.8.6
+Tested up to: 2.9.1
 Stable tag: trunk
 
 Collect PayPal donations towards multiple goals on your blog and show the progress to your visitors using sidebar widgets.
@@ -53,30 +53,6 @@ Example:
 
 == Frequently Asked Questions ==
 
-Q: "The data about payments doesn't come back from PayPal and is not written to the database."
-
-A: Some web hosts don't seem to allow php includes or requires in the PayPal IPN callback code. I am looking into this issue, but for now, here's a quick way for getting past the issue (thanks to [Kitty Cooper](http://openskywebdesign.com/) for this temporary solution):
-
-Replace this line in wp-content/plugins/donation-can/callback.php
-
-	require( dirname(__FILE__).’/../../../wp-config.php’ );
-
-with the code from wp-config.php that defines the database constants
-use the correct values for the '' ones
-
-	/** The name of the database for WordPress */
-	define('DB_NAME', '');
-
-	/** MySQL database username */
-	define('DB_USER', '');
-
-	/** MySQL database password */
-	define('DB_PASSWORD', '');
-
-	/** MySQL hostname */
-	define('DB_HOST', 'localhost');
-
-
 If your question wasn't answered here, visit the [official plugin page](http://jarkkolaine.com/plugins/donation-can/) and leave a comment and I will answer your question. If the question is common, it will be added to this page in the next update.
 
 == Screenshots ==
@@ -85,6 +61,12 @@ Screenshots go here
 
 
 == Changelog ==
+
+= 1.4 =
+* Improved PayPal IPN handling that should remove most (if not all) of the problems with payments not being stored to the database.
+* New setting for testing the plugin in PayPal Sandbox mode
+* Support for multiple currencies
+* Offline donations
 
 = 1.3.1 =
 * Minor update to fix the user capabilities required for accessing settings pages.
@@ -101,4 +83,4 @@ Screenshots go here
 * Made it possible to create donation goals without setting a target amount 
 
 = 1.0 =
-*   First released version.
+* First released version.

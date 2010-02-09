@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,6 +26,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	}
 ?>
 <div class="donation_meter ltr">
+    <?php if ($goal_id == "__all__" && $multiple_currencies_in_use) : ?>
+        Your donation goals use many different currencies, so we
+        cannot show an aggregated donation meter.
+    <?php else : ?>
 	<?php if ($target == "") : ?>
 		$<?php echo $current; ?> <?php _e("raised", "donation_can");?>
 	<?php else : ?> 
@@ -34,6 +38,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<div class="donation_progress_bar" style="width: <?php echo $percentage; ?>%;"></div>
 			</div>
 		</div>
-		$<?php echo $current; ?> / $<?php echo $target; ?> <?php _e("raised", "donation_can");?>
+
+		<?php echo $currency; ?> <?php echo $current; ?> / <?php echo $target; ?> <?php _e("raised", "donation_can");?>
 	<?php endif; ?>
+    <?php endif; ?>
 </div>

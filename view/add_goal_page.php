@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -82,7 +82,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					</div>
 
 					<div class="stuffbox">
-						<h3><label for="name"><?php _e("Fundraising Target (USD)", "donation_can");?></label></h3>
+						<h3><label for="name"><?php _e("Fundraising Target ", "donation_can");?> <?php echo $currency; ?></label></h3>
 						<div class="inside" id="goal-div">
 							<input type="text" name="donation_goal" value="" size="30"/>
 							<p>

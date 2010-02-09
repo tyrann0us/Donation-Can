@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,13 +17,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 .donation_can_notice {
-	padding: 10px;
-	margin: 10px 0px 10px 0px;
-	border: 1px solid #ccc;
-	background-color: rgb(255, 254, 235);
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+    border: 1px solid #ccc;
+    background-color: rgb(255, 254, 235);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+.donation-can-admin-notice {
+    border-bottom: 1px solid #ccc;
+    background-color: rgb(255, 254, 235);
+    text-align: center;
+    padding: 5px;
 }
 
 #donation_can_dashboard .inside  {
@@ -95,7 +102,9 @@ padding-top: 6px;
 	width: 100px;
 }
 
-#goal-id-div input, #goal-name-div input, #goal-div input, #page-id-div input, #goal-description-div textarea, #continue-button-text-div input, #notify-email-div input {
+#goal-id-div input, #goal-name-div input, #goal-div input, #page-id-div input, #goal-description-div textarea, #continue-button-text-div input, #notify-email-div input,
+#payer_name-div input, #payer_email-div input, #note-div textarea
+{
 	width: 100%;
 }
 

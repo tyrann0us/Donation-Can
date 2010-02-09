@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,6 +19,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 function render_user_notification($message) {
   echo "<div class='updated fade'><p>".$message."</p></div>";
+}
+
+function donation_can_render_error($message) {
+  echo "<div class='error fade'><p>".$message."</p></div>";
 }
 
 /** 
@@ -47,6 +51,8 @@ function donation_can_settings_page() {
 		$notify_email = attribute_escape($_POST["notify_email"]);
 		$style = attribute_escape($_POST["style"]);
 		$custom = attribute_escape($_POST["custom"]);
+                $currency = attribute_escape($_POST["currency"]);
+                $debug_mode = attribute_escape($_POST["debug_mode"]) == "1";
 
 		$donation_sum_num = attribute_escape($_POST["donation_sum_num"]);
 		$donation_sums = array();
@@ -68,6 +74,8 @@ function donation_can_settings_page() {
 		$general_settings["logo_on_paypal_page"] = $logo_on_paypal_page;
 		
 		$general_settings["notify_email"] = $notify_email;
+
+                $general_settings["currency"] = $currency;
 		
 		$general_settings["donation_sums"] = array();
 		foreach ($donation_sums as $sum) {
@@ -75,9 +83,10 @@ function donation_can_settings_page() {
 		}
 		
 		$general_settings["style"] = $style;
-//		if ($style == "custom" && $custom != "") {
-			$general_settings["custom"] = $custom;
-//		}
+                $general_settings["custom"] = $custom;
+                
+                $general_settings["debug_mode"] = $debug_mode;
+
 		
 		update_option("donation_can_general", $general_settings);
 		render_user_notification(__("Donation Can settings updated", "donation_can"));

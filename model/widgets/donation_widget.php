@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -54,7 +54,9 @@ class DonationWidget extends WP_Widget {
 		}
 		
 		$raised_so_far = donation_can_get_total_raised_for_cause($goal_id);	
-			
+
+                $currency = donation_can_get_currency_for_goal($goal);
+
 		$out = "";
 			
 		$out .= $before_widget;

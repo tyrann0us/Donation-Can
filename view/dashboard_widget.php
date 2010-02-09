@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -18,6 +18,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
+<?php global $wp_rewrite; ?>
+<?php if (!$wp_rewrite->using_permalinks()) : ?>
+    <!-- Error: Permalink structure not compatible with PayPal -->
+    <div class="donation_can_notice">
+        <?php _e("You haven't set up your WordPress permalink structure. Donation Can will not be able to receive payment notifications from PayPal.", "donation_can");?><br/>
+        <a href="<?php bloginfo("url");?>/wp-admin/options-permalink.php"><?php _e("Fix permalink settings now.", "donation_can");?></a>
+    </div>
+<?php endif; ?>
 <?php if (empty($goals)) : ?>
 
 	<!-- Empty Slate: Shown if no goals have been set up -->
@@ -41,13 +49,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					</tr>
 				<?php else : ?>
 					<?php $first = true; ?>
-					<?php foreach ($donations as $donation) : ?> 	
-						<tr <?php if ($first) : $first = false; ?>class="first"<?php endif;?>>
-							<td class="first"><?php echo $donation->time; ?></td>
-							<td class="b"><?php echo $donation->amount; ?><br/><small style="color:red;">(-<?php echo $donation->fee; ?>)</small></td>
-							<td class="last t"><span class="<?php if ($donation->payment_status == "Completed") { echo "approved"; } else { echo "waiting"; }?>"><?php echo $donation->payment_status; ?></span></td>
-						</tr>			
-					<?php endforeach; ?>
+					<?php foreach ($donations as $donation) : ?>
+                                            <?php $currency = donation_can_get_currency_for_goal($goals[$donation->cause_code]); ?>
+                                            <tr <?php if ($first) : $first = false; ?>class="first"<?php endif;?>>
+                                                <td class="first date"><?php echo mysql2date(__('Y/m/d g:i:s A'), $donation->time); ?></td>
+                                                <td class="b"><?php echo $currency . " " . $donation->amount; ?><br/><small style="color:red;">(-<?php echo $donation->fee; ?>)</small></td>
+                                                <td class="last t"><span class="<?php if ($donation->payment_status == "Completed") { echo "approved"; } else { echo "waiting"; }?>"><?php echo $donation->payment_status; ?></span></td>
+                                            </tr>
+                                        <?php endforeach; ?>
 				<?php endif; ?>
 			</tbody>
 		</table>
@@ -69,27 +78,38 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					} else {
 						$percent = $goal["collected"] / $goal["donation_goal"] * 100;
 					}
+
+                                        $currency = donation_can_get_currency_for_goal($goal);
 				?>
 				<tr <?php if ($first) : $first = false; ?>class="first"<?php endif; ?>>
 					<td class="b" style="width: 30%;"><?php echo $goal["name"]; ?></td>
 					<td>
 						<div style="width: <?php echo $percent; ?>%; background-color: #559955;">&nbsp;</div>
 					</td>
-					<td class="b last" style="width: 25%;">$<?php echo $goal["collected"]; ?> / <?php echo $goal["donation_goal"]; ?></td>
+					<td class="b last" style="width: 25%;"><?php echo $currency;?> <?php echo $goal["collected"]; ?>
+                                            <?php if ($goal["donation_goal"]) : ?>
+                                                / <?php echo $goal["donation_goal"]; ?>
+                                            <?php endif; ?>
+                                        </td>
 				</tr>
 			<?php endforeach; ?>
 		
 			<tr class="total">
-				<td class="b"><?php _e("TOTAL", "donation_can");?></td>
-				<?php
-					if ($total_goal == 0) {
-						$percent = 0;
-					} else {
-						$percent = $total_collected / $total_goal; 
-					}
-				?>
-				<td><div style="width: <?php echo $percent; ?>%; background-color: #779955;">&nbsp;</div></td>
-				<td class="b last" style="font-size: 16pt;">$<?php echo $total_collected; ?> / <?php echo $total_goal; ?></td>
+                            <td class="b"><?php _e("TOTAL", "donation_can");?></td>
+                            <?php if (donation_can_has_multiple_currencies_in_use()) : ?>
+                                <td></td>
+                                <td class="b last"><small style="color: rgb(230, 111, 0);">Multiple currencies selected, cannot count total.</small></td>
+                            <?php else: ?>
+                                <?php
+                                    if ($total_goal == 0) {
+                                            $percent = 0;
+                                    } else {
+                                            $percent = $total_collected / $total_goal;
+                                    }
+                                ?>
+                                <td><div style="width: <?php echo $percent; ?>%; background-color: #779955;">&nbsp;</div></td>
+                                <td class="b last" style="font-size: 16pt;"><?php echo $currency; ?> <?php echo $total_collected; ?> / <?php echo $total_goal; ?></td>
+                            <?php endif; ?>
 			</tr>
 		</table>	
 	</div>
@@ -107,15 +127,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <?php endif; ?>
 
 <p>
-	You are using <strong>Donation Can (version 1.0)</strong>. Check out the <a href="http://jarkkolaine.com/plugins/donation-can">plugin home page</a> for more information or to give feedback.
+    You are using <strong>Donation Can (version <?php echo $version; ?>)</strong>. Check out the <a href="http://jarkkolaine.com/plugins/donation-can">plugin home page</a> for more information or to give feedback.
 </p>
 <p>
-	Donation Can is free software. The plugin was developed to support Train for Humanity, a non-profit organization aiming to promote 
-	humanity through everyday athletes' training efforts. If you enjoy the plugin, consider 
-	<a href="http://trainforhumanity.org/author/jarkko">sponsoring my training</a> in the Train for Humanity project.
+    Donation Can is free software. The plugin was developed to support Train for Humanity, a non-profit organization aiming to promote
+    humanity through everyday athletes' training efforts. Train for Humanity has now been closed, but if you find the plugin useful, consider
+    <a href="https://www.habitat.org/cd/giving/donate.aspx?link=227">donating to Habitat for Humanity</a>'s efforts to help in rebuilding Haiti.
 </p>
 
 <p class="textright">
-	<a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php" class="button rbutton"><?php _e("Change Settings", "donation_can");?></a>
-	<a href="<?php echo bloginfo("url");?>/wp-admin/admin.php?page=goals.php" class="button rbutton"><?php _e("Update Goals", "donation_can");?></a>
+    <a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation-can/model/settings/settings.php" class="button rbutton"><?php _e("Change Settings", "donation_can");?></a>
+    <a href="<?php echo bloginfo("url");?>/wp-admin/admin.php?page=goals.php" class="button rbutton"><?php _e("Update Goals", "donation_can");?></a>
 </p>

@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,13 +23,16 @@ function donation_can_dashboard_widget() {
 }
 
 function render_donation_can_dashboard_widget() {
-	$donations = donation_can_get_donations(0, 5);
-	$goals = donation_can_get_goals(true);
+    $donations = donation_can_get_donations(0, 5);
+    $goals = donation_can_get_goals(true);
 	
-	$options = get_option("donation_can_general");
-	$paypal_account =  $options["paypal_email"];
+    $options = get_option("donation_can_general");
+    $paypal_account =  $options["paypal_email"];
+
+    $plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/donation-can/donation_can.php');
+    $version = $plugin_data["Version"];
 	
-	require(__FILE__ . "/../../../view/dashboard_widget.php");
+    require(__FILE__ . "/../../../view/dashboard_widget.php");
 }
 
 add_action('wp_dashboard_setup', 'donation_can_dashboard_widget'); 

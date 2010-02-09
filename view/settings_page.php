@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2009, Jarkko Laine.
+Copyright (c) 2009-2010, Jarkko Laine.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -32,6 +32,38 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<td><input type="text" class="regular-text" name="paypal_email" value="<?php echo $general_settings["paypal_email"];?>" size="40"/>
 					<span class="description"><?php _e("Your PayPal account email. This is where the funds will be sent to.", "donation_can");?></span>
 				</td>
+			</tr>
+			<tr valign="top">
+                            <th scope="row" valign="center"><?php _e("Currency:", "donation_can");?></th>
+                            <td>
+                                <select name="currency">
+                                    <option value="USD" <?php if ($general_settings["currency"] == 'USD') { echo "selected"; }?>>U.S. Dollars (USD)</option>
+                                    <option value="EUR" <?php if ($general_settings["currency"] == 'EUR') { echo "selected"; }?>>Euros (EUR)</option>
+                                    <option value="GBP" <?php if ($general_settings["currency"] == 'GBP') { echo "selected"; }?>>Pounds Sterling (GBP)</option>
+
+                                    <option value="AUD" <?php if ($general_settings["currency"] == 'AUD') { echo "selected"; }?>>Australian Dollars (AUD)</option>
+                                    <option value="NZD" <?php if ($general_settings["currency"] == 'NZD') { echo "selected"; }?>>New Zealand Dollars (NZD)</option>
+                                    <option value="CAD" <?php if ($general_settings["currency"] == 'CAD') { echo "selected"; }?>>Canadian Dollars (CAD)</option>
+                                    <option value="JPY" <?php if ($general_settings["currency"] == 'JPY') { echo "selected"; }?>>Yen (JPY)</option>
+                                    <option value="CHF" <?php if ($general_settings["currency"] == 'CHF') { echo "selected"; }?>>Swiss Franc (CHF)</option>
+                                    <option value="HKD" <?php if ($general_settings["currency"] == 'HKD') { echo "selected"; }?>>Hong Kong Dollar (HKD)</option>
+                                    <option value="SGD" <?php if ($general_settings["currency"] == 'SGD') { echo "selected"; }?>>Singapore Dollar (SGD)</option>
+                                    <option value="SEK" <?php if ($general_settings["currency"] == 'SEK') { echo "selected"; }?>>Swedish Krona (SEK)</option>
+                                    <option value="DKK" <?php if ($general_settings["currency"] == 'DKK') { echo "selected"; }?>>Danish Krone (DKK)</option>
+                                    <option value="NOK" <?php if ($general_settings["currency"] == 'NOK') { echo "selected"; }?>>Norwegian Krone (NOK)</option>
+                                    <option value="PLN" <?php if ($general_settings["currency"] == 'PLN') { echo "selected"; }?>>Polish Zloty (PLN)</option>
+                                    <option value="HUF" <?php if ($general_settings["currency"] == 'HUF') { echo "selected"; }?>>Hungarian Forint (HUF)</option>
+                                    <option value="CZK" <?php if ($general_settings["currency"] == 'CZK') { echo "selected"; }?>>Czech Koruna (CZK)</option>
+                                    <option value="ILS" <?php if ($general_settings["currency"] == 'ILS') { echo "selected"; }?>>Israeli Shekel (ILS)</option>
+                                    <option value="MXN" <?php if ($general_settings["currency"] == 'MXN') { echo "selected"; }?>>Mexican Peso (MXN)</option>
+                                    <option value="BRL" <?php if ($general_settings["currency"] == 'BRL') { echo "selected"; }?>>Brazilian Real (only for Brazilian users) (BRL)</option>
+                                    <option value="MYR" <?php if ($general_settings["currency"] == 'MYR') { echo "selected"; }?>>Malaysian Ringgits (only for Malaysian users) (MYR)</option>
+                                    <option value="PHP" <?php if ($general_settings["currency"] == 'PHP') { echo "selected"; }?>>Philippine Pesos (PHP)</option>
+                                    <option value="TWD" <?php if ($general_settings["currency"] == 'TWD') { echo "selected"; }?>>Taiwan New Dollars (TWD)</option>
+                                    <option value="THB" <?php if ($general_settings["currency"] == 'THB') { echo "selected"; }?>>Thai Baht (THB)</option>
+
+                                </select>
+                            </td>
 			</tr>
 			<tr valign="top">
 				<th scope="row" valign="center"><?php _e("Shipping:", "donation_can");?></th>
@@ -92,6 +124,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					<br/><span class="description"><?php _e("A comma separated list of email addresses that should be notified whenever someone makes a donation to any of the goals.", "donation_can");?></span>
 				</td>
 			</tr>
+
+                        <tr valign="top">
+				<th scope="row" valign="center"><?php _e("Sandbox mode:", "donation_can");?></th>
+				<td>
+					<input type="checkbox" name="debug_mode" value="1" <?php if ($general_settings["debug_mode"]) { echo "checked"; }?>/>
+					<br/><span class="description"><?php _e("Check this checkbox if you want to use the PayPal sandbox to test the plugin.", "donation_can");?></span>
+				</td>
+			</tr>
+
 
 			<tr valign="top">				
 				<th scope="row" valign="center"><?php _e("Donation options:", "donation_can");?></th>
