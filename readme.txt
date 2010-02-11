@@ -62,6 +62,9 @@ Screenshots go here
 
 == Changelog ==
 
+= 1.4.2 =
+* Added support for PATHINFO type permalinks in IPN notification handling
+
 = 1.4.1 =
 * Quick update to fix a small mistake that had passed the testing unnoticed. Goal progress is now visible again.
 

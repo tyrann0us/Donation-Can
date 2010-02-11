@@ -51,7 +51,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <input type="hidden" name="item_name" value="<?php echo $goal['name']; ?>"/>
                         <input type="hidden" name="item_number" value="<?php echo $goal['id']; ?>"/>
                         <input type="hidden" name="cmd" value=" _donations"/>
-                        <input type="hidden" name="notify_url" value="<?php bloginfo('url');?>/donation_can_ipn/paypal/"/>
+
+                        <input type="hidden" name="notify_url" value="<?php echo $notify_url;?>"/>
+
+
                         <input type="hidden" name="currency_code" value="<?php echo donation_can_get_currency_for_goal($goal, false); ?>"/>
 
                         <!-- A set of fields that are defined in the plugin settings -->
@@ -60,52 +63,52 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
                         <!-- A thank you page url -->
                         <?php
-                                $return_page = $general_settings["return_page"];
-                                if ($goal["return_page"] != "" && $goal["return_page"] != "-1") {
-                                        $return_page = $goal["return_page"];
-                                }
+                            $return_page = $general_settings["return_page"];
+                            if ($goal["return_page"] != "" && $goal["return_page"] != "-1") {
+                                    $return_page = $goal["return_page"];
+                            }
 
-                                $continue_button_text = $general_settings["continue_button_text"];
-                                if ($goal["continue_button_text"] != "" && $goal["continue_button_text"] != "-1") {
-                                        $continue_button_text = $goal["continue_button_text"];
-                                }
+                            $continue_button_text = $general_settings["continue_button_text"];
+                            if ($goal["continue_button_text"] != "" && $goal["continue_button_text"] != "-1") {
+                                    $continue_button_text = $goal["continue_button_text"];
+                            }
                         ?>
                         <?php if ($return_page != "" && $return_page != "-1") : ?>
-                                <?php $return_page_url = get_permalink($return_page); ?>
+                            <?php $return_page_url = get_permalink($return_page); ?>
 
-                                <input type="hidden" name="cbt" value="<?php echo $continue_button_text; ?>"/>
-                                <input type="hidden" name="return" value="<?php echo $return_page_url; ?>"/>
+                            <input type="hidden" name="cbt" value="<?php echo $continue_button_text; ?>"/>
+                            <input type="hidden" name="return" value="<?php echo $return_page_url; ?>"/>
                         <?php endif; ?>
 
                         <!-- A cancel page url -->
                         <?php
-                                $cancel_return_page = $general_settings["cancel_return_page"];
-                                if ($goal["cancel_return_page"] != "" && $goal["cancel_return_page"] != "-1") {
-                                        $cancel_return_page = $goal["cancel_return_page"];
-                                }
+                            $cancel_return_page = $general_settings["cancel_return_page"];
+                            if ($goal["cancel_return_page"] != "" && $goal["cancel_return_page"] != "-1") {
+                                    $cancel_return_page = $goal["cancel_return_page"];
+                            }
                         ?>
                         <?php if ($cancel_return_page != "" && $cancel_return_page != "-1") : ?>
-                                <?php $cancel_return_page_url = get_permalink($cancel_return_page); ?>
-                                <input type="hidden" name="cancel_return" value="<?php echo $cancel_return_page_url;?>"/>
+                            <?php $cancel_return_page_url = get_permalink($cancel_return_page); ?>
+                            <input type="hidden" name="cancel_return" value="<?php echo $cancel_return_page_url;?>"/>
                         <?php endif; ?>
 
                         <!-- Custom logo to show on PayPal page -->
                         <?php if ($general_settings["logo_on_paypal_page"] != "") : ?>
-                                <input type="hidden" name="cpp_header_image" value="<?php echo $general_settings["logo_on_paypal_page"];?>"/>
+                            <input type="hidden" name="cpp_header_image" value="<?php echo $general_settings["logo_on_paypal_page"];?>"/>
                         <?php endif; ?>
 
                         <?php if ($donation_sums != null && count($donation_sums) > 0) : ?>
-                                <p>
-                                        Donate:
-                                        <select name="amount">
-                                                <?php foreach ($donation_sums as $sum) : ?>
-                                                        <option value="<?php echo $sum;?>"><?php echo $currency; ?> <?php echo $sum; ?></option>
-                                                <?php endforeach; ?>
-                                                <?php if ($goal["allow_freeform_donation_sum"]) : ?>
-                                                        <option value=""><?php _e("Other (enter amount on next page)", "donation_can");?></option>
-                                                <?php endif; ?>
-                                        </select>
-                                </p>
+                            <p>
+                                Donate:
+                                <select name="amount">
+                                    <?php foreach ($donation_sums as $sum) : ?>
+                                        <option value="<?php echo $sum;?>"><?php echo $currency; ?> <?php echo $sum; ?></option>
+                                    <?php endforeach; ?>
+                                    <?php if ($goal["allow_freeform_donation_sum"]) : ?>
+                                        <option value=""><?php _e("Other (enter amount on next page)", "donation_can");?></option>
+                                    <?php endif; ?>
+                                </select>
+                            </p>
                         <?php endif; ?>
 
                         <input type="image" name="submit" border="0" src="http://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" alt="PayPal - The safer, easier way to pay online"/>

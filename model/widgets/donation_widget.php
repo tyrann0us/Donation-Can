@@ -57,6 +57,14 @@ class DonationWidget extends WP_Widget {
 
                 $currency = donation_can_get_currency_for_goal($goal);
 
+                global $wp_rewrite;
+                $notify_url = "donation_can_ipn/paypal/";
+                if ($wp_rewrite->using_index_permalinks()) {
+                    $notify_url = "index.php/" . $notify_url;
+                }
+
+                $notify_url = get_bloginfo("url") . "/" . $notify_url;
+
 		$out = "";
 			
 		$out .= $before_widget;
