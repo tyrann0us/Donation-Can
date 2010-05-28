@@ -18,38 +18,38 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 function donation_can_goals_menu() {
-	$causes = get_option("donation_can_causes");
-	if ($causes == null) {
-		$causes = array();
-	}
-		
-	// Edit cause
-	if (isset($_POST["edit_cause"])) {
-		$id = attribute_escape($_POST["edit_cause"]);
-		$cause = donation_can_create_cause($_POST, $id);
-		$causes[$id] = $cause;
-		
-		update_option("donation_can_causes", $causes);
-		render_user_notification(__("Updated goal:", "donation_can") . " " . $id);
-	}
+    $causes = get_option("donation_can_causes");
+    if ($causes == null) {
+        $causes = array();
+    }
 
-	// Remove cause
-	if (isset($_POST["remove_cause"])) {
-		$id = attribute_escape($_POST["remove_cause"]);
-		unset($causes[$id]);
+    // Edit cause
+    if (isset($_POST["edit_cause"])) {
+        $id = attribute_escape($_POST["edit_cause"]);
+        $cause = donation_can_create_cause($_POST, $id);
+        $causes[$id] = $cause;
 
-		update_option("donation_can_causes", $causes);
-		render_user_notification(__("Deleted goal:", "donation_can") . " " . $id);
-	}
-	
-	if (isset($_GET["edit"])) {
-		$id = $_GET["edit"];
-		$goal = $causes[$id];
-		$pages = get_pages();
-		
-		require(__FILE__ . "/../../../view/edit_goal_page.php");
-	} else {
-		require(__FILE__ . "/../../../view/goals_page.php");		
-	}
+        update_option("donation_can_causes", $causes);
+        render_user_notification(__("Updated goal:", "donation_can") . " " . $id);
+    }
+
+    // Remove cause
+    if (isset($_POST["remove_cause"])) {
+        $id = attribute_escape($_POST["remove_cause"]);
+        unset($causes[$id]);
+
+        update_option("donation_can_causes", $causes);
+        render_user_notification(__("Deleted goal:", "donation_can") . " " . $id);
+    }
+
+    if (isset($_GET["edit"])) {
+        $id = $_GET["edit"];
+        $goal = $causes[$id];
+        $pages = get_pages();
+
+        require(WP_PLUGIN_DIR . "/donation-can/view/edit_goal_page.php");
+    } else {
+        require(WP_PLUGIN_DIR . "/donation-can/view/goals_page.php");
+    }
 }
 ?>

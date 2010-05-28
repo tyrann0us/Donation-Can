@@ -35,8 +35,8 @@ function donation_can_donations_menu() {
     }
 		
     $donations = donation_can_get_donations($start_index, $donations_per_page, $filter_goal);
-    $goals = get_option("donation_can_causes");
+    $goals = donation_can_get_goals(true);
 		
-    require(__FILE__ . "/../../../view/donations_page.php");
+    require(WP_PLUGIN_DIR . "/donation-can/view/donations_page.php");
 }
 ?>

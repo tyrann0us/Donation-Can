@@ -71,16 +71,7 @@ function donation_can_install() {
 }
 
 function donation_can_get_total_raised_for_cause($cause_id) {
-    global $wpdb;
-    $query = "SELECT amount from " . donation_can_get_table_name($wpdb) . " where cause_code = '" . $wpdb->escape($cause_id) . "'";
-
-    $general_settings = get_option("donation_can_general");
-    if (!$general_settings["debug_mode"]) {
-        $query .= " AND sandbox = 0";
-    }
-    $query .= ";";
-
-    $donations = $wpdb->get_results($query);
+    $donations = donation_can_get_donations(0, 0, $cause_id);
 
     $total = 0;
     foreach ($donations as $donation) {
@@ -91,39 +82,25 @@ function donation_can_get_total_raised_for_cause($cause_id) {
 }
 
 function donation_can_get_total_target_for_all_causes() {
-	$total_target = 0;
-	$causes = get_option("donation_can_causes");
-	if ($causes == null) {
-		$causes = array();
-	}
-	
-	foreach ($causes as $id => $cause) {
-		$total_target += $cause["donation_goal"];
-	}
-	
-	return $total_target;
+    $total_target = 0;
+    $causes = get_option("donation_can_causes");
+    if ($causes == null) {
+        $causes = array();
+    }
+
+    foreach ($causes as $id => $cause) {
+        $total_target += $cause["donation_goal"];
+    }
+
+    return $total_target;
 }
 
 function donation_can_get_total_raised_for_all_causes() {
-    global $wpdb;
-    $query = "SELECT amount from " . donation_can_get_table_name($wpdb);
-
-    $general_settings = get_option("donation_can_general");
-    if (!$general_settings["debug_mode"]) {
-        if ($goal_id != null) {
-            $query .= " AND ";
-        } else {
-            $query .= " WHERE ";
-        }
-        $query .= "sandbox = 0";
-    }
-    $query .= ";";
-
-    $donations = $wpdb->get_results($query);
+    $goals = donation_can_get_goals(true);
 
     $total = 0;
-    foreach ($donations as $donation) {
-        $total += $donation->amount;
+    foreach ($goals as $goal) {
+        $total += $goal["collected"];
     }
 
     return $total;
@@ -144,22 +121,7 @@ function donation_can_get_goals($include_raised_data = false) {
             $goals[$goal["id"]] = $goal;
         }
 
-        $query = "SELECT cause_code, amount FROM " . donation_can_get_table_name($wpdb);
-
-        $general_settings = get_option("donation_can_general");
-        if (!$general_settings["debug_mode"]) {
-            if ($goal_id != null) {
-                $query .= " AND ";
-            } else {
-                $query .= " WHERE ";
-            }
-            $query .= "sandbox = 0";
-        }
-
-        $query .= ";";
-        $donations = $wpdb->get_results($query);
-
-        foreach ($donations as $donation) {
+        foreach (donation_can_get_donations() as $donation) {
             $goals[$donation->cause_code]["collected"] += $donation->amount;
         }
     }
@@ -167,24 +129,43 @@ function donation_can_get_goals($include_raised_data = false) {
     return $goals;
 }
 
-
 function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null) {
     global $wpdb;
+
+    $use_and = false;
 
     $query = "SELECT * FROM " . donation_can_get_table_name($wpdb);
     if ($goal_id != null) {
         $query = "SELECT * FROM " . donation_can_get_table_name($wpdb) . " WHERE cause_code = \"" . $goal_id . "\"";
+        $use_and = true;
     }
 
     $general_settings = get_option("donation_can_general");
     if (!$general_settings["debug_mode"]) {
-        if ($goal_id != null) {
+        if ($use_and) {
             $query .= " AND ";
         } else {
             $query .= " WHERE ";
+            $use_and = true;
         }
         $query .= "sandbox = 0";
     }
+
+    // Only accept donations from existing causes
+    $goals = get_option("donation_can_causes");
+    $goal_list = array();
+    foreach ($goals as $goal) {
+        $goal_list[] = '"' . $goal["id"] . '"';
+    }
+
+    $goal_list_string = implode(",", $goal_list);
+
+    if ($use_and) {
+        $query .= " AND ";
+    } else {
+        $query .= " WHERE ";
+    }
+    $query .= "cause_code IN (" . $goal_list_string . ")";
 
     $query .= " ORDER BY time DESC";
 
@@ -192,10 +173,8 @@ function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null) {
         $query .= " LIMIT $offset,$limit";
     }
     $query .= ";";
-
-    $donations = $wpdb->get_results($query);
-
-    return $donations;
+    
+    return $wpdb->get_results($query);
 }
 
 function donation_can_currency_defaults($currency, $convert_to_symbols = true) {
@@ -248,71 +227,50 @@ function donation_can_has_multiple_currencies_in_use() {
     return $multiple_currencies_found;
 }
 
-
 function donation_can_get_donation_count($goal_id = null) {
-    global $wpdb;
-
-    $query = "SELECT count(*) FROM " . donation_can_get_table_name($wpdb);
-    if ($goal_id != null) {
-            $query = "SELECT count(*) FROM " . donation_can_get_table_name($wpdb) . " WHERE cause_code = \"" . $goal_id . "\"";
-    }
-
-    $general_settings = get_option("donation_can_general");
-    if (!$general_settings["debug_mode"]) {
-        if ($goal_id != null) {
-            $query .= " AND ";
-        } else {
-            $query .= " WHERE ";
-        }
-        $query .= "sandbox = 0";
-    }
-
-    $query .= ";";
-
-    $donations = $wpdb->get_var($query);
-
-    return $donations;
+    $donations = donation_can_get_donations(0, 0, $goal_id);
+    return count($donations);
 }
 
 function donation_can_create_cause($post, $id = -1) {
-	if ($id == -1) {
-		$id = attribute_escape($post["id"]);
-	}
-	$name = attribute_escape($post["name"]);
-	$description = attribute_escape($post["description"]);
-	$donation_goal = attribute_escape($post["donation_goal"]);
-	$return_page = attribute_escape($post["return_page"]);
-	$cancelled_return_page = attribute_escape($post["cancelled_return_page"]);
-	$continue_button_text = attribute_escape($post["continue_button_text"]);
-	$notify_email = attribute_escape($post["notify_email"]);
-	$allow_freeform_donation_sum = attribute_escape($post["allow_freeform_donation_sum"]);
+    if ($id == -1) {
+            $id = attribute_escape($post["id"]);
+    }
+    $name = attribute_escape($post["name"]);
+    $description = attribute_escape($post["description"]);
+    $donation_goal = attribute_escape($post["donation_goal"]);
+    $return_page = attribute_escape($post["return_page"]);
+    $cancelled_return_page = attribute_escape($post["cancelled_return_page"]);
+    $continue_button_text = attribute_escape($post["continue_button_text"]);
+    $notify_email = attribute_escape($post["notify_email"]);
+    $allow_freeform_donation_sum = attribute_escape($post["allow_freeform_donation_sum"]);
 
-	$donation_sum_num = attribute_escape($post["donation_sum_num"]);
-	$donation_sums = array();
-	for ($i = 0; $i < $donation_sum_num; $i++) {
-		$sum_value = attribute_escape($post["donation_sum_" . $i]);
-		if ($sum_value != null && $sum_value != "") {
-			$donation_sums[] = $sum_value;
-		}
-	}
+    $donation_sum_num = attribute_escape($post["donation_sum_num"]);
+    $donation_sums = array();
+    for ($i = 0; $i < $donation_sum_num; $i++) {
+        $sum_value = attribute_escape($post["donation_sum_" . $i]);
+        if ($sum_value != null && $sum_value != "") {
+                $donation_sums[] = $sum_value;
+        }
+    }
 
-	$cause = array();
-	$cause["id"] = $id;
-	$cause["name"] = $name;
-	$cause["description"] = $description;
-	$cause["donation_goal"] = $donation_goal;
+    $cause = array();
+    $cause["id"] = $id;
+    $cause["name"] = $name;
+    $cause["description"] = $description;
+    $cause["donation_goal"] = $donation_goal;
 
-        // Get the current currency from general settings and save it as the currency of this goal
-        $cause["currency"] = donation_can_get_current_currency(false);
+    // Get the current currency from general settings and save it as the currency of this goal
+    $cause["currency"] = donation_can_get_current_currency(false);
 
-	$cause["return_page"] = $return_page;
-	$cause["cancelled_return_page"] = $cancelled_return_page;
-	$cause["continue_button_text"] = $continue_button_text; 
-	$cause["notify_email"] = $notify_email;
-	$cause["donation_sums"] = $donation_sums;
-	$cause["allow_freeform_donation_sum"] = $allow_freeform_donation_sum;
+    $cause["return_page"] = $return_page;
+    $cause["cancelled_return_page"] = $cancelled_return_page;
+    $cause["continue_button_text"] = $continue_button_text;
+    $cause["notify_email"] = $notify_email;
+    $cause["donation_sums"] = $donation_sums;
+    $cause["allow_freeform_donation_sum"] = $allow_freeform_donation_sum;
 
-	return $cause;
+    return $cause;
 }
 
 function w2log($msg) {
@@ -426,6 +384,30 @@ function donation_can_proccess_paypal_ipn($wp) {
 	}
 	fclose ($fp);
     }
+}
+
+function donation_can_nicedate($date) {
+    $date_string = mysql2date(__('Y/m/d g:i A'), $date);
+    $time_string = mysql2date(__('g:i A'), $date);
+
+    $date_data = date_parse($date_string);
+    $now_data = getdate();
+
+    if ($date_data["year"] == $now_data["year"]
+            && $date_data["month"] == $now_data["mon"]) {
+        $difference = $now_data["mday"] - $date_data["day"];
+
+        if ($difference == 0) {
+            return sprintf(__("Today at %s", "donation_can"), $time_string);
+        } else if ($difference == 1) {
+            return sprintf(__("Yesterday at %s", "donation_can"), $time_string);
+        } else if ($difference < 7) {
+            return sprintf(__("%d days ago at %s", "donation_can"),$difference, $time_string);
+        }
+    }
+
+    return $date_string;
+
 }
 
 ?>

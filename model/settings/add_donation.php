@@ -78,6 +78,6 @@ function donation_can_add_donation_menu() {
         }
     }
 	
-    require(__FILE__ . "/../../../view/add_donation_page.php");
+    require(WP_PLUGIN_DIR . "/donation-can/view/add_donation_page.php");
 }
 ?>

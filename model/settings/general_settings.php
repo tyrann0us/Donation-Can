@@ -34,66 +34,66 @@ function donation_can_render_error($message) {
  * - remove a cause
  */
 function donation_can_settings_page() {	
-	$general_settings = get_option("donation_can_general");
-	$pages = get_pages();
-	
-	$style_options = array("default" => "Default", "custom" => "Customize");
+    $general_settings = get_option("donation_can_general");
+    $pages = get_pages();
 
-	// Save general settings
-	if ($_POST["edit_settings"] == "Y") {
-		$paypal_email = attribute_escape($_POST["paypal_email"]);
-		$require_shipping = attribute_escape($_POST["require_shipping"]);
-		$ask_for_note = attribute_escape($_POST["ask_for_note"]);
-		$return_page = attribute_escape($_POST["return_page"]);
-		$continue_button_text = attribute_escape($_POST["continue_button_text"]);
-		$cancel_return_page = attribute_escape($_POST["cancel_return_page"]);
-		$logo_on_paypal_page = attribute_escape($_POST["logo_on_paypal_page"]);
-		$notify_email = attribute_escape($_POST["notify_email"]);
-		$style = attribute_escape($_POST["style"]);
-		$custom = attribute_escape($_POST["custom"]);
-                $currency = attribute_escape($_POST["currency"]);
-                $debug_mode = attribute_escape($_POST["debug_mode"]) == "1";
+    $style_options = array("default" => "Default", "custom" => "Customize");
 
-		$donation_sum_num = attribute_escape($_POST["donation_sum_num"]);
-		$donation_sums = array();
-		for ($i = 0; $i < $donation_sum_num; $i++) {
-			$sum_value = attribute_escape($_POST["donation_sum_" . $i]);
-			if ($sum_value != null && $sum_value != "") {
-				$donation_sums[] = $sum_value;
-			}
-		}
-				
-		$general_settings["paypal_email"] = $paypal_email;		
-		$general_settings["require_shipping"] = $require_shipping;
-		$general_settings["ask_for_note"] = $ask_for_note;
-		$general_settings["continue_button_text"] = $continue_button_text;
+    // Save general settings
+    if ($_POST["edit_settings"] == "Y") {
+        $paypal_email = attribute_escape($_POST["paypal_email"]);
+        $require_shipping = attribute_escape($_POST["require_shipping"]);
+        $ask_for_note = attribute_escape($_POST["ask_for_note"]);
+        $return_page = attribute_escape($_POST["return_page"]);
+        $continue_button_text = attribute_escape($_POST["continue_button_text"]);
+        $cancel_return_page = attribute_escape($_POST["cancel_return_page"]);
+        $logo_on_paypal_page = attribute_escape($_POST["logo_on_paypal_page"]);
+        $notify_email = attribute_escape($_POST["notify_email"]);
+        $style = attribute_escape($_POST["style"]);
+        $custom = attribute_escape($_POST["custom"]);
+        $currency = attribute_escape($_POST["currency"]);
+        $debug_mode = attribute_escape($_POST["debug_mode"]) == "1";
 
-		$general_settings["return_page"] = $return_page;
-		$general_settings["cancel_return_page"] = $cancel_return_page;
+        $donation_sum_num = attribute_escape($_POST["donation_sum_num"]);
+        $donation_sums = array();
+        for ($i = 0; $i < $donation_sum_num; $i++) {
+            $sum_value = attribute_escape($_POST["donation_sum_" . $i]);
+            if ($sum_value != null && $sum_value != "") {
+                $donation_sums[] = $sum_value;
+            }
+        }
 
-		$general_settings["logo_on_paypal_page"] = $logo_on_paypal_page;
-		
-		$general_settings["notify_email"] = $notify_email;
+        $general_settings["paypal_email"] = $paypal_email;
+        $general_settings["require_shipping"] = $require_shipping;
+        $general_settings["ask_for_note"] = $ask_for_note;
+        $general_settings["continue_button_text"] = $continue_button_text;
 
-                $general_settings["currency"] = $currency;
-		
-		$general_settings["donation_sums"] = array();
-		foreach ($donation_sums as $sum) {
-			$general_settings["donation_sums"][] = $sum;
-		}
-		
-		$general_settings["style"] = $style;
-                $general_settings["custom"] = $custom;
-                
-                $general_settings["debug_mode"] = $debug_mode;
+        $general_settings["return_page"] = $return_page;
+        $general_settings["cancel_return_page"] = $cancel_return_page;
 
-		
-		update_option("donation_can_general", $general_settings);
-		render_user_notification(__("Donation Can settings updated", "donation_can"));
-	}
+        $general_settings["logo_on_paypal_page"] = $logo_on_paypal_page;
+
+        $general_settings["notify_email"] = $notify_email;
+
+        $general_settings["currency"] = $currency;
+
+        $general_settings["donation_sums"] = array();
+        foreach ($donation_sums as $sum) {
+            $general_settings["donation_sums"][] = $sum;
+        }
+
+        $general_settings["style"] = $style;
+        $general_settings["custom"] = $custom;
+
+        $general_settings["debug_mode"] = $debug_mode;
 
 
-	require(__FILE__ . "/../../../view/settings_page.php");
+        update_option("donation_can_general", $general_settings);
+        render_user_notification(__("Donation Can settings updated", "donation_can"));
+    }
+
+
+    require(WP_PLUGIN_DIR . "/donation-can/view/settings_page.php");
 }
 
 ?>

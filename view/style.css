@@ -29,8 +29,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 .donation-can-admin-notice {
     border-bottom: 1px solid #ccc;
     background-color: rgb(255, 254, 235);
+    color: rgb(85, 85, 85);
     text-align: center;
     padding: 5px;
+    font-size: 12px;
 }
 
 #donation_can_dashboard .inside  {
@@ -38,53 +40,62 @@ margin-top: 0px !important;
 }
 
 #donation_can_dashboard .inside p.sub {
-color: rgb(119, 119, 119);
-font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
-font-size: 13px;
-font-style: italic;
-padding: 5px 0px 0px 0px;
-margin: 0px;
+    color: rgb(119, 119, 119);
+    font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
+    font-size: 13px;
+    font-style: italic;
+    padding: 5px 0px 0px 0px;
+    margin: 0px;
 }
 
 #donation_can_dashboard .table {
-background: rgb(249, 249, 249);
-border-bottom: 1px solid rgb(236, 236, 236);
-border-top: 1px solid rgb(236, 236, 236);
-margin: 0px -9px 10px;
-padding: 0px 10px;
+    background: rgb(249, 249, 249);
+    border-bottom: 1px solid rgb(236, 236, 236);
+    border-top: 1px solid rgb(236, 236, 236);
+    margin: 0px -9px 10px;
+    padding: 0px 10px;
 }
 
 #donation_can_dashboard table {
-	width: 100%;
+    width: 100%;
 }
 
 #donation_can_dashboard table td {
-border-top: 1px solid rgb(236, 236, 236);
-padding: 3px 0px;
-white-space: nowrap;
+    border-top: 1px solid rgb(236, 236, 236);
+    padding: 3px 0px;
+    white-space: nowrap;
+    font-size: 12px;
 }
 
 #donation_can_dashboard table tr.first td {
 border-top: none;
 }
 
-#donation_can_dashboard td.waiting {
-color: rgb(230, 111, 0);
+#donation_can_dashboard td .approved {
+    color: green;
 }
 
-#donation_can_dashboard td.failed {
-color: red;
+#donation_can_dashboard td .waiting {
+    color: rgb(230, 111, 0);
 }
 
-#donation_can_dashboard td.success {
-color: green;
+#donation_can_dashboard td .failed {
+    color: red;
 }
 
 #donation_can_dashboard td.b {
-font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
-font-size: 14px;
-padding-right: 6px;
-text-align: right;
+    font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
+    font-size: 14px;
+    padding-right: 6px;
+    text-align: right;
+}
+
+#donation_can_dashboard td.last {
+    width: 70px;
+}
+
+#donation_can_dashboard td.goal {
+    font-style: italic;
 }
 
 #donation_can_dashboard .t {
@@ -145,6 +156,55 @@ padding-top: 6px;
 }
 
 #donation-submit-div div.inside {
-	margin: 0px;
-	padding: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/** Stats area in admin view */
+
+#donation-stats {
+    margin: auto;
+    overflow: auto;
+}
+
+#donation-stats .stats-box {
+    width: 250px;
+    float: left;
+    margin: 10px 15px 15px 0px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+#donation-stats .donation-progress {
+    border: 1px solid #ddd;
+    padding: 3px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+#donation-stats .donation-progress div {
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+#donation-stats .progress-as-text {
+    text-align: center;
+    font-size: 11pt;
+    font-style: italic;
+    font-family: Georgia;
+    padding: 5px;
+}
+
+#donation-stats .title {
+    font-family: Arial;
+    text-align: center;
+    font-size: 9pt;
+    color: #333;
+    padding: 5px 0px 0px 0px;
 }

@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Donation Can
-Version: 1.4.2
-Plugin URI: http://jarkkolaine.com/plugins/donation-can
+Version: 1.4.3
+Plugin URI: http://treehouseapps.com/donation-can
 Description: Donation Can lets you raise funds for multiple causes using your WordPress blog and PayPal account while tracking the progress of each cause separately. <a href="tools.php?page=donation-can/donation_can.php">Click here</a> to configure settings.
 Author: Jarkko Laine
 Author URI: http://jarkkolaine.com

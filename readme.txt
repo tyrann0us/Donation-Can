@@ -1,9 +1,9 @@
 === Donation Can ===
 Contributors: jarkkolaine
-Donate link: http://jarkkolaine.com/plugins/donation-can
+Donate link: http://treehouseapps.com/donation-can
 Tags: donations, paypal, fundraising, money
 Requires at least: 2.8
-Tested up to: 2.9.1
+Tested up to: 2.9.2
 Stable tag: trunk
 
 Collect PayPal donations towards multiple goals on your blog and show the progress to your visitors using sidebar widgets.
@@ -61,6 +61,10 @@ Screenshots go here
 
 
 == Changelog ==
+
+= 1.4.3 =
+* Bug fix: Donations made to deleted goals are not shown anymore (they are still kept in the database as history data, so you can access them with MySQL)
+* Bug fix: Paths to plugin files should work for all users now
 
 = 1.4.2 =
 * Added support for PATHINFO type permalinks in IPN notification handling

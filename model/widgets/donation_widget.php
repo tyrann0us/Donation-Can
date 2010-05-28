@@ -91,7 +91,7 @@ class DonationWidget extends WP_Widget {
 		$show_donations = esc_attr($instance["show_donations"]);
 		$show_title = esc_attr($instance["show_title"]);
 		$title = esc_attr($instance["title"]);		
-		
+
 		$goals = get_option("donation_can_causes");
 		if ($goals == null) {
 			$goals = array();

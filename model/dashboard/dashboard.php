@@ -32,7 +32,7 @@ function render_donation_can_dashboard_widget() {
     $plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/donation-can/donation_can.php');
     $version = $plugin_data["Version"];
 	
-    require(__FILE__ . "/../../../view/dashboard_widget.php");
+    require(WP_PLUGIN_DIR . "/donation-can/view/dashboard_widget.php");
 }
 
 add_action('wp_dashboard_setup', 'donation_can_dashboard_widget'); 
