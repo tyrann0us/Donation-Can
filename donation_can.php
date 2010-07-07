@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Donation Can
-Version: 1.4.3
+Version: 1.4.4
 Plugin URI: http://treehouseapps.com/donation-can
 Description: Donation Can lets you raise funds for multiple causes using your WordPress blog and PayPal account while tracking the progress of each cause separately. <a href="tools.php?page=donation-can/donation_can.php">Click here</a> to configure settings.
 Author: Jarkko Laine
@@ -161,6 +161,12 @@ function donation_can_admin_notices() {
     }
 }
 
+// Remember to flush_rules() when adding rules
+function donation_can_flush_rules(){
+    global $wp_rewrite;
+    $wp_rewrite->flush_rules();
+}
+
 register_activation_hook(__FILE__, 'donation_can_install');
 add_filter("wp_head", "donation_can_head_filter");
 add_filter("the_content", "donation_can_content_filter");
@@ -169,4 +175,6 @@ add_filter('query_vars', 'donation_can_query_vars');
 add_action('parse_request', 'donation_can_parse_request');
 add_action('generate_rewrite_rules', 'donation_can_rewrite_rules');
 add_action('admin_notices', 'donation_can_admin_notices');
+add_filter('init','donation_can_flush_rules');
+
 ?>
