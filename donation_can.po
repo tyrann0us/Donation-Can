@@ -1,0 +1,681 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Donation Can\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-05 22:35+0200\n"
+"PO-Revision-Date: 2011-04-05 22:57+0200\n"
+"Last-Translator: Jarkko Laine <jarkko@jarkkolaine.com>\n"
+"Language-Team: Treehouse Apps <jarkko@jarkkolaine.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: view\n"
+"X-Poedit-SearchPath-2: model\n"
+"X-Poedit-SearchPath-3: model/widgets\n"
+"X-Poedit-SearchPath-4: model/settings\n"
+"X-Poedit-SearchPath-5: model/dashboard\n"
+
+#: donation_can.php:118
+msgid "Donation Can is in sandbox mode. Remember to <a href=\""
+msgstr "Donation Can is in sandbox mode. Remember to <a href=\""
+
+#: donation_can.php:144
+#: donation_can.php:146
+msgid "Add Donation Form"
+msgstr "Add Donation Form"
+
+#: model/data.php:432
+msgid "Y/m/d g:i A"
+msgstr ""
+
+#: model/data.php:433
+msgid "g:i A"
+msgstr ""
+
+#: model/data.php:443
+#, php-format
+msgid "Today at %s"
+msgstr ""
+
+#: model/data.php:445
+#, php-format
+msgid "Yesterday at %s"
+msgstr ""
+
+#: model/data.php:447
+#, php-format
+msgid "%d days ago at %s"
+msgstr ""
+
+#: model/dashboard/dashboard.php:22
+msgid "Fundraising Status"
+msgstr ""
+
+#: model/settings/donation_can_add_donation.php:51
+msgid "Select a goal to add the donation to."
+msgstr ""
+
+#: model/settings/donation_can_add_donation.php:55
+msgid "Enter a donation sum greater than 0."
+msgstr ""
+
+#: model/settings/donation_can_add_donation.php:76
+msgid "Added offline donation"
+msgstr ""
+
+#: model/settings/donation_can_add_donation.php:77
+msgid "Browse donations"
+msgstr ""
+
+#: model/settings/donation_can_add_goal.php:48
+msgid "Added goal:"
+msgstr ""
+
+#: model/settings/donation_can_donations.php:33
+msgid "Deleted donation:"
+msgstr ""
+
+#: model/settings/donation_can_general_settings.php:109
+msgid "Donation Can settings updated"
+msgstr ""
+
+#: model/settings/donation_can_goals.php:95
+msgid "Updated goal:"
+msgstr ""
+
+#: model/settings/donation_can_goals.php:104
+msgid "Deleted goal:"
+msgstr ""
+
+#: model/settings/settings.php:27
+msgid "Donation Can"
+msgstr "Donation Can"
+
+#: model/settings/settings.php:28
+msgid "Donation Can Settings - General"
+msgstr ""
+
+#: model/settings/settings.php:28
+msgid "General Settings"
+msgstr ""
+
+#: model/settings/settings.php:29
+msgid "Donation Can Settings - Causes"
+msgstr ""
+
+#: model/settings/settings.php:29
+msgid "Causes"
+msgstr ""
+
+#: model/settings/settings.php:30
+msgid "Donation Can Settings - Add New Cause"
+msgstr ""
+
+#: model/settings/settings.php:30
+msgid "Add New Cause"
+msgstr ""
+
+#: model/settings/settings.php:31
+msgid "Donation Can Settings - Browse Donations"
+msgstr ""
+
+#: model/settings/settings.php:31
+msgid "Donations"
+msgstr "Donations"
+
+#: model/settings/settings.php:32
+msgid "Donation Can Settings - Add New Donation"
+msgstr ""
+
+#: model/settings/settings.php:32
+#: view/add_donation_page.php:41
+msgid "Add New Donation"
+msgstr ""
+
+#: model/widgets/donation_list_widget.php:74
+msgid "DONATION_LIST_WITH_NAME_AND_SUM_AND_CAUSE"
+msgstr "%NAME gave %CURRENCY %SUM to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:76
+msgid "DONATION_LIST_WITH_NAME_AND_SUM"
+msgstr "%NAME gave %CURRENCY %SUM"
+
+#: model/widgets/donation_list_widget.php:80
+msgid "DONATION_LIST_WITH_NAME_AND_CAUSE"
+msgstr "%NAME gave to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:82
+msgid "DONATION_LIST_WITH_NAME"
+msgstr "%NAME made a donation"
+
+#: model/widgets/donation_list_widget.php:86
+msgid "DONATION_LIST_WITH_SUM_AND_CAUSE"
+msgstr "A donation of %CURRENCY %SUM was made to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:88
+msgid "DONATION_LIST_WITH_SUM"
+msgstr "A donation of %CURRENCY %SUM was made"
+
+#: model/widgets/donation_list_widget.php:92
+msgid "DONATION_LIST_WITH_CAUSE"
+msgstr "A donation was made to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:142
+#: model/widgets/donation_progress_widget.php:84
+#: model/widgets/donation_widget.php:113
+msgid "Goal:"
+msgstr ""
+
+#: model/widgets/donation_list_widget.php:157
+#: model/widgets/donation_progress_widget.php:101
+#: model/widgets/donation_widget.php:130
+msgid "Display title"
+msgstr ""
+
+#: model/widgets/donation_list_widget.php:169
+msgid "Display names of donors"
+msgstr ""
+
+#: model/widgets/donation_list_widget.php:175
+msgid "Display donation sums"
+msgstr ""
+
+#: model/widgets/donation_widget.php:142
+msgid "Display progress"
+msgstr ""
+
+#: model/widgets/donation_widget.php:148
+msgid "Display description"
+msgstr ""
+
+#: model/widgets/donation_widget.php:154
+msgid "Display latest donations"
+msgstr ""
+
+#: view/add_donation_page.php:53
+msgid "Save"
+msgstr ""
+
+#: view/add_donation_page.php:59
+msgid "Add Donation"
+msgstr ""
+
+#: view/add_donation_page.php:73
+msgid "Goal"
+msgstr ""
+
+#: view/add_donation_page.php:76
+msgid "--Select goal--"
+msgstr ""
+
+#: view/add_donation_page.php:89
+msgid "Select the goal to add the donation to."
+msgstr ""
+
+#: view/add_donation_page.php:95
+msgid "Amount"
+msgstr ""
+
+#: view/add_donation_page.php:102
+msgid "Name of donor"
+msgstr ""
+
+#: view/add_donation_page.php:109
+msgid "Email address of donor"
+msgstr ""
+
+#: view/add_donation_page.php:116
+msgid "Note"
+msgstr ""
+
+#: view/add_shortcode.php:20
+msgid "Choose Cause"
+msgstr ""
+
+#: view/add_shortcode.php:24
+msgid "Add donation form"
+msgstr ""
+
+#: view/add_shortcode.php:30
+msgid "You haven't created any fundraising causes yet."
+msgstr ""
+
+#: view/add_shortcode.php:33
+msgid "Click here to create one."
+msgstr ""
+
+#: view/add_shortcode.php:34
+msgid "Note that clicking on the link will move you out of this post editor."
+msgstr ""
+
+#: view/add_shortcode.php:73
+msgid "Customize title"
+msgstr ""
+
+#: view/add_shortcode.php:94
+msgid "Insert into Post"
+msgstr ""
+
+#: view/add_shortcode.php:95
+msgid "Customize form"
+msgstr ""
+
+#: view/dashboard_widget.php:25
+msgid "You haven't set up your WordPress permalink structure. Donation Can will not be able to receive payment notifications from PayPal."
+msgstr ""
+
+#: view/dashboard_widget.php:26
+msgid "Fix permalink settings now."
+msgstr ""
+
+#: view/dashboard_widget.php:33
+msgid "You haven't set up any goals yet."
+msgstr ""
+
+#: view/dashboard_widget.php:34
+msgid "Start by creating your first one."
+msgstr ""
+
+#: view/dashboard_widget.php:39
+msgid "Latest Donations"
+msgstr ""
+
+#: view/dashboard_widget.php:47
+msgid "No donations yet."
+msgstr ""
+
+#: view/dashboard_widget.php:55
+#, php-format
+msgid "To '%s'"
+msgstr ""
+
+#: view/dashboard_widget.php:65
+msgid "Goal Progress"
+msgstr ""
+
+#: view/dashboard_widget.php:97
+msgid "TOTAL"
+msgstr ""
+
+#: view/dashboard_widget.php:120
+msgid "You haven't set up your PayPal account information yet."
+msgstr ""
+
+#: view/dashboard_widget.php:121
+msgid "Click here to do it now."
+msgstr ""
+
+#: view/dashboard_widget.php:124
+msgid "PayPal account:"
+msgstr ""
+
+#: view/dashboard_widget.php:132
+msgid "Change Settings"
+msgstr ""
+
+#: view/dashboard_widget.php:133
+msgid "Update Goals"
+msgstr ""
+
+#: view/donation_form_single.php:107
+msgid "Other (enter amount on next page)"
+msgstr ""
+
+#: view/donation_form_single.php:117
+#, php-format
+msgid "Powered by %s."
+msgstr ""
+
+#: view/donation_form_single.php:121
+msgid "The donation goal has been reached. Thank you for your support!"
+msgstr ""
+
+#: view/donations_page.php:21
+msgid "Donations to all goals"
+msgstr ""
+
+#: view/donations_page.php:39
+msgid "View all goals"
+msgstr ""
+
+#: view/donations_page.php:96
+msgid "Daily Progress"
+msgstr ""
+
+#: view/donations_page.php:101
+msgid "Numeric stats?"
+msgstr ""
+
+#: view/donations_page.php:110
+#: view/donations_page.php:120
+#: view/goals_page.php:56
+#: view/goals_page.php:66
+msgid "Date"
+msgstr ""
+
+#: view/donations_page.php:112
+#: view/donations_page.php:122
+msgid "Donation type"
+msgstr ""
+
+#: view/donations_page.php:113
+#: view/donations_page.php:123
+msgid "Donor"
+msgstr ""
+
+#: view/donations_page.php:114
+#: view/donations_page.php:124
+msgid "Donation Sum"
+msgstr ""
+
+#: view/donations_page.php:130
+msgid "Are you sure you want to delete donation"
+msgstr ""
+
+#: view/donations_page.php:144
+msgid "Y/m/d g:i:s A"
+msgstr ""
+
+#: view/donations_page.php:147
+#: view/goals_page.php:82
+msgid "Delete"
+msgstr ""
+
+#: view/edit_goal_page.php:56
+msgid "Edit Cause"
+msgstr ""
+
+#: view/edit_goal_page.php:92
+msgid "How much money do you need for this cause?"
+msgstr ""
+
+#: view/edit_goal_page.php:128
+msgid "Don't set a target for the fundraising. The amount raised so far is shown instead of a progress bar."
+msgstr ""
+
+#: view/edit_goal_page.php:134
+msgid "Donation options"
+msgstr ""
+
+#: view/edit_goal_page.php:137
+msgid "Decide the donation sums for your visitors to choose from. You can use the 'Add new' button to create as many options as you need."
+msgstr ""
+
+#: view/edit_goal_page.php:147
+#: view/settings_page.php:181
+msgid "Remove"
+msgstr ""
+
+#: view/edit_goal_page.php:156
+#: view/settings_page.php:191
+msgid "Add new"
+msgstr ""
+
+#: view/edit_goal_page.php:160
+msgid "Include the option for your visitors to pick their donation sums freely."
+msgstr ""
+
+#: view/edit_goal_page.php:166
+msgid "Describe the cause in a few words"
+msgstr ""
+
+#: view/edit_goal_page.php:173
+msgid "Where should the visitor go after donating to this cause?"
+msgstr ""
+
+#: view/edit_goal_page.php:176
+msgid "Thank you page"
+msgstr ""
+
+#: view/edit_goal_page.php:178
+#: view/edit_goal_page.php:188
+msgid "Use PayPal Default (no return link)"
+msgstr ""
+
+#: view/edit_goal_page.php:186
+msgid "Cancelled page"
+msgstr ""
+
+#: view/edit_goal_page.php:199
+msgid "Who should be notified of donations?"
+msgstr ""
+
+#: view/edit_goal_page.php:203
+msgid "A comma separated list of email addresses that should be notified when a donation is made to this cause. In addition to these, the general email addresses defined in general settings are notified."
+msgstr ""
+
+#: view/goals_page.php:23
+msgid "Are you sure you want to delete cause '"
+msgstr ""
+
+#: view/goals_page.php:33
+msgid "Donation Causes"
+msgstr ""
+
+#: view/goals_page.php:39
+msgid "Add a new cause to get started with collecting donations."
+msgstr ""
+
+#: view/goals_page.php:52
+#: view/goals_page.php:62
+msgid "Cause"
+msgstr ""
+
+#: view/goals_page.php:53
+#: view/goals_page.php:63
+#: view/settings_page.php:158
+msgid "Added by"
+msgstr ""
+
+#: view/goals_page.php:55
+#: view/goals_page.php:65
+msgid "Collected"
+msgstr ""
+
+#: view/goals_page.php:83
+msgid "View donations"
+msgstr ""
+
+#: view/goals_page.php:93
+msgid "No goal"
+msgstr ""
+
+#: view/goals_page.php:111
+msgid "Add cause"
+msgstr ""
+
+#: view/progress_bar.php:30
+msgid "Your donation goals use many different currencies, so we cannot show an aggregated donation meter."
+msgstr ""
+
+#: view/progress_bar.php:33
+#: view/progress_bar.php:41
+msgid "raised"
+msgstr ""
+
+#: view/settings_page.php:24
+msgid "Donation Can Settings"
+msgstr ""
+
+#: view/settings_page.php:31
+msgid "PayPal Email:"
+msgstr ""
+
+#: view/settings_page.php:33
+msgid "Your PayPal account email. This is where the funds will be sent to."
+msgstr ""
+
+#: view/settings_page.php:37
+msgid "Currency:"
+msgstr ""
+
+#: view/settings_page.php:69
+msgid "Shipping:"
+msgstr ""
+
+#: view/settings_page.php:71
+msgid "Prompt for an address but do not require one"
+msgstr ""
+
+#: view/settings_page.php:72
+msgid "Do not prompt for an address"
+msgstr ""
+
+#: view/settings_page.php:73
+msgid "Prompt for an address and require one"
+msgstr ""
+
+#: view/settings_page.php:77
+msgid "Prompt to include a note:"
+msgstr ""
+
+#: view/settings_page.php:79
+msgid "Provide a text box and prompt for the note"
+msgstr ""
+
+#: view/settings_page.php:80
+msgid "Hide the text box and the note"
+msgstr ""
+
+#: view/settings_page.php:84
+msgid "Thank you page:"
+msgstr ""
+
+#: view/settings_page.php:87
+#: view/settings_page.php:105
+msgid "Use PayPal Default"
+msgstr ""
+
+#: view/settings_page.php:95
+msgid "Text for continue button:"
+msgstr ""
+
+#: view/settings_page.php:98
+msgid "Applies when thank you page URL is set to something else than 'Use Paypal Default'."
+msgstr ""
+
+#: view/settings_page.php:102
+msgid "Payment cancelled page:"
+msgstr ""
+
+#: view/settings_page.php:113
+msgid "Logo to show on PayPal payment page:"
+msgstr ""
+
+#: view/settings_page.php:116
+msgid "max. 750 x 90 px"
+msgstr ""
+
+#: view/settings_page.php:121
+msgid "Notify by Email:"
+msgstr ""
+
+#: view/settings_page.php:124
+msgid "A comma separated list of email addresses that should be notified whenever someone makes a donation to any of the goals."
+msgstr ""
+
+#: view/settings_page.php:129
+msgid "Subtract PayPal fees:"
+msgstr ""
+
+#: view/settings_page.php:132
+msgid "Check this checkbox if you want the plugin to only show the amount you have actually received instead of the amount donated by people."
+msgstr ""
+
+#: view/settings_page.php:137
+msgid "Sandbox mode:"
+msgstr ""
+
+#: view/settings_page.php:140
+msgid "Check this checkbox if you want to use the PayPal sandbox to test the plugin."
+msgstr ""
+
+#: view/settings_page.php:145
+msgid "Hide Donation Can back link:"
+msgstr ""
+
+#: view/settings_page.php:148
+msgid "Check the checkbox if you don't want to include a link to Donation Can in your donation widgets."
+msgstr ""
+
+#: view/settings_page.php:154
+msgid "Sort donation causes by:"
+msgstr ""
+
+#: view/settings_page.php:157
+msgid "Name"
+msgstr ""
+
+#: view/settings_page.php:159
+msgid "Fundraising goal"
+msgstr ""
+
+#: view/settings_page.php:160
+msgid "Raised so far"
+msgstr ""
+
+#: view/settings_page.php:161
+msgid "Date added"
+msgstr ""
+
+#: view/settings_page.php:165
+msgid "Ascending"
+msgstr ""
+
+#: view/settings_page.php:166
+msgid "Descending"
+msgstr ""
+
+#: view/settings_page.php:172
+msgid "Donation options:"
+msgstr ""
+
+#: view/settings_page.php:186
+msgid "None yet. Click on \"add new\" below a few times to create some donation options (for example 5.00)."
+msgstr ""
+
+#: view/settings_page.php:208
+msgid "Donation widget style:"
+msgstr ""
+
+#: view/settings_page.php:220
+msgid "You can use the following CSS classes to customize the looks of your donation widget:"
+msgstr ""
+
+#: view/settings_page.php:223
+msgid "the donation widget container"
+msgstr ""
+
+#: view/settings_page.php:224
+msgid "The title of the donation widget (usually goal name)"
+msgstr ""
+
+#: view/settings_page.php:225
+msgid "description of the goal in the donation widget"
+msgstr ""
+
+#: view/settings_page.php:226
+msgid "Holder for the donation status display (contains the progress bar and textual presentation)"
+msgstr ""
+
+#: view/settings_page.php:227
+msgid "A container for the donation progress bar item"
+msgstr ""
+
+#: view/settings_page.php:228
+msgid "A container for the bar inside the progress bar item"
+msgstr ""
+
+#: view/settings_page.php:229
+msgid "The actual bar (fills .donation_progress_container according to current donation progress)"
+msgstr ""
+
+#: view/settings_page.php:236
+msgid "Save Changes"
+msgstr ""
+
