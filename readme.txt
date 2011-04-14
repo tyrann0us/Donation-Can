@@ -86,10 +86,17 @@ Coming soon...
 
 == Upgrade Notice ==
 
+= 1.5.2 =
+This is a bug fix release. If you see all your donations and are collecting them just fine, you can safely skip this update.
+
 = 1.5.0 =
 This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
+
+= 1.5.2 =
+* Bug fix: Fixed a bug database upgrade bug introduced in previous version
+* Bug fix: Fixed a bug related to passing the selected currency to PayPal
 
 = 1.5.1 =
 * Bug fix: Database upgrades don't rely on the plugin activation hook anymore as WordPress doesn't call that method in automatic updates.
