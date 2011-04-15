@@ -23,7 +23,7 @@ function donation_can_get_table_name($wpdb) {
 }
 
 function donation_can_get_current_db_version() {
-    return "4.0";
+    return "5.0";
 }
 
 function donation_can_get_current_create_table_row() {
