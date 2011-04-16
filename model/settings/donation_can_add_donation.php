@@ -58,6 +58,7 @@ function donation_can_add_donation_menu() {
         if ($cause_code_valid && $amount_valid) {
             // Save data
             $data = array(
+                "item_number" => donation_can_create_item_number($cause_code),
                 "cause_code" => $cause_code,
                 "payment_status" => "Completed",
                 "amount" => $amount,

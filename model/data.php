@@ -346,6 +346,10 @@ function donation_can_create_cause($post, $unique_id, $id = -1) {
     return $cause;
 }
 
+function donation_can_create_item_number($cause_id) {
+    return $cause_id . "-" . time();
+}
+
 function w2log($msg) {
     if (true) {
         $filename = dirname(__FILE__) . "/../log";
@@ -390,7 +394,7 @@ function donation_can_process_start_donation($wp) {
 
     // Generate item number unique to this donation so we can use it to track
     // the rest of the process
-    $item_number = $cause_id . "-" . time();
+    $item_number = donation_can_create_item_number($cause_id);
 
     // Generate parameters to post
     $paypal_args = array(
