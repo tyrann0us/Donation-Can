@@ -4,7 +4,7 @@ Donate link: http://treehouseapps.com/donation-can
 Tags: donations, paypal, fundraising, money
 Requires at least: 2.8
 Tested up to: 3.1.1
-Stable tag: 1_5_2
+Stable tag: 1_5_2_1
 
 Collect PayPal donations towards multiple goals on your blog and show the progress to your visitors using sidebar widgets.
 
@@ -86,6 +86,9 @@ Coming soon...
 
 == Upgrade Notice ==
 
+= 1.5.2.1 =
+This is yet another quick bug fix release that fixes problems with adding offline donations.
+
 = 1.5.2 =
 This is a bug fix release. If you see all your donations and are collecting them just fine, you can safely skip this update.
 
@@ -93,6 +96,9 @@ This is a bug fix release. If you see all your donations and are collecting them
 This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
+
+= 1.5.2.1 =
+* Bug fix: There was still an issue left from the previous fixes that caused problems when adding offline donations.
 
 = 1.5.2 =
 * Bug fix: Fixed a bug database upgrade bug introduced in previous version
