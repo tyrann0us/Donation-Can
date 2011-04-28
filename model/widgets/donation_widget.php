@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 /**
- * The widget for a single donation form.
+ * The widget for a donation form.
  */
 class DonationWidget extends WP_Widget {
     function DonationWidget() {
@@ -52,6 +52,10 @@ class DonationWidget extends WP_Widget {
         if ($title == null || $title == "") {
             $title = $goal["name"];
         }
+
+        // The looks of the widget
+        $widget_style_id = esc_attr($instance["style_id"]);
+        $style = donation_can_get_widget_style_by_id($widget_style_id);
 
         $donation_sums = $general_settings["donation_sums"];
         if ($goal["donation_sums"] != null && count($goal["donation_sums"]) > 0) {
@@ -101,7 +105,7 @@ class DonationWidget extends WP_Widget {
         $out = "";
 
         $out .= $before_widget;
-		
+
         // Use output buffering to get the widget HTML into the string rather than straight on screen
         ob_start();
 
@@ -119,10 +123,12 @@ class DonationWidget extends WP_Widget {
                         "show_donations" => $show_donations,
                         "goal" => $goal,
                         "action_url" => $action_url,
-                        "donation_strings" => $donation_strings
+                        "donation_strings" => $donation_strings,
+                        "elements" => $style["elements"],
+                        "widget_style_id" => $widget_style_id
                     ));
         } else {
-            require_donation_can_view('permalinks.php');
+            require_donation_can_view('permalinks');
         }
 
         $out .= ob_get_contents();
@@ -138,34 +144,50 @@ class DonationWidget extends WP_Widget {
     }
 
     function form($instance) {
-            $goal_id = esc_attr($instance["goal_id"]);
-            $show_progress = esc_attr($instance["show_progress"]);
-            $show_description = esc_attr($instance["show_description"]);
-            $show_donations = esc_attr($instance["show_donations"]);
-            $show_title = esc_attr($instance["show_title"]);
-            $title = esc_attr($instance["title"]);
+        $goal_id = esc_attr($instance["goal_id"]);
+        $show_progress = esc_attr($instance["show_progress"]);
+        $show_description = esc_attr($instance["show_description"]);
+        $show_donations = esc_attr($instance["show_donations"]);
+        $show_title = esc_attr($instance["show_title"]);
+        $title = esc_attr($instance["title"]);
+        $style_id = esc_attr($instance["style_id"]);
 
-            $goals = get_option("donation_can_causes");
-            if ($goals == null) {
-                $goals = array();
-            }
-            ?>
-                    <p>
-                            <label for="<?php echo $this->get_field_id('goal_id'); ?>">
-                                    <?php _e('Goal:'); ?>
-                                    <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
-                                            name="<?php echo $this->get_field_name('goal_id'); ?>">
+        $goals = get_option("donation_can_causes");
+        if ($goals == null) {
+            $goals = array();
+        }
 
-                                            <?php foreach ($goals as $goal) : ?>
-                                                    <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
-                                            <?php endforeach; ?>
-                                    </select>
-                            </label>
-                    </p>
-                    <p>
+        $widget_styles = donation_can_get_widget_styles();
+            
+        ?>
+            <p>
+                <label for="<?php echo $this->get_field_id('goal_id'); ?>"><?php _e('Goal:'); ?></label><br/>
+                <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
+                        name="<?php echo $this->get_field_name('goal_id'); ?>">
+
+                    <?php foreach ($goals as $goal) : ?>
+                        <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+                    <!--<p>
                             <a href="" class="button">Edit goal settings</a>
+                    </p>-->
+
+            <p>
+                <label for="<?php echo $this->get_field_id('style_id'); ?>"><?php _e("Widget style:", "donation_can");?></label><br/>
+                <select class="widefat" name="<?php echo $this->get_field_name('style_id');?>">
+                    <?php foreach ($widget_styles as $style) : ?>
+                        <option value="<?php echo $style["id"];?>" <?php if ($style["id"] == $style_id) { echo "selected"; }?>><?php echo $style["name"];?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+                    <p>
+                        <a href="" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
                     </p>
 
+                    <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
+                    
                     <p>
                             <label for="<?php echo $this->get_field_id('show_title'); ?>">
                                     <input type="checkbox" id="<?php echo $this->get_field_id('show_title'); ?>" <?php if ($show_title) { echo "checked"; } ?>
@@ -196,6 +218,7 @@ class DonationWidget extends WP_Widget {
                                             name="<?php echo $this->get_field_name('show_donations'); ?>" /> <?php _e('Display latest donations', "donation_can"); ?>
                             </label>
                     </p>
+
             <?php
     }
 }

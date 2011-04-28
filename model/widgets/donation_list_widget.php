@@ -25,7 +25,7 @@ class DonationListWidget extends WP_Widget {
 	function widget($args, $instance) {
             global $wp_rewrite;
             if (!$wp_rewrite->using_permalinks()) {
-                require(WP_PLUGIN_DIR . "/donation-can/view/permalinks.php");
+                require_donation_can_view('permalinks');
             } else {
                 extract($args);
 
@@ -110,7 +110,7 @@ class DonationListWidget extends WP_Widget {
                     }
                 }
 
-                require_donation_can_view('donation_list', array("donation_strings" => $donation_strings));
+                require_donation_can_view('widget_blocks/donation_list', array("donation_strings" => $donation_strings));
 
                 echo $after_widget;
             }

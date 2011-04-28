@@ -97,6 +97,12 @@ This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
 
+= 1.5.3 =
+* Support for defining and choosing custom widget styles for donation forms (The old CSS from general settings is still included, but that functionality is deprecated and will be removed at some point)
+* First two default widget styles: "Default" and "Default Vertical"
+* New currency: Turkish Lira (according to PayPal, it only works for Turkish customers)
+* Bug fix: Selecting the thank you / cancelled page on general settings tab works now
+
 = 1.5.2.1 =
 * Bug fix: There was still an issue left from the previous fixes that caused problems when adding offline donations.
 

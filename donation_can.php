@@ -37,14 +37,27 @@ require("model/settings/settings.php");
 require("theme_methods.php");
 
 // Adds the style sheet definition to head
-function donation_can_head_filter() {
-    // Add the custom style created in settings
+function donation_can_head_filter() {   
+    echo "<style type=\"text/css\" media=\"screen\">\n";
+
+    $styles = donation_can_get_widget_styles();
+    foreach ($styles as $style) {
+        if (isset($style["css"])) {
+            foreach ($style["css"] as $element => $css_definition) {
+                echo ".donation-can-widget." . $style["id"] . " " . $element . " {\n";
+                echo $css_definition;
+                echo "\n}";
+            }
+        }
+    }
+    
+    // Deprecated, but let's keep it for a while in case people are relying on it
     $options = get_option("donation_can_general");
     if ($options != null && isset($options["custom"])) {
-        echo "<style type=\"text/css\" media=\"screen\">";
         echo $options["custom"];
-        echo "</style>";
     }
+
+    echo "</style>";
 }
 
 /**
@@ -52,6 +65,7 @@ function donation_can_head_filter() {
  */
 function donation_can_shortcode_handler($attributes, $content = null) {
     $defaults = array(
+        "style_id" => "default",
         "goal_id" => "",
         "show_progress" => true,
         "show_description" => true,
@@ -134,11 +148,11 @@ function donation_can_rewrite_rules($wp_rewrite) {
 }
 
 function donation_can_flush_rules() {
-    if (get_option("donation_can_rewrite_rule_version", "0.0") != "1.0") {
+    if (get_option("donation_can_rewrite_rule_version", "0.0") != "1.1") {
         global $wp_rewrite;
         $wp_rewrite->flush_rules();
         
-        update_option("donation_can_rewrite_rule_version", "1.0");
+        update_option("donation_can_rewrite_rule_version", "1.1");
     }
 }
 
@@ -157,6 +171,7 @@ function donation_can_init(){
     load_plugin_textdomain("donation_can", false, "donation-can");
 
     wp_enqueue_style('donation-can', plugins_url("/donation-can/view/style.css"), false,'1.0','all');
+    wp_enqueue_script('jquery');
     wp_enqueue_script('donation-can-scripts', plugins_url("/donation-can/view/scripts.js"));
 }
 
@@ -183,7 +198,7 @@ function donation_can_media_button_register() {
 }
 
 function donation_can_media_button_form() {    
-    require_donation_can_view("add_shortcode", array("goals" => donation_can_get_goals()));
+    require_donation_can_view("add_shortcode", array("goals" => donation_can_get_goals(), "styles" => donation_can_get_widget_styles()));
 }
 
 // I develop the plugin outside wp-content using a symlink so I can't use __FILE__ here.

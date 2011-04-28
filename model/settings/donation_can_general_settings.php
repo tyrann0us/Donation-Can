@@ -109,7 +109,8 @@ function donation_can_settings_page() {
         render_user_notification(__("Donation Can settings updated", "donation_can"));
     }
 
-    require_donation_can_view('settings_page', array("general_settings" => $general_settings));
+    require_donation_can_view('settings_page', array("general_settings" => $general_settings,
+        "pages" => $pages, "style_options" => $style_options));
     
 }
 

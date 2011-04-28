@@ -25,7 +25,7 @@ class DonationProgressWidget extends WP_Widget {
     function widget($args, $instance) {
         global $wp_rewrite;
         if (!$wp_rewrite->using_permalinks()) {
-            require_donation_can_view('permalinks.php');
+            require_donation_can_view('permalinks');
         } else {
             extract($args);
             $goal_id = esc_attr($instance["goal_id"]);
@@ -65,7 +65,7 @@ class DonationProgressWidget extends WP_Widget {
                 if ($show_title) {
                     echo $before_title . $title . $after_title;
                 }
-                require_donation_can_view('progress_bar', array("currency" => $currency, "current" => $raised, "target" => $total_target));
+                require_donation_can_view('widget_blocks/progress_bar', array("currency" => $currency, "current" => $raised, "target" => $total_target));
             }
 
             echo $after_widget;

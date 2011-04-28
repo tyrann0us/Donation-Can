@@ -18,52 +18,57 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<div class="donation-can_donation-widget">
-    <?php if ($show_title) : ?>
-        <?php echo $before_title; ?><?php echo $title;?><?php echo $after_title; ?>
-    <?php endif; ?>
-	
-    <?php if ($show_description) : ?>
-        <div class="donation-can_goal-description">
-            <?php echo $goal["description"];?>
+<div class="donation-can-widget <?php echo $widget_style_id; ?>">
+    <form action="<?php echo $action_url; ?>" method="post" class="donation-form">
+        <input type="hidden" name="cause" value="<?php echo $goal["id"]; ?>"/>
+
+        <?php foreach ($elements as $id => $element) : ?>
+            <?php
+                switch ($element["type"]) {
+                    case "title":
+                        if ($show_title) {
+                            require_donation_can_view('widget_blocks/title', array("element" => $element, "goal" => $goal, "title" => $title));
+                        }
+                        break;
+
+                    case "description":
+                        if ($show_description) {
+                            require_donation_can_view('widget_blocks/description', array("element" => $element, "goal" => $goal));
+                        }
+                        break;
+
+                    case "progress":
+                        if ($show_progress) {
+                            require_donation_can_view('widget_blocks/progress_bar', array("element" => $element, "target" => $goal["donation_goal"], "current" => $raised_so_far, "currency" => $currency));
+                        }
+                        break;
+
+                    case "donation-options":
+                        require_donation_can_view('widget_blocks/donation_options', array("element" => $element, "donation_sums" => $donation_sums, "goal" => $goal, "currency" => $currency));
+                        break;
+
+                    case "submit-button":
+                        require_donation_can_view('widget_blocks/submit_button', array("element" => $element));
+                        break;
+
+                    case "donation-list":
+                        require_donation_can_view('widget_blocks/donation_list', array("element" => $element, "donation_strings" => $donation_strings));
+                        break;
+
+                    default:
+                        break;
+
+                }
+            ?>
+        <?php endforeach; ?>
+
+    </form>
+
+    <?php if ($show_back_link) : ?>
+        <div class="backlink">
+            <?php printf(__("Powered by %s."), "<a href=\"http://treehouseapps.com/donation-can\">Donation Can</a>"); ?>
         </div>
     <?php endif; ?>
-	
-    <?php if ($show_progress) : ?>
-        <?php
-            $target = $goal["donation_goal"];
-            $current = $raised_so_far;
-            require("progress_bar.php");
-        ?>
-    <?php endif; ?>
 
-    <div class="donation-can_donation-form">
-        <form action="<?php echo $action_url; ?>" method="post">
-            <input type="hidden" name="cause" value="<?php echo $goal["id"]; ?>"/>
-            <?php if ($donation_sums != null && count($donation_sums) > 0) : ?>
-                <p>
-                    Donate:
-                    <select name="amount">
-                        <?php foreach ($donation_sums as $sum) : ?>
-                            <option value="<?php echo $sum;?>"><?php echo $currency; ?> <?php echo $sum; ?></option>
-                        <?php endforeach; ?>
-                        <?php if ($goal["allow_freeform_donation_sum"]) : ?>
-                            <option value=""><?php _e("Other (enter amount on next page)", "donation_can");?></option>
-                        <?php endif; ?>
-                    </select>
-                </p>
-            <?php endif; ?>
 
-            <input type="image" name="submit" border="0" src="http://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" alt="PayPal - The safer, easier way to pay online"/>
-        </form>
-
-        <?php if ($show_donations) : ?>
-            <?php require_donation_can_view('donation_list', array("donation_strings" => $donation_strings)); ?>
-        <?php endif; ?>
-
-        <?php if ($show_back_link) : ?>
-            <div class="donation-can_backlink"><?php printf(__("Powered by %s."), "<a href=\"http://treehouseapps.com/donation-can\">Donation Can</a>"); ?></div>
-        <?php endif; ?>
-    </div>
-    
 </div>

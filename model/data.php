@@ -76,6 +76,96 @@ function donation_can_get_general_settings() {
     return get_option("donation_can_general");
 }
 
+function donation_can_get_widget_styles() {
+    $widget_styles = get_option("donation_can_widget_styles");
+    $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
+
+    if ($widget_styles == null || $widget_styles_version != "1.0") {
+        // If nothing has been saved yet, return the default widget
+        // and update it to options
+        $widget_styles = array(
+            "default" => array(
+                "name" => __("Default", "donation_can"),
+                "id" => "default",
+                "elements" => array(
+                    "1" => array("type" => "title"),
+                    "2" => array("type" => "description"),
+                    "3" => array("type" => "progress"),
+                    "4" => array("type" => "donation-options"),
+                    "5" => array("type" => "submit-button")
+                ),
+                "css" => array(
+                    "" => "border: 1px #ddd solid; border-radius: 5px; padding: 10px; background-color: #f5f5f5;",
+                    "h3" => "margin-top: 0px;",
+                    ".description" => "margin: 10px 0px 0px 0px;",
+                    ".donation_meter" => "background-color: #fafafa; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin: 10px -10px 10px -10px; padding: 10px;",
+                    ".progress-meter" => "border: 0px; height: 10px;",
+                    ".progress-container" => "background-color: #ddd; height: 10px; border-radius: 4px;",
+                    ".progress-bar" => "background-color: #87C442; height: 10px; border-radius: 4px;",
+                    ".progress-text" => "position: relative; margin-top: 10px; font-size: 8pt; color: #444; height: 30px;",
+                    ".currency" => "position: absolute; display: block; left: 0px; top: 0px;",
+                    ".raised" => "position: absolute; top: 0px; left: 10px; font-weight: bold; display: block;",
+                    ".raised-label" => "position: absolute; top: 15px; left: 0px; text-transform: uppercase; color: #777; display: block;",
+                    ".goal" => "position: absolute; top: 0px; right: 0px; font-weight: bold; display: block;",
+                    ".goal-label" => "position: absolute; top: 15px; right: 0px; text-transform: uppercase; color: #777; display: block;",
+                    ".donation-options select" => "width: 100%;",
+                    ".submit-donation" => "width: 100%;",
+                    ".submit-donation input" => "margin: 10px auto 0px auto; width: 147px; display: block;",
+                    ".backlink" => "text-align: center; margin-top: 15px;"
+                )
+            ),
+            "default_2" => array(
+                "name" => __("Default Vertical", "donation_can"),
+                "id" => "default_2",
+                "elements" => array(
+                    "1" => array("type" => "progress", "direction" => "vertical", "text-format" => "%-and-total"),
+                    "2" => array("type" => "title"),
+                    "3" => array("type" => "description"),
+                    "4" => array("type" => "donation-options", "list-format" => "buttons")
+                ),
+                "css" => array(
+                    "" => "text-align: left; border: 1px solid #ccc; border-radius: 5px; padding: 0px 10px 10px 0px; background-color: #f5f5f5; font-family: Verdana; font-size: 8pt;",
+                    "h3" => "margin: 10px auto 10px auto; text-align: left; font-family: Arial;",
+                    ".description" => "text-align: left; margin: 10px 0px 0px 0px;",
+                    ".donation-form" => "overflow: auto;",
+                    ".donation_meter" => "width: 50px; float: left; margin: 0px 10px 0px 0px; text-align: center; background-color: #fff; border-top-left-radius: 5px; border-bottom-right-radius: 5px; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc;",
+                    ".progress-meter" => "border: 0px; height: 200px; width: 20px; margin: auto;",
+                    ".progress-container" => "background-color: #eee; border: 0px; height: 200px; width: 20px; border-radius: 4px; position: relative;",
+                    ".progress-bar" => "background-color: #87C442; position: absolute; bottom: 0px; left: 0px; width: 20px; border-radius: 4px;",
+                    ".donation-options" => "margin: 10px 0px 10px 0px;",
+                    ".donation-callout" => "display: none;",
+                    ".donation-button-list" => "width: auto;",
+                    ".button" => "display: block; padding: 5px; background-color: #e5e5e5; margin: 8px 0px 7px 0px; border: 0px; text-align: left; cursor: pointer;",
+                    ".backlink" => "text-align: center; margin-top: 15px;",
+                    ".progress-text" => "margin-top: 5px; font-size: 8pt;",
+                    ".raised-label" => "display: none;",
+                    ".percentage" => "display: block; text-align: center; font-weight: bold; color: #888;",
+                    ".goal-label" => "display: none;",
+                    ".of-label" => "display: block; text-align: center; color: #999; font-size: 8pt;",
+                    ".currency" => "color: #999; font-size: 8pt;",
+                    ".goal" => "color: #999; text-align: center; font-size: 8pt;"
+                )
+            )
+        );
+
+        update_option("donation_can_widget_styles", $widget_styles);
+        update_option("donation_can_widget_styles_version", "0.0");
+    }
+
+    return $widget_styles;
+}
+
+function donation_can_get_widget_style_by_id($style_id) {
+    $styles = donation_can_get_widget_styles();
+
+    if (isset($styles[$style_id])) {
+        return $styles[$style_id];
+    }
+
+    // Default to default if the requested style is not found
+    return $styles["default"];
+}
+
 function donation_can_get_total_raised_for_cause($cause_id) {
     $donations = donation_can_get_donations(0, 0, $cause_id);
 

@@ -54,6 +54,18 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th valign="top" scope="row" class="label">
+                                    <span class="alignleft"><label for="style_id"><?php _e("Widget style", "donation_can");?></label></span>
+                                </th>
+                                <td class="field">
+                                    <select name="style_id">
+                                        <?php foreach ($styles as $style) : ?>
+                                            <option value="<?php echo $style["id"];?>" <?php if ($style["id"] == $style_id) { echo "selected"; }?>><?php echo $style["name"];?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td></td>
                                 <td class="field">
                                     <div style="display:none;" id="customize-options">
@@ -115,6 +127,7 @@
                var win = window.dialogArguments || opener || parent || top;
 
                var goalId = jQuery("select[name=goal_id]").val();
+               var styleId = jQuery("select[name=style_id]").val();
                var showProgress = jQuery("input[name=show_progress]").is(":checked");
                var showDescription = jQuery("input[name=show_description]").is(":checked");
                var showDonations = jQuery("input[name=show_donations]").is(":checked");
@@ -124,8 +137,9 @@
                // TODO: if goal id not selected, don't allow inserting
                // TODO: what if there are no goals to select?
 
-               var shortcodeParams = "goal_id='" + goalId +
-                   "' show_progress=" + showProgress +
+               var shortcodeParams = "goal_id='" + goalId + "'" +
+                   " style_id='" + styleId + "'" +
+                   " show_progress=" + showProgress +
                    " show_description=" + showDescription +
                    " show_donations=" + showDonations +
                    " show_title=" + showTitle +

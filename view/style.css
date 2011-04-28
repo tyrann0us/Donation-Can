@@ -16,6 +16,63 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/* DEFAULT WIDGET STYLE */
+
+/*
+
+- .donation-can-widget
+
+        h3.donation-title
+
+        div.description
+            p*
+
+        div.progress-bar
+            div.progress-container
+                div.progress
+
+            div.raised-text (tähän eri vaihtoehtoja)
+
+        div.make-a-donation
+            select
+
+            submit
+
+        div.latest-donations
+            h3
+
+            ul
+                li
+                    a?
+
+
+        div.backlink
+
+
+TITLE
+
+DESCRIPTION
+
+PROGRESS BAR
+
+DONATION OPTIONS
+
+DONATION BUTTON
+
+POWERED BY
+
+
+*/
+
+#donation-can-powered {
+
+}
+
+
+
+
+/* STYLES FOR ADMIN */
+
 .donation-can-permalink-nag {
 	border: 1px solid red;
 	background-color: #FFEEEE;
