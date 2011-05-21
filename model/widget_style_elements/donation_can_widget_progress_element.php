@@ -52,6 +52,7 @@ class DonationCanWidgetProgressElement extends DonationCanWidgetStyleElement {
                         "target" => $goal["donation_goal"],
                         "current" => $widget_options["raised_so_far"],
                         "percentage" => $percentage,
+                        "progress_text" => $progress_text,
                         "currency" => $widget_options["currency"]));
         }
     }
