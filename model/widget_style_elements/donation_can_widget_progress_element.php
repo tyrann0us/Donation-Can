@@ -40,7 +40,8 @@ class DonationCanWidgetProgressElement extends DonationCanWidgetStyleElement {
                 }
             }
 
-            $progress_text = $element["text-format"];
+            $progress_text = $this->element_data["text-format"];
+
             $progress_text = str_replace("%PERCENTAGE%", intval($percentage), $progress_text);
             $progress_text = str_replace("%CURRENCY%", $widget_options["currency"], $progress_text);
             $progress_text = str_replace("%TARGET%", $goal["donation_goal"], $progress_text);
