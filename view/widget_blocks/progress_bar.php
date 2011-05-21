@@ -18,17 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<?php 
-    if ($target == 0) {
-        $percentage = 0;
-    } else {
-        $percentage = ($current / $target) * 100;
-
-        if ($percentage > 100) {
-            $percentage = 100;
-        }
-    }
-?>
 <div class="donation_meter progress-element ltr">
     <?php if ($goal_id == "__all__" && $multiple_currencies_in_use) : ?>
         <?php _e("Your donation goals use different currencies, so we cannot show an aggregated donation meter.", "donation-can"); ?>
@@ -47,20 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             </div>
 
             <div class="progress-text">
-                <?php if ($element["text-format"] == "%-and-total") : ?>
-                    <span class="percentage"><?php echo intval($percentage); ?> %</span>
-                    <span class="raised-label"><?php _e("Raised", "donation_can");?></span>
-                    <span class="of-label"><?php _e("of", "donation_can");?></span>
-                    <span class="currency"><?php echo $currency; ?></span>
-                    <span class="goal"><?php echo $target; ?></span>
-                    <span class="goal-label"><?php _e("Target", "donation_can");?></span>
-                <?php else : ?>
-                    <span class="currency"><?php echo $currency; ?></span>
-                    <span class="raised"><?php echo $current; ?></span>
-                    <span class="raised-label"><?php _e("Raised", "donation_can");?></span>
-                    <span class="goal"><?php echo $target; ?></span>
-                    <span class="goal-label"><?php _e("Target", "donation_can");?></span>
-                <?php endif; ?>
+                <?php echo $progress_text; ?>
             </div>
 	<?php endif; ?>
     <?php endif; ?>

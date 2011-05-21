@@ -19,10 +19,9 @@
 
         <p>
             <label for="text-format">Text format:</label><br/>
-            <select name="text-format">
-                <option value="%-and-total" <?php if (isset($data['text-format']) && $data['text-format'] == "%-and-total") echo "selected"; ?>>Percentage and total</option>
-                <option value="collected-and-total" <?php if (!isset($data['text-format']) || $data['text-format'] == "collected-and-total") echo "selected"; ?>>Amount raised and total</option>
-            </select>
+            <input type="text" name="text-format" value="<?php echo $data['text-format'];?>"/>
+            <br/>
+            <em>Use the following placeholders to mark variable data: %CURRENCY%, %TARGET%, %CURRENT%, %PERCENTAGE%</em>
         </p>
     </div>
     

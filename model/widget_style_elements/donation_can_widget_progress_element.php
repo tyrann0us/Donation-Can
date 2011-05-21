@@ -31,11 +31,27 @@ class DonationCanWidgetProgressElement extends DonationCanWidgetStyleElement {
         $goal = $widget_options["goal"];
         
         if ($widget_options["show_progress"]) {
+            if ($goal["donation_goal"] == 0) {
+                $percentage = 0;
+            } else {
+                $percentage = ($widget_options["raised_so_far"] / $goal["donation_goal"]) * 100;
+                if ($percentage > 100) {
+                    $percentage = 100;
+                }
+            }
+
+            $progress_text = $element["text-format"];
+            $progress_text = str_replace("%PERCENTAGE%", intval($percentage), $progress_text);
+            $progress_text = str_replace("%CURRENCY%", $widget_options["currency"], $progress_text);
+            $progress_text = str_replace("%TARGET%", $goal["donation_goal"], $progress_text);
+            $progress_text = str_replace("%CURRENT%", $widget_options["raised_so_far"], $progress_text);
+
             require_donation_can_view('widget_blocks/progress_bar',
                     array(
                         "element" => $this->element_data,
                         "target" => $goal["donation_goal"],
                         "current" => $widget_options["raised_so_far"],
+                        "percentage" => $percentage,
                         "currency" => $widget_options["currency"]));
         }
     }

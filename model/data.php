@@ -80,7 +80,7 @@ function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.3") {
+    if ($widget_styles == null || $widget_styles_version != "1.4") {
         // If nothing has been saved yet, return the default widget
         // and update it to options
         $widget_styles = array(
@@ -91,7 +91,7 @@ function donation_can_get_widget_styles() {
                 "elements" => array(
                     "1" => array("type" => "title"),
                     "2" => array("type" => "description"),
-                    "3" => array("type" => "progress"),
+                    "3" => array("type" => "progress", "text-format" => "<span class=\"currency\">%CURRENCY%</span><span class=\"raised\">%CURRENT%</span><span class=\"raised-label\">Raised</span><span class=\"goal\">%TARGET%</span><span class=\"goal-label\">Target</span>"),
                     "4" => array("type" => "donation-options"),
                     "5" => array("type" => "submit")
                 ),
@@ -120,7 +120,7 @@ function donation_can_get_widget_styles() {
                 "id" => "default_2",
                 "locked" => true,
                 "elements" => array(
-                    "1" => array("type" => "progress", "direction" => "vertical", "text-format" => "%-and-total"),
+                    "1" => array("type" => "progress", "direction" => "vertical", "text-format" => "<span class=\"percentage\">%PERCENTAGE% %</span> of <span class=\"currency\">%CURRENCY%</span><span class=\"goal\">%TARGET%</span>"),
                     "2" => array("type" => "title"),
                     "3" => array("type" => "description"),
                     "4" => array("type" => "donation-options", "list-format" => "buttons")
@@ -151,7 +151,7 @@ function donation_can_get_widget_styles() {
         );
 
         update_option("donation_can_widget_styles", $widget_styles);
-        update_option("donation_can_widget_styles_version", "1.3");
+        update_option("donation_can_widget_styles_version", "1.4");
     }
 
     return $widget_styles;
