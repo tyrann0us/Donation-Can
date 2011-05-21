@@ -93,7 +93,7 @@ function donation_can_get_widget_styles() {
                     "2" => array("type" => "description"),
                     "3" => array("type" => "progress"),
                     "4" => array("type" => "donation-options"),
-                    "5" => array("type" => "submit-element")
+                    "5" => array("type" => "submit")
                 ),
                 "css" => array(
                     "" => "border: 1px #ddd solid; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; background-color: #f5f5f5;",
