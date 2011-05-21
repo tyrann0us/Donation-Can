@@ -80,7 +80,7 @@ function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.3") {
+    if ($widget_styles == null || $widget_styles_version != "1.4") {
         // If nothing has been saved yet, return the default widget
         // and update it to options
         $widget_styles = array(
