@@ -87,6 +87,7 @@ function donation_can_get_widget_styles() {
             "default" => array(
                 "name" => __("Default", "donation_can"),
                 "id" => "default",
+                "locked" => true,
                 "elements" => array(
                     "1" => array("type" => "title"),
                     "2" => array("type" => "description"),
@@ -117,6 +118,7 @@ function donation_can_get_widget_styles() {
             "default_2" => array(
                 "name" => __("Default Vertical", "donation_can"),
                 "id" => "default_2",
+                "locked" => true,
                 "elements" => array(
                     "1" => array("type" => "progress", "direction" => "vertical", "text-format" => "%-and-total"),
                     "2" => array("type" => "title"),
@@ -149,7 +151,7 @@ function donation_can_get_widget_styles() {
         );
 
         update_option("donation_can_widget_styles", $widget_styles);
-        update_option("donation_can_widget_styles_version", "0.0");
+        update_option("donation_can_widget_styles_version", "1.0");
     }
 
     return $widget_styles;
@@ -164,6 +166,35 @@ function donation_can_get_widget_style_by_id($style_id) {
 
     // Default to default if the requested style is not found
     return $styles["default"];
+}
+
+function donation_can_save_widget_style($style_id, $style_definition) {
+    // TODO: don't allow changing default styles!    
+    $styles = donation_can_get_widget_styles();
+
+    if ($styles[$style_id]["locked"]) {
+        render_user_notification("Cannot update style " . $style_id);
+        return false;
+    }
+
+    $styles[$style_id] = $style_definition;
+    update_option("donation_can_widget_styles", $styles);
+
+    return true;
+}
+
+function donation_can_delete_widget_style($style_id) {
+    $styles = donation_can_get_widget_styles();
+
+    if ($styles[$style_id]["locked"]) {
+        render_user_notification("Cannot delete style " . $style_id);
+        return false;
+    }
+
+    unset($styles[$style_id]);
+    update_option("donation_can_widget_styles", $styles);
+
+    return true;
 }
 
 function donation_can_get_total_raised_for_cause($cause_id) {
@@ -439,6 +470,41 @@ function donation_can_create_cause($post, $unique_id, $id = -1) {
 function donation_can_create_item_number($cause_id) {
     return $cause_id . "-" . time();
 }
+
+function donation_can_get_style_element_from_data($element) {
+    if (!is_array($element)) {
+        return null;
+    }
+
+    switch ($element["type"]) {
+        case "title":
+            return new DonationCanWidgetTitleElement($element);
+
+        case "description":
+            return new DonationCanWidgetDescriptionElement($element);
+
+        case "progress":
+            return new DonationCanWidgetProgressElement($element);
+
+        case "donation-options":
+            return new DonationCanWidgetDonationOptionsElement($element);
+
+        case "submit":
+            return new DonationCanWidgetSubmitElement($element);
+
+        case "donation-list":
+            return new DonationCanWidgetDonationListElement($element);
+
+        case "text":
+            return new DonationCanWidgetTextElement($element);
+
+        default:
+            break;
+    }
+
+    return null;
+}
+
 
 function w2log($msg) {
     if (true) {

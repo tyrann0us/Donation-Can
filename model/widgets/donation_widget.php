@@ -112,18 +112,21 @@ class DonationWidget extends WP_Widget {
         if ($wp_rewrite->using_permalinks()) {
             require_donation_can_view('donation_form_single',
                     array(
-                        "currency" => $currency,
-                        "raised_so_far" => $raised_so_far,
-                        "donation_sums" => $donation_sums,
-                        "title" => $title,
-                        "show_title" => $show_title,
+                        "widget_options" => array(
+                            "currency" => $currency,
+                            "raised_so_far" => $raised_so_far,
+                            "donation_sums" => $donation_sums,
+                            "title" => $title,
+                            "show_title" => $show_title,
+                            "show_progress" => $show_progress,
+                            "show_description" => $show_description,
+                            "show_donations" => $show_donations,
+                            "goal" => $goal,
+                            "donation_strings" => $donation_strings
+                        ),
                         "show_back_link" => $show_back_link,
-                        "show_progress" => $show_progress,
-                        "show_description" => $show_description,
-                        "show_donations" => $show_donations,
-                        "goal" => $goal,
                         "action_url" => $action_url,
-                        "donation_strings" => $donation_strings,
+                        "goal" => $goal,
                         "elements" => $style["elements"],
                         "widget_style_id" => $widget_style_id
                     ));
@@ -182,9 +185,9 @@ class DonationWidget extends WP_Widget {
                     <?php endforeach; ?>
                 </select>
             </p>
-                    <p>
-                        <a href="" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
-                    </p>
+            <p>
+                <a href="<?php bloginfo('url');?>/wp-admin/admin.php?page=donation_can_widget_styles.php" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
+            </p>
 
                     <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
                     

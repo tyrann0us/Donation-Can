@@ -22,45 +22,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <form action="<?php echo $action_url; ?>" method="post" class="donation-form">
         <input type="hidden" name="cause" value="<?php echo $goal["id"]; ?>"/>
 
-        <?php foreach ($elements as $id => $element) : ?>
-            <?php
-                switch ($element["type"]) {
-                    case "title":
-                        if ($show_title) {
-                            require_donation_can_view('widget_blocks/title', array("element" => $element, "goal" => $goal, "title" => $title));
-                        }
-                        break;
+        <?php
+            foreach ($elements as $id => $element) {
+                $element_object = donation_can_get_style_element_from_data($element);
 
-                    case "description":
-                        if ($show_description) {
-                            require_donation_can_view('widget_blocks/description', array("element" => $element, "goal" => $goal));
-                        }
-                        break;
-
-                    case "progress":
-                        if ($show_progress) {
-                            require_donation_can_view('widget_blocks/progress_bar', array("element" => $element, "target" => $goal["donation_goal"], "current" => $raised_so_far, "currency" => $currency));
-                        }
-                        break;
-
-                    case "donation-options":
-                        require_donation_can_view('widget_blocks/donation_options', array("element" => $element, "donation_sums" => $donation_sums, "goal" => $goal, "currency" => $currency));
-                        break;
-
-                    case "submit-button":
-                        require_donation_can_view('widget_blocks/submit_button', array("element" => $element));
-                        break;
-
-                    case "donation-list":
-                        require_donation_can_view('widget_blocks/donation_list', array("element" => $element, "donation_strings" => $donation_strings));
-                        break;
-
-                    default:
-                        break;
-
+                if ($element_object) {
+                    echo $element_object->get_view($widget_options);
                 }
-            ?>
-        <?php endforeach; ?>
+            }
+        ?>
 
     </form>
 

@@ -89,6 +89,7 @@ POWERED BY
     border: 1px solid #ccc;
     background-color: rgb(255, 254, 235);
     border-radius: 5px;
+    text-align: left;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
 }
@@ -298,4 +299,20 @@ padding-top: 6px;
 .donation_can-fee {
     color: red;
     font-size: -1;
+}
+
+.donation-can-locked {
+    background-color: #eee;
+}
+
+.donation-can-locked a {
+    color: #666;
+}
+
+.donation-can-default-widget-notice {
+    border: 1px solid #eee;
+    text-align: left;
+    margin: 5px;
+    padding: 10px;
+    background-color: yellow;
 }

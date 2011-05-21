@@ -26,12 +26,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+require("ajax.php");
 require("mvc.php");
+
 require("model/data.php");
 
 require("model/widgets/widgets.php");
 require("model/dashboard/dashboard.php");
 require("model/settings/settings.php");
+require("model/widget_style_elements/widget_style_elements.php");
 
 // Helper methods for theme developers
 require("theme_methods.php");
@@ -170,8 +173,21 @@ function donation_can_admin_notices() {
 function donation_can_init(){
     load_plugin_textdomain("donation_can", false, "donation-can");
 
+    // TODO: don't enqueue all scripts all the time...
+
     wp_enqueue_style('donation-can', plugins_url("/donation-can/view/style.css"), false,'1.0','all');
+
     wp_enqueue_script('jquery');
+    wp_enqueue_script('jquery-ui-core');
+
+    if (is_admin()) {
+        wp_enqueue_script('jquery-ui-draggable');
+        wp_enqueue_script('jquery-ui-sortable');
+        wp_enqueue_script('jquery-ui-droppable');
+        wp_enqueue_script('json2');
+        wp_enqueue_script('suggest'); // For autocompletes in admin
+    }
+    
     wp_enqueue_script('donation-can-scripts', plugins_url("/donation-can/view/scripts.js"));
 }
 
@@ -224,4 +240,5 @@ add_action("media_upload_donation-can", "donation_can_media_button_form");
 
 // Check that the database tables are up to date
 donation_can_db_upgrade();
+
 ?>

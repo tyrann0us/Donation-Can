@@ -40,6 +40,17 @@ function require_donation_can_view($view_name, $args = null) {
     }
 }
 
+function get_donation_can_view_as_string($view_name, $args = null) {
+    $out = "";
+    
+    ob_start();
 
+    require_donation_can_view($view_name, $args);
+
+    $out .= ob_get_contents();
+    ob_clean();
+
+    return $out;
+}
 
 ?>

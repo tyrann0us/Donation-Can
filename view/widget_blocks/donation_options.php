@@ -17,10 +17,9 @@
 
                 <?php foreach ($donation_sums as $sum) : ?>
                     <a class="button" onclick="return submitDonation(this, <?php echo $sum; ?>);">Donate <?php echo $currency; ?> <?php echo $sum; ?></a>
-                    <!--<input type="button" class="button" onclick="return submitDonation(this.form, <?php echo $sum; ?>);" value="Donate <?php echo $currency; ?> <?php echo $sum; ?>"/>-->
                 <?php endforeach; ?>
                 <?php if ($goal["allow_freeform_donation_sum"]) : ?>
-                    <input type="button" class="button" onclick="return submitDonation(this.form, <?php echo $sum; ?>);" value="<?php _e("Other", "donation_can");?>"/>
+                    <a class="button" onclick="return submitDonation(this, '');"><?php _e("Donate other amount", "donation_can");?></a>
                 <?php endif; ?>
             </div>
 

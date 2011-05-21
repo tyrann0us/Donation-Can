@@ -22,6 +22,8 @@ require("donation_can_goals.php");
 require("donation_can_add_goal.php");
 require("donation_can_donations.php");
 require("donation_can_add_donation.php");
+require("donation_can_widget_styles.php");
+require("donation_can_edit_widget_style.php");
 
 function donation_can_setup_admin_menus() {
     add_menu_page(__('Donation Can', "donation_can"), __('Donation Can', "donation_can"), "manage_options", "donation_can_general_settings.php", 'donation_can_top_menu');
@@ -30,6 +32,8 @@ function donation_can_setup_admin_menus() {
     add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Add New Cause', "donation_can"), __('Add New Cause', "donation_can"), "manage_options", "donation_can_add_goal.php", 'donation_can_add_goal_menu');
     add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Browse Donations', "donation_can"), __('Donations', "donation_can"), "manage_options", "donation_can_donations.php", 'donation_can_donations_menu');
     add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Add New Donation', "donation_can"), __('Add New Donation', "donation_can"), "manage_options", "donation_can_add_donation.php", 'donation_can_add_donation_menu');
+    add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Widget Styles', "donation_can"), __('Widget Styles', "donation_can"), "manage_options", "donation_can_widget_styles.php", 'donation_can_widget_styles_menu');
+    add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Add New Widget Style', "donation_can"), __('Add New Widget Style', "donation_can"), "manage_options", "donation_can_edit_widget_style.php", 'donation_can_edit_widget_style_menu');
 }
 
 function donation_can_top_menu() {

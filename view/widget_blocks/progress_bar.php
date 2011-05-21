@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         }
     }
 ?>
-<div class="donation_meter ltr">
+<div class="donation_meter progress-element ltr">
     <?php if ($goal_id == "__all__" && $multiple_currencies_in_use) : ?>
         <?php _e("Your donation goals use different currencies, so we cannot show an aggregated donation meter.", "donation-can"); ?>
     <?php else : ?>

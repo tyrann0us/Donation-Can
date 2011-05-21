@@ -63,7 +63,7 @@ without any typing required.
 
 For those interested in the details of the shortcode:
 
-The shortcode requires one parameter ("donation_goal"), which is one of the donation goals you have created in the plugin settings. In addition to that mandatory parameter, you can use the following parameters:
+The shortcode requires one parameter (goal_id="donation_goal"), where "donation_goal" is one of the donation goals you have created in the plugin settings. In addition to that mandatory parameter, you can use the following parameters:
 
 * show_progress: Set to "true" or "false" (default = "true")
 * show_description: Set to "true" or "false" (default = "true")
@@ -74,7 +74,7 @@ These parameters are used as key-value pairs, e.g. "show_progress=false"
 
 Example:
 
-[donation-can coffee show_progress=false]
+[donation-can goal_id="coffee" show_progress=false]
 
 == Frequently Asked Questions ==
 
@@ -85,6 +85,9 @@ If your question wasn't answered here, visit the [official plugin page](http://j
 Coming soon...
 
 == Upgrade Notice ==
+
+= 1.5.3 =
+Adds a whole new editor for defining widget styles and two default styles to choose from.
 
 = 1.5.2.1 =
 This is yet another quick bug fix release that fixes problems with adding offline donations.
@@ -98,8 +101,8 @@ This version contains many of improvements that make Donation Can easier to use.
 == Changelog ==
 
 = 1.5.3 =
-* Support for defining and choosing custom widget styles for donation forms (The old CSS from general settings is still included, but that functionality is deprecated and will be removed at some point)
-* First two default widget styles: "Default" and "Default Vertical"
+* Editor for defining custom widget styles for donation forms (The old CSS from general settings is still included, but that functionality is deprecated and will be removed at some point)
+* Two default widget styles: "Default" and "Default Vertical"
 * New currency: Turkish Lira (according to PayPal, it only works for Turkish customers)
 * Bug fix: Selecting the thank you / cancelled page on general settings tab works now
 
