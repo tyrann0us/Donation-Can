@@ -55,6 +55,9 @@ class DonationWidget extends WP_Widget {
 
         // The looks of the widget
         $widget_style_id = esc_attr($instance["style_id"]);
+        if ($widget_style_id == null || $widget_style_id == '') {
+            $widget_style_id = "default";
+        }
         $style = donation_can_get_widget_style_by_id($widget_style_id);
 
         $donation_sums = $general_settings["donation_sums"];
