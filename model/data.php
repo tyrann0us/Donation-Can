@@ -169,7 +169,6 @@ function donation_can_get_widget_style_by_id($style_id) {
 }
 
 function donation_can_save_widget_style($style_id, $style_definition) {
-    // TODO: don't allow changing default styles!    
     $styles = donation_can_get_widget_styles();
 
     if ($styles[$style_id]["locked"]) {

@@ -27,8 +27,8 @@ class DonationCanWidgetDonationOptionsElement extends DonationCanWidgetStyleElem
         return "donation-options-element";
     }
 
-    function get_view($widget_params) {
-        return get_donation_can_view_as_string('widget_blocks/donation_options',
+    function render_view($widget_params) {
+        require_donation_can_view('widget_blocks/donation_options',
                 array(
                     "element" => $this->element_data,
                     "donation_sums" => $widget_params["donation_sums"],

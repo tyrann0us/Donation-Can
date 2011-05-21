@@ -27,8 +27,8 @@ class DonationCanWidgetDonationListElement extends DonationCanWidgetStyleElement
         return "donation-list-element";
     }
 
-    function get_view($widget_options) {
-        return get_donation_can_view_as_string('widget_blocks/donation_list', array("element" => $this->element_data, "donation_strings" => $widget_options["donation_strings"]));
+    function render_view($widget_options) {
+        require_donation_can_view('widget_blocks/donation_list', array("element" => $this->element_data, "donation_strings" => $widget_options["donation_strings"]));
     }
 
     function get_admin_view($show_options, $id) {

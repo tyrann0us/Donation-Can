@@ -13,7 +13,7 @@ abstract class DonationCanWidgetStyleElement {
 
     abstract function get_type();
 
-    abstract function get_view($widget_options);
+    abstract function render_view($widget_options);
     abstract function get_admin_view($show_options, $id);
 }
 

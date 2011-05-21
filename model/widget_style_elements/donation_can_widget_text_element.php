@@ -27,8 +27,8 @@ class DonationCanWidgetTextElement extends DonationCanWidgetStyleElement {
         return "text-element";
     }
 
-    function get_view($widget_options) {
-        return get_donation_can_view_as_string('widget_blocks/text', array("text" => $this->element_data["text"]));
+    function render_view($widget_options) {
+        require_donation_can_view('widget_blocks/text', array("text" => $this->element_data["text"]));
     }
 
     function get_admin_view($show_options, $id) {

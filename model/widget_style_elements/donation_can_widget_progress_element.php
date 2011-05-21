@@ -27,20 +27,17 @@ class DonationCanWidgetProgressElement extends DonationCanWidgetStyleElement {
         return "progress-element";
     }
 
-    function get_view($widget_options) {
-        $view = "";
+    function render_view($widget_options) {
         $goal = $widget_options["goal"];
         
         if ($widget_options["show_progress"]) {
-            $view = get_donation_can_view_as_string('widget_blocks/progress_bar',
+            require_donation_can_view('widget_blocks/progress_bar',
                     array(
                         "element" => $this->element_data,
                         "target" => $goal["donation_goal"],
                         "current" => $widget_options["raised_so_far"],
                         "currency" => $widget_options["currency"]));
         }
-
-        return $view;
     }
 
     function get_admin_view($show_options, $id) {

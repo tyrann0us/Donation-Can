@@ -27,14 +27,11 @@ class DonationCanWidgetDescriptionElement extends DonationCanWidgetStyleElement 
         return "description-element";
     }
 
-    function get_view($widget_options) {
-        $view = "";
+    function render_view($widget_options) {
         if ($widget_options["show_description"]) {
-            $view = get_donation_can_view_as_string('widget_blocks/description',
+            require_donation_can_view('widget_blocks/description',
                     array("element" => $this->element_data, "goal" => $widget_options["goal"]));
         }
-
-        return $view;
     }
 
     function get_admin_view($show_options, $id) {
