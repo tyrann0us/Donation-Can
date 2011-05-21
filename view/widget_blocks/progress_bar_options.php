@@ -19,7 +19,7 @@
 
         <p>
             <label for="text-format">Text format:</label><br/>
-            <input type="text" name="text-format" value="<?php echo urlencode($data['text-format']);?>"/>
+            <input type="text" name="text-format" value="<?php echo htmlentities($data['text-format']);?>"/>
             <br/>
             <em>Use the following placeholders to mark variable data: %CURRENCY%, %TARGET%, %CURRENT%, %PERCENTAGE%</em>
         </p>
