@@ -80,7 +80,7 @@ function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.1") {
+    if ($widget_styles == null || $widget_styles_version != "1.2") {
         // If nothing has been saved yet, return the default widget
         // and update it to options
         $widget_styles = array(
@@ -93,7 +93,7 @@ function donation_can_get_widget_styles() {
                     "2" => array("type" => "description"),
                     "3" => array("type" => "progress"),
                     "4" => array("type" => "donation-options"),
-                    "5" => array("type" => "submit-button")
+                    "5" => array("type" => "submit-element")
                 ),
                 "css" => array(
                     "" => "border: 1px #ddd solid; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; background-color: #f5f5f5;",
@@ -151,7 +151,7 @@ function donation_can_get_widget_styles() {
         );
 
         update_option("donation_can_widget_styles", $widget_styles);
-        update_option("donation_can_widget_styles_version", "1.1");
+        update_option("donation_can_widget_styles_version", "1.2");
     }
 
     return $widget_styles;
