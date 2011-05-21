@@ -80,7 +80,7 @@ function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.0") {
+    if ($widget_styles == null || $widget_styles_version != "1.1") {
         // If nothing has been saved yet, return the default widget
         // and update it to options
         $widget_styles = array(
@@ -96,13 +96,13 @@ function donation_can_get_widget_styles() {
                     "5" => array("type" => "submit-button")
                 ),
                 "css" => array(
-                    "" => "border: 1px #ddd solid; border-radius: 5px; padding: 10px; background-color: #f5f5f5;",
+                    "" => "border: 1px #ddd solid; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; background-color: #f5f5f5;",
                     "h3" => "margin-top: 0px;",
                     ".description" => "margin: 10px 0px 0px 0px;",
                     ".donation_meter" => "background-color: #fafafa; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin: 10px -10px 10px -10px; padding: 10px;",
                     ".progress-meter" => "border: 0px; height: 10px;",
-                    ".progress-container" => "background-color: #ddd; height: 10px; border-radius: 4px;",
-                    ".progress-bar" => "background-color: #87C442; height: 10px; border-radius: 4px;",
+                    ".progress-container" => "background-color: #ddd; height: 10px; border-radius: 4px; -moz-border-radius: 4px;",
+                    ".progress-bar" => "background-color: #87C442; height: 10px; border-radius: 4px; -moz-border-radius: 4px;",
                     ".progress-text" => "position: relative; margin-top: 10px; font-size: 8pt; color: #444; height: 30px;",
                     ".currency" => "position: absolute; display: block; left: 0px; top: 0px;",
                     ".raised" => "position: absolute; top: 0px; left: 10px; font-weight: bold; display: block;",
@@ -126,14 +126,14 @@ function donation_can_get_widget_styles() {
                     "4" => array("type" => "donation-options", "list-format" => "buttons")
                 ),
                 "css" => array(
-                    "" => "text-align: left; border: 1px solid #ccc; border-radius: 5px; padding: 0px 10px 10px 0px; background-color: #f5f5f5; font-family: Verdana; font-size: 8pt;",
+                    "" => "text-align: left; border: 1px solid #ccc; border-radius: 5px; -moz-border-radius: 5px; padding: 0px 10px 10px 0px; background-color: #f5f5f5; font-family: Verdana; font-size: 8pt;",
                     "h3" => "margin: 10px auto 10px auto; text-align: left; font-family: Arial;",
                     ".description" => "text-align: left; margin: 10px 0px 0px 0px;",
                     ".donation-form" => "overflow: auto;",
                     ".donation_meter" => "width: 50px; float: left; margin: 0px 10px 0px 0px; text-align: center; background-color: #fff; border-top-left-radius: 5px; border-bottom-right-radius: 5px; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc;",
                     ".progress-meter" => "border: 0px; height: 200px; width: 20px; margin: auto;",
-                    ".progress-container" => "background-color: #eee; border: 0px; height: 200px; width: 20px; border-radius: 4px; position: relative;",
-                    ".progress-bar" => "background-color: #87C442; position: absolute; bottom: 0px; left: 0px; width: 20px; border-radius: 4px;",
+                    ".progress-container" => "background-color: #eee; border: 0px; height: 200px; width: 20px; border-radius: 4px; -moz-border-radius: 4px; position: relative;",
+                    ".progress-bar" => "background-color: #87C442; position: absolute; bottom: 0px; left: 0px; width: 20px; border-radius: 4px; -moz-border-radius: 4px;",
                     ".donation-options" => "margin: 10px 0px 10px 0px;",
                     ".donation-callout" => "display: none;",
                     ".donation-button-list" => "width: auto;",
@@ -151,7 +151,7 @@ function donation_can_get_widget_styles() {
         );
 
         update_option("donation_can_widget_styles", $widget_styles);
-        update_option("donation_can_widget_styles_version", "1.0");
+        update_option("donation_can_widget_styles_version", "1.1");
     }
 
     return $widget_styles;
