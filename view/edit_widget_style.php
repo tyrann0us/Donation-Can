@@ -24,18 +24,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     }
 
     .donation-can-widget-left {
-        /*margin-left: 430px;*/
         float: right;
         clear: right;
         width: 270px;
     }
 
     .donation-can-widget-right {
-        /*float: left;*/
         margin: 20px 290px 0px 0px;
-
-
-        
     }
 
     .donation-can-widget-right .sidebar-name, .donation-can-widget-left .sidebar-name {
@@ -53,9 +48,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         height: 19px;
         color: #333;
         margin: 0px;
-overflow: hidden;
-padding: 5px 12px;
-white-space: nowrap;
+        overflow: hidden;
+        padding: 5px 12px;
+        white-space: nowrap;
     }
 
     .donation-can-widget-right #widget-contents {
@@ -91,10 +86,8 @@ white-space: nowrap;
     .widget-element {
         border: 1px solid #dfdfdf;
         border-radius: 8px;
-
         background: url("images/gray-grad.png");
         padding: 0px;
-
     }
 
     .widget-element .element-options {
@@ -168,11 +161,6 @@ white-space: nowrap;
         padding: 0px 0px 20px 20px;
     }
 
-    .tab-items li a.selected {
-        /*background-color: #333;
-        color: #fff;*/
-    }
-
     .clean-slate {
         text-align: center;
         border: 1px dashed #d1d1d1;
@@ -202,7 +190,22 @@ white-space: nowrap;
     div#add-style-row-button {
         margin: 20px 0px 10px 20px;
     }
-    
+
+    input.css-selector {
+        float: left;
+        clear: left;
+
+        margin-right: 150px;
+        width: 100%;
+    }
+
+    .remove-css-row {
+        float: right;
+        clear: right;
+        display: block;
+
+        margin-left: 10px;
+    }
 </style>
 
 <?php $style = $styles[$style_id]; ?>
@@ -280,11 +283,23 @@ white-space: nowrap;
         var newId = "css-element-" + cssElementCounter++;
         styleRow.attr("id", newId);
 
+        jQuery("a.remove-css-row", styleRow).click(function() {
+            removeStyleRow(newId);
+        });
+
         jQuery("#css-element-container").append(styleRow);
         //styleRow.effect("highlight", {}, 3000);
 
         // Enable autocomplete for the new row
         jQuery("#" + newId + " > input").suggest("<?php bloginfo('url'); ?>?donation_can_style_autocomplete=1");
+    }
+
+    function removeStyleRow(id) {       
+        var styleRow = jQuery("#" + id);
+        jQuery("input", styleRow).val("");
+        jQuery("textarea", styleRow).val("");
+
+        styleRow.hide();
     }
 
     jQuery(document).ready(function() {
@@ -447,6 +462,7 @@ white-space: nowrap;
                         <div id="css-element-container">
                             <?php $css_counter = 0; if (isset($style["css"])) : foreach ($style["css"] as $selector => $css_element) : ?>
                                 <div class="donation-can-css-element" id="css-element-<?php echo $css_counter++; ?>">
+                                    <a href="#" class="remove-css-row" onclick="removeElement('css-element-<?php echo $css_counter;?>');">Remove</a>
                                     <input type="text" name="css-selector" value="<?php echo $selector;?>"><br/>
                                     <textarea name="css-definition" cols="60" rows="5"><?php echo str_replace('; ', ";\n", $css_element);?></textarea>
                                 </div>
@@ -457,7 +473,8 @@ white-space: nowrap;
 
                         <div id="style-row-template" style="display:none;">
                             <div class="donation-can-css-element">
-                                <input type="text" name="css-selector" value=""><br/>
+                                <a href="#" class="remove-css-row">Remove</a>
+                                <input type="text" class="css-selector" name="css-selector" value=""><br/>
                                 <textarea name="css-definition" cols="60" rows="5"></textarea>
                             </div>
                         </div>
