@@ -196,8 +196,8 @@ function donation_can_delete_widget_style($style_id) {
     return true;
 }
 
-function donation_can_get_total_raised_for_cause($cause_id) {
-    $donations = donation_can_get_donations(0, 0, $cause_id);
+function donation_can_get_total_raised_for_cause($cause_id, $include_before_reset = false) {
+    $donations = donation_can_get_donations(0, 0, $cause_id, $include_before_reset);
 
     $general_settings = donation_can_get_general_settings();
 
@@ -248,7 +248,7 @@ function donation_can_get_goal($goal_id, $include_raised_data = false) {
 }
 
 // if include_raised_data, adds the raised money as a cell in the array
-function donation_can_get_goals($include_raised_data = false) {
+function donation_can_get_goals($include_raised_data = false, $include_before_reset = false) {
     global $wpdb;
 
     $general_settings = donation_can_get_general_settings();
@@ -265,15 +265,49 @@ function donation_can_get_goals($include_raised_data = false) {
         }
 
         foreach (donation_can_get_donations() as $donation) {
-            $goals[$donation->cause_code]["collected"] += $donation->amount;
+            $reset_after_id = $goal["reset_after_id"];
+            if ($donation->id > $reset_after_id || $include_before_reset) {
+                $goals[$donation->cause_code]["collected"] += $donation->amount;
 
-            if ($general_settings["subtract_paypal_fees"]) {
-                $goals[$donation->cause_code]["collected"] -= $donation->fee;
+                if ($general_settings["subtract_paypal_fees"]) {
+                    $goals[$donation->cause_code]["collected"] -= $donation->fee;
+                }
             }
         }
     }
 
     return $goals;
+}
+
+function donation_can_reset_goal($goal_id) {
+    $goals = donation_can_get_goals(false);
+    if ($goals != null && $goal_id != null && isset($goals[$goal_id])) {
+        $goal = $goals[$goal_id];
+
+        $donations = donation_can_get_donations(0, 0, $goal_id);
+
+        // Find the id of the last donation saved
+        $id = 0;
+        foreach ($donations as $donation) {
+            if ($donation->id > $id) {
+                $id = $donation->id;
+            }
+        }
+
+        $goal["reset_after_id"] = $id;
+
+        $goals[$goal_id] = $goal;
+        update_option("donation_can_causes", $goals);
+    }
+}
+
+function donation_can_goal_has_been_reset($goal_id) {
+    $goal = donation_can_get_goal($goal_id);
+    if (!$goal) {
+        return false;
+    }
+
+    return (isset($goal["reset_after_id"]) && $goal["reset_after_id"] > 0);
 }
 
 function donation_can_delete_donation($id) {
@@ -282,7 +316,7 @@ function donation_can_delete_donation($id) {
     $wpdb->query($query);    
 }
 
-function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null) {
+function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null, $include_donations_before_reset = false) {
     global $wpdb;
 
     $query = "SELECT * FROM " . donation_can_get_table_name($wpdb) . " WHERE deleted = 0";
@@ -294,8 +328,13 @@ function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null) {
 
     if ($goal_id != null) {
         $query .= " AND cause_code = \"" . $goal_id . "\"";
-    }
 
+        $goal = donation_can_get_goal($goal_id);
+        if (isset($goal["reset_after_id"]) && !$include_donations_before_reset) {
+            $query .= " AND id > \"" . $goal["reset_after_id"] . "\"";
+        }
+    }
+    
     $general_settings = donation_can_get_general_settings();
     if (!$general_settings["debug_mode"]) {
         $query .= " AND sandbox = 0";

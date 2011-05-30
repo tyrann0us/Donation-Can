@@ -27,6 +27,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         }
         return false;
     }
+
+    function confirm_reset(name) {
+        return confirm("<?php _e("Are you sure you want to reset the donation counter for cause '", "donation_can");?>" + name + "'?'");
+    }
 </script>
 
 <div class="wrap">
@@ -81,6 +85,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <span class="edit"><a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php&edit=<?php echo $id; ?>">Edit</a></span>
                                 <span class="delete"> | <a href="#" onclick="return delete_goal('<?php echo $id; ?>', '<?php echo $cause['name'];?>');"><?php _e("Delete");?></a></span>
                                 <span class="view-donations"> | <a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_donations.php&filter_goal=<?php echo $id; ?>"><?php _e("View donations", "donation_can");?></a></span>
+                                <span class="reset-counter"> | <a onclick="return confirm_reset('<?php echo $cause['name'];?>');" href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php&reset=<?php echo $id; ?>">Reset</a></span>
                             </div>
                         </td>
                         <td>
@@ -95,6 +100,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         </td>
                         <td>
                             <?php echo $currency . " ". donation_can_get_total_raised_for_cause($id); ?>
+                            <?php if (donation_can_goal_has_been_reset($id)) : ?>
+                            <br/><span class="total-including-resets">(<?php echo $currency . " " . donation_can_get_total_raised_for_cause($id, true); ?>)</span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <?php echo $cause["created_at"]; ?>

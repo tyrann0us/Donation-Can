@@ -316,3 +316,8 @@ padding-top: 6px;
     padding: 10px;
     background-color: yellow;
 }
+
+.total-including-resets {
+    font-size: 8pt;
+    color: #aaa;
+}

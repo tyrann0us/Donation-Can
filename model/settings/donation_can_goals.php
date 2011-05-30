@@ -104,6 +104,14 @@ function donation_can_goals_menu() {
         render_user_notification(__("Deleted goal:", "donation_can") . " " . $id);
     }
 
+    // Reset cause
+    if (isset($_GET["reset"])) {
+        $id = attribute_escape($_GET["reset"]);
+        donation_can_reset_goal($id);
+
+        render_user_notification(__("Donations reset for goal: ", "donation_can") . " " . $id);
+    }
+
     if (isset($_GET["edit"])) {
         $id = $_GET["edit"];
         $goal = $causes[$id];

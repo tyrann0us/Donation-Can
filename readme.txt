@@ -100,6 +100,11 @@ This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
 
+= 1.5.4 = 
+* Option for resetting the counter for a specific goal. All donations for that goal are kept in history, but only the ones added after the resetting are shown to visitors.
+* Anonymous donations
+* Functionality for cloning widget style templates to make it easier to create new customizations
+
 = 1.5.3 =
 * Editor for defining custom widget styles for donation forms (The old CSS from general settings is still included, but that functionality is deprecated and will be removed at some point)
 * Two default widget styles: "Default" and "Default Vertical"
