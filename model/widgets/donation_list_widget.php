@@ -70,8 +70,9 @@ class DonationListWidget extends WP_Widget {
                     $donations = array_merge($donations, $donation_tmp);
                 }
 
+                // Sort the donations and drop the extra
                 usort($donations, array("DonationListWidget", "donation_list_sort_function"));
-
+                
             } else {
                 $goal = $goals[$goal_id];
                 if ($title == null || $title == "") {

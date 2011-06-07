@@ -182,6 +182,28 @@ function donation_can_save_widget_style($style_id, $style_definition) {
     return true;
 }
 
+function donation_can_clone_widget_style($id, $new_name) {
+    $styles = donation_can_get_widget_styles();
+
+    if (!isset($styles[$id])) {
+        render_user_notification("No style found with id " . $id);
+        return false;
+    }
+
+    $style = $styles[$id];
+
+    $new_id = donation_can_create_cause_id_from_name($new_name);
+
+    $style["name"] = $new_name;
+    $style["id"] = $new_id;
+    $style["locked"] = false;
+
+    $styles[$new_id] = $style;
+    update_option("donation_can_widget_styles", $styles);
+
+    return true;
+}
+
 function donation_can_delete_widget_style($style_id) {
     $styles = donation_can_get_widget_styles();
 

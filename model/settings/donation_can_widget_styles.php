@@ -25,6 +25,12 @@ function donation_can_widget_styles_menu() {
         if (donation_can_delete_widget_style($id)) {
             render_user_notification(__("Deleted style:", "donation_can") . " " . $id);
         }
+    } else if (isset($_POST["clone_style"])) {
+        $id = attribute_escape($_POST["clone_style"]);
+        $new_name = attribute_escape($_POST["new_name"]);
+        if (donation_can_clone_widget_style($id, $new_name)) {
+            render_user_notification(__("Cloned style:", "donation_can") . " " . $id);
+        }
     }
 
     $widget_styles = donation_can_get_widget_styles();

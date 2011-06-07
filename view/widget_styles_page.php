@@ -27,6 +27,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         }
         return false;
     }
+
+    function clone_style(id) {
+        var newName = prompt("Name for new style:", "");
+
+        if (newName) {
+            jQuery("#clone_style_form > input[name=clone_style]").val(id);
+            jQuery("#clone_style_form > input[name=new_name]").val(newName);
+            jQuery("#clone_style_form").submit();
+        }
+
+        return false;
+    }
 </script>
 
 <div class="wrap">
@@ -43,6 +55,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
         <form method="post" id="remove_style_form" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_widget_styles.php">
             <input type="hidden" name="remove_style" value=""/>
+        </form>
+
+        <form method="post" id="clone_style_form" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_widget_styles.php">
+            <input type="hidden" name="clone_style" value=""/>
+            <input type="hidden" name="new_name" value=""/>
         </form>
 
         <table class="widefat fixed" cellspacing="0" style="margin-top: 8px;">
@@ -69,6 +86,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
                             <div class="row-actions">
                                 <span class="edit"><a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_edit_widget_style.php&style_id=<?php echo $id; ?>"><?php echo $style["locked"] ? __("View", "donation_can") : __("Edit", "donation_can"); ?></a></span>
+
+                                <span class="clone"> | <a href="#" onclick="clone_style('<?php echo $id; ?>');"><?php _e("Clone", "donation_can");?></a></span>
 
                                 <?php if (!$style["locked"]) : ?>
                                     <span class="delete"> | <a href="#" onclick="return delete_style('<?php echo $id; ?>', '<?php echo $style['name'];?>');"><?php _e("Delete");?></a></span>
