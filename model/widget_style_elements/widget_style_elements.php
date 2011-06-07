@@ -24,4 +24,5 @@ require("donation_can_widget_donation_options_element.php");
 require("donation_can_widget_progress_element.php");
 require("donation_can_widget_donation_list_element.php");
 require("donation_can_widget_text_element.php");
+require("donation_can_widget_anonymous_element.php");
 ?>

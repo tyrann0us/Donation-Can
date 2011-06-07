@@ -86,7 +86,7 @@ class DonationWidget extends WP_Widget {
                 if (!$donation->anonymous) {
                     $donation_string = __("%NAME donated %CURRENCY %SUM", "donation_can");
                 } else {
-                    $donation_string = __("%CURRENCY %SUM was donated anonymously", "donation_can");
+                    $donation_string = __("Anonymous donated %CURRENCY %SUM", "donation_can");
                 }
 
                 if ($donation_string != "") {

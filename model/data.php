@@ -558,6 +558,9 @@ function donation_can_get_style_element_from_data($element) {
         case "text":
             return new DonationCanWidgetTextElement($element);
 
+        case "anonymous":
+            return new DonationCanWidgetAnonymousElement($element);
+
         default:
             break;
     }
@@ -584,6 +587,10 @@ function donation_can_process_start_donation($wp) {
     $cause_id = $_POST["cause"];
     $cause = donation_can_get_goal($cause_id);
     $amount = $_POST["amount"];
+    
+    if (isset($_POST["anonymous"])) {
+        $anonymous = (esc_attr($_POST["anonymous"]) == "checked");
+    }
 
     if ($cause == null) {
         w2log("Error: donation_can_process_start_donation called without cause");
@@ -671,6 +678,7 @@ function donation_can_process_start_donation($wp) {
         "payer_email" => "",
         "payer_name" => "",
         "fee" => 0,
+        "anonymous" => $anonymous,
         "time" => current_time('mysql')
     );
    

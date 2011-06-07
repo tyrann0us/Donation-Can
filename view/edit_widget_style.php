@@ -491,7 +491,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <div id="widget-list">
                                 <ul>
                                 <?php
-                                    $available_elements = array("title", "description", "donation-options", "donation-list", "progress", "text", "submit");
+                                    $available_elements = array("title", "description", "donation-options", "donation-list", "progress", "text", "anonymous", "submit");
                                     foreach ($available_elements as $el) {
                                         $element_object = donation_can_get_style_element_from_data(array('type' => $el));
                                         echo $element_object->to_string(false);

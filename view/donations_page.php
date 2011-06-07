@@ -149,8 +149,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     </td>
                     <td><?php echo $goals[$donation->cause_code]["name"]; ?></td>
                     <td><?php echo ($donation->offline ? "Offline" : "PayPal"); ?></td>
-                    <td>
-                        <strong><?php echo $donation->payer_name; ?></strong><br/>
+                    <td>                        
+                        <strong><?php echo $donation->payer_name; ?></strong> <?php if ($donation->anonymous) { ?><span class="anonymous">(anonymous)</span><?php } ?><br/>
                         <?php echo $donation->payer_email; ?>
 
                     </td>

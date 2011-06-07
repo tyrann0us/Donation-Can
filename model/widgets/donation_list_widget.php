@@ -113,7 +113,7 @@ class DonationListWidget extends WP_Widget {
                     }
                 } else {
                     if ($goal_id == "__all__") {
-                        $donation_string = __("A donation was made to \"%CAUSE\"", "donation_can");
+                        $donation_string = __("An anonymous donation was made to \"%CAUSE\"", "donation_can");
                     } else {
                         $donation_string = "";
                     }
