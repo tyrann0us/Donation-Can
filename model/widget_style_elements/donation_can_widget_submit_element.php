@@ -28,11 +28,11 @@ class DonationCanWidgetSubmitElement extends DonationCanWidgetStyleElement {
     }
 
     function render_view($widget_options) {
-        require_donation_can_view('widget_blocks/submit_button', array("element" => $this->element_data));
+        require_donation_can_view('widget_blocks/submit_button', array("data" => $this->element_data));
     }
 
     function get_admin_view($show_options, $id) {
-        return "<li class=\"widget-element submit-element\" id=\"$id\"><h3>Submit button</h3></li>";
+        return get_donation_can_view_as_string('widget_blocks/submit_button_options', array('data' => $this->element_data, 'show_options' => $show_options, "id" => $id));
     }
 
 }

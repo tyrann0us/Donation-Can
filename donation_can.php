@@ -181,6 +181,10 @@ function donation_can_init(){
     wp_enqueue_script('jquery-ui-core');
 
     if (is_admin()) {
+        wp_enqueue_style('thickbox');
+        wp_enqueue_script('media-upload');
+        wp_enqueue_script('thickbox');
+
         wp_enqueue_script('jquery-ui-draggable');
         wp_enqueue_script('jquery-ui-sortable');
         wp_enqueue_script('jquery-ui-droppable');

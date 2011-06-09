@@ -212,6 +212,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 <script type="text/javascript">
     var cssElementCounter = 0;
+    var uploadToField = null;
 
     function switchTab(link, tabId) {
         jQuery(".tab-contents").hide();
@@ -375,13 +376,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             }
         });
 
+        window.send_to_editor = function(html) {
+            imgurl = jQuery('img',html).attr('src');
+            jQuery('input[name=button-image]', uploadToField).val(imgurl);
+            jQuery('img', uploadToField).attr("src", imgurl);
+
+            tb_remove();
+        }
+
         // CSS editor
         
         jQuery("input[name=css-selector]").suggest("<?php bloginfo('url'); ?>?donation_can_style_autocomplete=1");
     });
 
-<?php if (!$style["locked"]) : ?>
-<?php endif; ?>
+
+    function uploadImage(element) {
+        uploadToField = jQuery(element).closest('div.element-options');
+
+        tb_show('', '<?php echo bloginfo('url') ?>/wp-admin/media-upload.php?type=image&amp;TB_iframe=true');
+        return false;
+    };
 
 </script>
 
