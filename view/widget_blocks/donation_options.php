@@ -23,6 +23,20 @@
                 <?php endif; ?>
             </div>
 
+        <?php elseif ($element["list-format"] == "radio") : $first = true; ?>
+
+            <div class="donation-radio-button-list">
+
+                <?php foreach ($donation_sums as $sum) : ?>
+                    <div class="radio-button"><input type="radio" name="amount" value="<?php echo $sum;?>" <?php if ($first) { echo "checked"; $first = false; } ?>> <label for="amount"><?php echo $currency; ?> <?php echo $sum; ?></label></div>
+                <?php endforeach; ?>
+                <?php if ($goal["allow_freeform_donation_sum"]) : ?>
+                    <div class="radio-button"><input type="radio" name="amount" value=""> <?php _e("Other", "donation_can");?></div>
+                <?php endif; ?>
+
+            </div>
+
+
         <?php else : ?>
 
             <select name="amount">

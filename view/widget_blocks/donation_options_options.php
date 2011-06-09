@@ -17,9 +17,11 @@
             <label for="list-format">List format:</label><br/>
             <select name="list-format">
                 <option value="list" <?php if (!isset($data['list-format']) || $data['list-format'] == "list") echo "selected"; ?>>Drop down list</option>
-                <option value="buttons" <?php if (isset($data['list-format']) && $data['list-format'] == "buttons") echo "selected"; ?>>Options as selection buttons</option>
+                <option value="buttons" <?php if (isset($data['list-format']) && $data['list-format'] == "buttons") echo "selected"; ?>>Options as links</option>
+                <option value="radio" <?php if (isset($data['list-format']) && $data['list-format'] == "radio") echo "selected"; ?>>Options as radio buttons</option>
             </select>
         </p>
+        
     </div>
 
 </li>
