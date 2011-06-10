@@ -45,6 +45,10 @@ class DonationWidget extends WP_Widget {
         $goals = get_option("donation_can_causes");
         $goal = $goals[$goal_id];
 
+        if ($goal_id == null || $goal == null) {
+            return get_donation_can_view_as_string("donation_form_no_cause");
+        }
+
         $show_back_link = !$general_settings["link_back"];
 
         $show_title = esc_attr($instance["show_title"]);

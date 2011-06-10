@@ -133,10 +133,15 @@ function hideCurrencySelection() {
     if (selectedCurrency == "USD") {
         selectedCurrency = "$";
     } else if (selectedCurrency == "EUR") {
-        selectedCurrency = "€";
+        selectedCurrency = "&euro;";
+    } else if (selectedCurrency == "GBP") {
+        selectedCurrency = "&pound;";
+    } else if (selectedCurrency == "JPY") {
+        selectedCurrency = "&yen;";
     }
 
-    jQuery("#goal-currency a").text(selectedCurrency);
+
+    jQuery("#goal-currency a").html(selectedCurrency);
     jQuery("#goal-currency").show();
     jQuery("#currency-options").hide();
 

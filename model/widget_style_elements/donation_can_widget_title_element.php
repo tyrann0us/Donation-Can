@@ -30,7 +30,7 @@ class DonationCanWidgetTitleElement extends DonationCanWidgetStyleElement {
     function render_view($widget_options) {
         if ($widget_options["show_title"]) {
             require_donation_can_view('widget_blocks/title',
-                    array("element" => $this->element_data, "goal" => $widget_data["goal"], "title" => $widget_data["title"]));
+                    array("element" => $this->element_data, "goal" => $widget_options["goal"], "title" => $widget_options["title"]));
         }
     }
 

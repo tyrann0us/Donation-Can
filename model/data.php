@@ -80,11 +80,14 @@ function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.4") {
+    if ($widget_styles == null || $widget_styles_version != "1.6") {
+        if ($widget_styles == null) {
+            $widget_styles = array();
+        }
+
         // If nothing has been saved yet, return the default widget
         // and update it to options
-        $widget_styles = array(
-            "default" => array(
+        $widget_styles["default"] = array(
                 "name" => __("Default", "donation_can"),
                 "id" => "default",
                 "locked" => true,
@@ -93,10 +96,11 @@ function donation_can_get_widget_styles() {
                     "2" => array("type" => "description"),
                     "3" => array("type" => "progress", "text-format" => "<span class=\"currency\">%CURRENCY%</span><span class=\"raised\">%CURRENT%</span><span class=\"raised-label\">Raised</span><span class=\"goal\">%TARGET%</span><span class=\"goal-label\">Target</span>"),
                     "4" => array("type" => "donation-options"),
-                    "5" => array("type" => "submit")
+                    "5" => array("type" => "anonymous", "prompt" => __("Anonymous donation", "donation_can")),
+                    "6" => array("type" => "submit")
                 ),
                 "css" => array(
-                    "" => "border: 1px #ddd solid; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; background-color: #f5f5f5;",
+                    "" => "border: 1px #ddd solid; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; background-color: #f5f5f5; color: #333;",
                     "h3" => "margin-top: 0px;",
                     ".description" => "margin: 10px 0px 0px 0px;",
                     ".donation_meter" => "background-color: #fafafa; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin: 10px -10px 10px -10px; padding: 10px;",
@@ -114,8 +118,9 @@ function donation_can_get_widget_styles() {
                     ".submit-donation input" => "margin: 10px auto 0px auto; width: 147px; display: block;",
                     ".backlink" => "text-align: center; margin-top: 15px;"
                 )
-            ),
-            "default_2" => array(
+            );
+        
+        $widget_styles["default_2"] = array(
                 "name" => __("Default Vertical", "donation_can"),
                 "id" => "default_2",
                 "locked" => true,
@@ -123,10 +128,11 @@ function donation_can_get_widget_styles() {
                     "1" => array("type" => "progress", "direction" => "vertical", "text-format" => "<span class=\"percentage\">%PERCENTAGE% %</span> <span class=\"of-label\">of</span> <span class=\"currency\">%CURRENCY%</span><span class=\"goal\">%TARGET%</span>"),
                     "2" => array("type" => "title"),
                     "3" => array("type" => "description"),
-                    "4" => array("type" => "donation-options", "list-format" => "buttons")
+                    "4" => array("type" => "donation-options", "list-format" => "buttons"),
+                    "5" => array("type" => "anonymous", "prompt" => __("Anonymous donation", "donation_can"))
                 ),
                 "css" => array(
-                    "" => "text-align: left; border: 1px solid #ccc; border-radius: 5px; -moz-border-radius: 5px; padding: 0px 10px 10px 0px; background-color: #f5f5f5; font-family: Verdana; font-size: 8pt;",
+                    "" => "text-align: left; border: 1px solid #ccc; border-radius: 5px; -moz-border-radius: 5px; padding: 0px 10px 10px 0px; background-color: #f5f5f5; font-family: Verdana; font-size: 8pt; color: #333;",
                     "h3" => "margin: 10px auto 10px auto; text-align: left; font-family: Arial;",
                     ".description" => "text-align: left; margin: 10px 0px 0px 0px;",
                     ".donation-form" => "overflow: auto;",
@@ -146,12 +152,11 @@ function donation_can_get_widget_styles() {
                     ".of-label" => "display: block; text-align: center; color: #999; font-size: 8pt;",
                     ".currency" => "color: #999; font-size: 8pt;",
                     ".goal" => "color: #999; text-align: center; font-size: 8pt;"
-                )
-            )
-        );
+                )            
+            );
 
         update_option("donation_can_widget_styles", $widget_styles);
-        update_option("donation_can_widget_styles_version", "1.4");
+        update_option("donation_can_widget_styles_version", "1.6");
     }
 
     return $widget_styles;
@@ -224,13 +229,15 @@ function donation_can_get_total_raised_for_cause($cause_id, $include_before_rese
     $general_settings = donation_can_get_general_settings();
 
     $total = 0;
-    foreach ($donations as $donation) {
-        $amount = $donation->amount;
-        if ($general_settings["subtract_paypal_fees"]) {
-            $amount -= $donation->fee;
-        }
+    if ($donations != null && is_array($donations)) {
+        foreach ($donations as $donation) {
+            $amount = $donation->amount;
+            if ($general_settings["subtract_paypal_fees"]) {
+                $amount -= $donation->fee;
+            }
 
-        $total += $amount;
+            $total += $amount;
+        }
     }
 
     return $total;
@@ -254,8 +261,10 @@ function donation_can_get_total_raised_for_all_causes() {
     $goals = donation_can_get_goals(true);
 
     $total = 0;
-    foreach ($goals as $goal) {
-        $total += $goal["collected"];
+    if ($goals != null && is_array($goals)) {
+        foreach ($goals as $goal) {
+            $total += $goal["collected"];
+        }
     }
 
     return $total;
@@ -286,13 +295,16 @@ function donation_can_get_goals($include_raised_data = false, $include_before_re
             $goals[$goal["id"]] = $goal;
         }
 
-        foreach (donation_can_get_donations() as $donation) {
-            $reset_after_id = $goal["reset_after_id"];
-            if ($donation->id > $reset_after_id || $include_before_reset) {
-                $goals[$donation->cause_code]["collected"] += $donation->amount;
+        $donations = donation_can_get_donations();
+        if ($donations != null && is_array($donations)) {
+            foreach ($donations as $donation) {
+                $reset_after_id = $goal["reset_after_id"];
+                if ($donation->id > $reset_after_id || $include_before_reset) {
+                    $goals[$donation->cause_code]["collected"] += $donation->amount;
 
-                if ($general_settings["subtract_paypal_fees"]) {
-                    $goals[$donation->cause_code]["collected"] -= $donation->fee;
+                    if ($general_settings["subtract_paypal_fees"]) {
+                        $goals[$donation->cause_code]["collected"] -= $donation->fee;
+                    }
                 }
             }
         }
@@ -393,7 +405,13 @@ function donation_can_currency_defaults($currency, $convert_to_symbols = true) {
             $currency = "$";
         }
         if ($currency == "EUR") {
-            $currency = "€";
+            $currency = "&euro;";
+        }
+        if ($currency == "GBP") {
+            $currency = "&pound;";
+        }
+        if ($currency == "JPY") {
+            $currency = "&yen;";
         }
     }
 

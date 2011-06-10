@@ -3,7 +3,7 @@ Contributors: jarkkolaine
 Donate link: http://treehouseapps.com/donation-can
 Tags: donations, paypal, fundraising, money
 Requires at least: 2.8
-Tested up to: 3.1.2
+Tested up to: 3.1.3
 Stable tag: 1_5_3
 
 Collect PayPal donations towards multiple goals on your blog and show the progress to your visitors using sidebar widgets.
@@ -86,6 +86,9 @@ Coming soon...
 
 == Upgrade Notice ==
 
+= 1.5.4 =
+Improvements to the widget style editor and several other small fixes.
+
 = 1.5.3 =
 Adds a whole new editor for defining widget styles and two default styles to choose from.
 
@@ -100,10 +103,15 @@ This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
 
-= 1.5.4 = 
-* Option for resetting the counter for a specific goal. All donations for that goal are kept in history, but only the ones added after the resetting are shown to visitors.
-* Cloning widget style templates to make it easier to create new customizations
-* Anonymous donations
+= 1.5.4 =
+* Added support for replacing the default donation button with your own graphic.
+* Added option for showing donation options as radio buttons.
+* Added support for resetting the counter for a specific goal. All donations for that goal are kept in history, but only the ones added after the resetting are shown to visitors.
+* Added support for cloning widget style templates to make it easier to create new customizations
+* Donations can now be made anonymously.
+* GBP and JPY are now converted to the proper graphical symbols instead of using the three letter acronyms
+* Bug fix: Defined a text color (dark gray) for the default widget styles 
+* Bug fix: Better error reporting when users create donation widgets without specifying a cause.
 
 = 1.5.3 =
 * Editor for defining custom widget styles for donation forms (The old CSS from general settings is still included, but that functionality is deprecated and will be removed at some point)
