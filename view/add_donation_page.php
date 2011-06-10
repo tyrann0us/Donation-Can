@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         var selectedGoalId = jQuery("#cause-selection").val();
         var currency = currencies[selectedGoalId];
 
-        jQuery("#goal-currency").text(currency);
+        jQuery("#goal-currency").html(currency);
     }
 </script>
 
