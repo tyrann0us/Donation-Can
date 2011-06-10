@@ -825,7 +825,7 @@ function donation_can_process_paypal_ipn($wp) {
 
                     $subject = '[Donation Can] New Donation to ' . $data["cause_code"];
                     $message = 'A new donation was made to your cause, "' . $goal["name"] . "\":\r\n\r\n"
-                                      . $data["payer_name"] . ' (' . $data["payer_email"] . ') donated ' . donation_can_get_currency_for_goal($goal) . " " . $data["amount"] . ' (PayPal fee: ' . $data["fee"] . ') to "'. $goal["name"] . '" (' . $data["cause_code"] . ').'
+                                      . $data["payer_name"] . ' (' . $data["payer_email"] . ') donated ' . donation_can_get_currency_for_goal($goal, false) . " " . $data["amount"] . ' (PayPal fee: ' . $data["fee"] . ') to "'. $goal["name"] . '" (' . $data["cause_code"] . ').'
                                       . "\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n"
                                       . get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php" . "\r\n\r\nThanks,\r\nDonation Can";
                     $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
