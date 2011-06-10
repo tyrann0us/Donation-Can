@@ -28,8 +28,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         return false;
     }
 
-    function confirm_reset(name) {
-        return confirm("<?php _e("Are you sure you want to reset the donation counter for cause '", "donation_can");?>" + name + "'?'");
+    function confirm_reset(id, name) {
+        var agree = confirm("<?php _e("Are you sure you want to reset the donation counter for cause '", "donation_can");?>" + name + "'?'");
+        if (agree) {
+            document.reset_cause.reset.value = id;
+            document.reset_cause.submit();
+        }
+        return false;
     }
 </script>
 
@@ -47,6 +52,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
         <form method="post" name="delete_cause" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php">
             <input type="hidden" name="remove_cause" value=""/>
+        </form>
+
+        <form method="post" name="reset_cause" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php">
+            <input type="hidden" name="reset" value=""/>
         </form>
 
         <table class="widefat fixed" cellspacing="0" style="margin-top: 8px;">
@@ -85,7 +94,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <span class="edit"><a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php&edit=<?php echo $id; ?>">Edit</a></span>
                                 <span class="delete"> | <a href="#" onclick="return delete_goal('<?php echo $id; ?>', '<?php echo $cause['name'];?>');"><?php _e("Delete");?></a></span>
                                 <span class="view-donations"> | <a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_donations.php&filter_goal=<?php echo $id; ?>"><?php _e("View donations", "donation_can");?></a></span>
-                                <span class="reset-counter"> | <a onclick="return confirm_reset('<?php echo $cause['name'];?>');" href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php&reset=<?php echo $id; ?>">Reset</a></span>
+                                <span class="reset-counter"> | <a onclick="return confirm_reset('<?php echo $id; ?>', '<?php echo $cause['name'];?>');" href="#"><?php _e("Reset", "donation_can");?></a></span>
                             </div>
                         </td>
                         <td>

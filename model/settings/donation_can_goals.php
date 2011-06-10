@@ -104,9 +104,9 @@ function donation_can_goals_menu() {
         render_user_notification(__("Deleted goal:", "donation_can") . " " . $id);
     }
 
-    // Reset cause
-    if (isset($_GET["reset"])) {
-        $id = attribute_escape($_GET["reset"]);
+    // Reset cause (has to be through POST to make sure the user doesn't do this again by accident...)
+    if (isset($_POST["reset"])) {
+        $id = attribute_escape($_POST["reset"]);
         donation_can_reset_goal($id);
 
         render_user_notification(__("Donations reset for goal: ", "donation_can") . " " . $id);
