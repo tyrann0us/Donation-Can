@@ -19,20 +19,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // Dashboard widget
 function donation_can_dashboard_widget() {
-	wp_add_dashboard_widget("donation_can_dashboard", __("Fundraising Status", "donation_can"), 'render_donation_can_dashboard_widget');
+    wp_add_dashboard_widget("donation_can_dashboard", __("Fundraising Status", "donation_can"), 'render_donation_can_dashboard_widget');
 }
 
 function render_donation_can_dashboard_widget() {
     $donations = donation_can_get_donations(0, 5);
-    $goals = donation_can_get_goals(true);
-	
-    $options = get_option("donation_can_general");
+    $goals = donation_can_get_goals(false);
+    
+    foreach ($goals as $id => $goal) {
+        $goal["collected"] = donation_can_get_total_raised_for_cause($id);
+        $goals[$id] = $goal;
+    }
+
+    $options = donation_can_get_general_settings();
     $paypal_account =  $options["paypal_email"];
 
     $plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/donation-can/donation_can.php');
     $version = $plugin_data["Version"];
-	
-    require(WP_PLUGIN_DIR . "/donation-can/view/dashboard_widget.php");
+
+    require_donation_can_view('dashboard_widget', array("donations" => $donations, "goals" => $goals,
+        "paypal_account" => $paypal_account, "version" => $version));
 }
 
 add_action('wp_dashboard_setup', 'donation_can_dashboard_widget'); 
