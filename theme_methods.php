@@ -96,13 +96,14 @@ function donation_can_donation_progress($goal_id = "__all__", $show_title = true
  * Renders a donation form for the given donation goal.
  *
  * @param $goal_id			The id of the goal to render. No default value.
+ * @param $style_id             The style id to use for the donation goal
  * @param $show_progress	Toggles showing a progress bar. Defaults to true.
  * @param $show_description	Toggles showing goal description. Defaults to true.
  * @param $show_donations	Toggles showing a list of donations. Defaults to false.
  * @param $show_title		Toggles showing the title. Defaults to true.
  * @param $title			A custom title. If left empty, the name of the goal is used instead.
  */
-function donation_can_donation_form($goal_id, $show_progress = true, $show_description = true, 
+function donation_can_donation_form($goal_id, $style_id = "default", $show_progress = true, $show_description = true, 
 	$show_donations = false, $show_title = true, $title = "", $return = false) {
 		
 	$params = array(

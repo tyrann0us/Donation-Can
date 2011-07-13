@@ -29,25 +29,38 @@ function donation_can_get_current_db_version() {
 function donation_can_get_current_create_table_row() {
     global $wpdb;
 
+    // Create the column structure separately in order
+    // to give sub plugins a chance to make their own 
+    // changes
+    $columns = array(
+        "id" => "mediumint(9) NOT NULL AUTO_INCREMENT",
+        "item_number" => "VARCHAR(128) NOT NULL",
+        "transaction_id" => "VARCHAR(255) NOT NULL",
+        "payment_status" => "VARCHAR(255) NOT NULL",
+        "time timestamp" => "NOT NULL",
+        "payer_email" => "VARCHAR(128) NOT NULL",
+        "payer_name" => "VARCHAR(255) NOT NULL",
+        "anonymous" => "TINYINT(1) DEFAULT '0' NOT NULL",
+        "cause_code" => "VARCHAR(64) NOT NULL",
+        "amount" => "DECIMAL(10,2) DEFAULT '0.00' NOT NULL",
+        "fee" => "DECIMAL(10,2) DEFAULT '0.00' NOT NULL",
+        "note" => "TEXT",
+        "sandbox" => "TINYINT(1) DEFAULT '0' NOT NULL",
+        "offline" => "TINYINT(1) DEFAULT '0' NOT NULL",
+        "deleted" => "TINYINT(1) DEFAULT '0' NOT NULL",
+    );
+    
+    $columns = apply_filters('donation_can_db_structure', $columns);
+    
     $table_name = donation_can_get_table_name($wpdb);
-    $query = "CREATE TABLE " . $table_name . " (
-        id mediumint(9) NOT NULL AUTO_INCREMENT,
-        item_number VARCHAR(128) NOT NULL,
-        transaction_id VARCHAR(255) NOT NULL,
-        payment_status VARCHAR(255) NOT NULL,
-        time timestamp NOT NULL,
-        payer_email VARCHAR(128) NOT NULL,
-        payer_name VARCHAR(255) NOT NULL,
-        anonymous TINYINT(1) DEFAULT '0' NOT NULL,
-        cause_code VARCHAR(64) NOT NULL,
-        amount DECIMAL(10,2) DEFAULT '0.00' NOT NULL,
-        fee DECIMAL(10,2) DEFAULT '0.00' NOT NULL,
-        note TEXT,
-        sandbox TINYINT(1) DEFAULT '0' NOT NULL,
-        offline TINYINT(1) DEFAULT '0' NOT NULL,
-        deleted TINYINT(1) DEFAULT '0' NOT NULL,
-        UNIQUE KEY id (id)
-    );";
+    $query = "CREATE TABLE " . $table_name . " ( ";
+    
+    foreach ($columns as $name => $definition) {
+        $query .= $name . " " . $definition . ",\n";
+    }
+    
+    $query .= "UNIQUE KEY id (id));";
+    
     return $query;
 }
 
@@ -60,15 +73,19 @@ function donation_can_install() {
 
 function donation_can_db_upgrade() {
     global $wpdb;
-
+    
     $db_version = get_option("donation_can_db_version", "0.0");
-    if ($db_version != donation_can_get_current_db_version()) {
+    $update_needed = ($db_version != donation_can_get_current_db_version());
+    $update_needed = apply_filters("donation_can_db_update_needed", $update_needed);
+    
+    if ($update_needed) {
         $query = donation_can_get_current_create_table_row();
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($query);
         
         update_option("donation_can_db_version", donation_can_get_current_db_version());
+        do_action("donation_can_db_update_finished");
     }
 }
 
@@ -376,6 +393,10 @@ function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null, $i
 
     // Only accept donations from existing causes
     $goals = get_option("donation_can_causes");
+    if (!$goals) {
+        $goals = array();
+    }
+    
     $goal_list = array();
     foreach ($goals as $goal) {
         $goal_list[] = '"' . $goal["id"] . '"';
@@ -699,8 +720,13 @@ function donation_can_process_start_donation($wp) {
         "anonymous" => $anonymous,
         "time" => current_time('mysql')
     );
-   
+    
+    // Let sub plugins add their own fields if necessary
+    $data = apply_filters("donation_can_transaction_data", $data, $_POST);
+       
     $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%f", "%s");
+    $types = apply_filters("donation_can_transaction_types", $data, $_POST);
+    
     $table_name = donation_can_get_table_name($wpdb);
 
     $wpdb->insert($table_name, $data, $types);

@@ -33,7 +33,10 @@ function donation_can_setup_admin_menus() {
     add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Browse Donations', "donation_can"), __('Donations', "donation_can"), "manage_options", "donation_can_donations.php", 'donation_can_donations_menu');
     add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Add New Donation', "donation_can"), __('Add New Donation', "donation_can"), "manage_options", "donation_can_add_donation.php", 'donation_can_add_donation_menu');
     add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Widget Styles', "donation_can"), __('Widget Styles', "donation_can"), "manage_options", "donation_can_widget_styles.php", 'donation_can_widget_styles_menu');
-    add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Add New Widget Style', "donation_can"), __('Add New Widget Style', "donation_can"), "manage_options", "donation_can_edit_widget_style.php", 'donation_can_edit_widget_style_menu');
+    add_submenu_page('donation_can_general_settings.php', __('Donation Can Settings - Add New Widget Style', "donation_can"), __('Add New Widget Style', "donation_can"), "manage_options", "donation_can_edit_widget_style.php", 'donation_can_edit_widget_style_menu');  
+    
+    // Notify sub plugins that it's time to create a menu
+    do_action('donation_can_menus_created', 'donation_can_general_settings.php');
 }
 
 function donation_can_top_menu() {

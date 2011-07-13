@@ -243,6 +243,6 @@ add_action("media_buttons", "donation_can_media_button_register", 20);
 add_action("media_upload_donation-can", "donation_can_media_button_form");
 
 // Check that the database tables are up to date
-donation_can_db_upgrade();
+add_action("plugins_loaded", 'donation_can_db_upgrade');
 
 ?>
