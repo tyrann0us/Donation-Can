@@ -614,12 +614,14 @@ function w2log($msg) {
         // TODO: add instructions for turning logging on
         $filename = dirname(__FILE__) . "/../log";
 
-        if (file_exists($filename) && is_writable($filename)) {
-            $fd = fopen($filename, "a");
-            $str = "[" . date("Y/m/d h:i:s", mktime()) . "] " . $msg;
-            fwrite($fd, $str . "\n");
-            fclose($fd);
+        if (!is_writable($filename)) {
+            die("Can't write to Donation Can log file. Disable logging from settings or make the log file (plugin directory/log) writable to continue.");
         }
+
+        $fd = fopen($filename, "a");
+        $str = "[" . date("Y/m/d h:i:s", mktime()) . "] " . $msg;
+        fwrite($fd, $str . "\n");
+        fclose($fd);
     }
 }
 

@@ -41,32 +41,34 @@ function donation_can_settings_page() {
 
     // Save general settings
     if ($_POST["edit_settings"] == "Y") {
-        $paypal_email = attribute_escape($_POST["paypal_email"]);
-        $require_shipping = attribute_escape($_POST["require_shipping"]);
-        $ask_for_note = attribute_escape($_POST["ask_for_note"]);
-        $return_page = attribute_escape($_POST["return_page"]);
-        $continue_button_text = attribute_escape($_POST["continue_button_text"]);
-        $cancel_return_page = attribute_escape($_POST["cancel_return_page"]);
-        $logo_on_paypal_page = attribute_escape($_POST["logo_on_paypal_page"]);
-        $notify_email = attribute_escape($_POST["notify_email"]);
-        $style = attribute_escape($_POST["style"]);
-        $custom = attribute_escape($_POST["custom"]);
-        $currency = attribute_escape($_POST["currency"]);
-        $debug_mode = attribute_escape($_POST["debug_mode"]) == "1";
+        $paypal_email = esc_attr($_POST["paypal_email"]);
+        $require_shipping = esc_attr($_POST["require_shipping"]);
+        $ask_for_note = esc_attr($_POST["ask_for_note"]);
+        $return_page = esc_attr($_POST["return_page"]);
+        $continue_button_text = esc_attr($_POST["continue_button_text"]);
+        $cancel_return_page = esc_attr($_POST["cancel_return_page"]);
+        $logo_on_paypal_page = esc_attr($_POST["logo_on_paypal_page"]);
+        $notify_email = esc_attr($_POST["notify_email"]);
+        $style = esc_attr($_POST["style"]);
+        $custom = esc_attr($_POST["custom"]);
+        $currency = esc_attr($_POST["currency"]);
 
-        $sort_causes_field = attribute_escape($_POST["sort_causes_field"]);
-        $sort_causes_order = attribute_escape($_POST["sort_causes_order"]);
-        $sort_donations_field = attribute_escape($_POST["sort_donations_field"]);
-        $sort_donations_order = attribute_escape($_POST["sort_donations_order"]);
+        $debug_mode = esc_attr($_POST["debug_mode"]) == "1";
+        $enable_logging = esc_attr($_POST["enable_logging"]) == "1";
 
-        $show_back_link = attribute_escape($_POST["link_back"]) == "1";
+        $sort_causes_field = esc_attr($_POST["sort_causes_field"]);
+        $sort_causes_order = esc_attr($_POST["sort_causes_order"]);
+        $sort_donations_field = esc_attr($_POST["sort_donations_field"]);
+        $sort_donations_order = esc_attr($_POST["sort_donations_order"]);
 
-        $subtract_fees = attribute_escape($_POST["subtract_fees"]) == "1";
+        $show_back_link = esc_attr($_POST["link_back"]) == "1";
 
-        $donation_sum_num = attribute_escape($_POST["donation_sum_num"]);
+        $subtract_fees = esc_attr($_POST["subtract_fees"]) == "1";
+
+        $donation_sum_num = esc_attr($_POST["donation_sum_num"]);
         $donation_sums = array();
         for ($i = 0; $i < $donation_sum_num; $i++) {
-            $sum_value = attribute_escape($_POST["donation_sum_" . $i]);
+            $sum_value = esc_attr($_POST["donation_sum_" . $i]);
             if ($sum_value != null && $sum_value != "") {
                 $donation_sums[] = $sum_value;
             }
@@ -95,6 +97,7 @@ function donation_can_settings_page() {
         $general_settings["custom"] = $custom;
 
         $general_settings["debug_mode"] = $debug_mode;
+        $general_settings["enable_logging"] = $enable_logging;
 
         $general_settings["sort_causes_field"] = $sort_causes_field;
         $general_settings["sort_donations_field"] = $sort_donations_field;

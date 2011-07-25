@@ -103,6 +103,9 @@ This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
 
+= 1.5.5 =
+* Made logging a configurable setting. By default logging is turned off, and if you turn it on, you must make sure the log file is writeable.
+
 = 1.5.4 =
 * Added support for replacing the default donation button with your own graphic.
 * Added option for showing donation options as radio buttons.

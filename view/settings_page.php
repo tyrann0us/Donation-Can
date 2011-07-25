@@ -99,13 +99,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				</td>
 			</tr>            
 
-            <tr valign="top">
+                        <tr valign="top">
 				<th scope="row" valign="center"><?php _e("Sandbox mode:", "donation_can");?></th>
 				<td>
 					<input type="checkbox" name="debug_mode" value="1" <?php if ($general_settings["debug_mode"]) { echo "checked"; }?>/>
 					<br/><span class="description"><?php _e("Check this checkbox if you want to use the PayPal sandbox to test the plugin.", "donation_can");?></span>
 				</td>
 			</tr>
+
+                        <tr valign="top">
+                            <th scope="row" valign="center"><?php _e("Enable logging:", "donation_can");?></th>
+                            <td>
+                                <input type="checkbox" name="enable_logging" value="1" <?php if ($general_settings["enable_logging"]) { echo "checked"; }?>/>
+                                <br/><span class="description"><?php _e("If you check this checkbox, a log file will be created to the plugin directory. Make sure the directory is writeable for logging to work.", "donation_can");?></span>
+                            </td>
+			</tr>
+
 
             <tr valign="top">
                 <th scope="row" valign="center"><?php _e("Hide Donation Can back link:", "donation_can");?></th>
