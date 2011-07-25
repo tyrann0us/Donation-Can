@@ -609,13 +609,17 @@ function donation_can_get_style_element_from_data($element) {
 
 
 function w2log($msg) {
-    if (true) {
+    $general_settings = donation_can_get_general_settings();
+    if ($general_settings["enable_logging"] == true) {
+        // TODO: add instructions for turning logging on
         $filename = dirname(__FILE__) . "/../log";
 
-        $fd = fopen($filename, "a");
-        $str = "[" . date("Y/m/d h:i:s", mktime()) . "] " . $msg;
-        fwrite($fd, $str . "\n");
-        fclose($fd);
+        if (file_exists($filename) && is_writable($filename)) {
+            $fd = fopen($filename, "a");
+            $str = "[" . date("Y/m/d h:i:s", mktime()) . "] " . $msg;
+            fwrite($fd, $str . "\n");
+            fclose($fd);
+        }
     }
 }
 
@@ -663,7 +667,7 @@ function donation_can_process_start_donation($wp) {
         "business" => $general_settings["paypal_email"],
         "item_name" => $cause['name'],
         "item_number" => $item_number,
-        "cmd" => " _donations",
+        "cmd" => "_donations",
         "notify_url" => $notify_url,
         "currency_code" => donation_can_get_currency_for_goal($cause, false),
         "no_shipping" => "1",

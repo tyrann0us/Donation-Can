@@ -107,8 +107,8 @@ function donation_can_shortcode_handler($attributes, $content = null) {
 //
 
 function donation_can_query_vars($vars) {
-    $new_vars = array('donation_can_ipn');
-    $vars = $new_vars + $vars;
+    $vars[] = 'donation_can_ipn';
+
     return $vars;
 }
 
