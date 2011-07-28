@@ -20,13 +20,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 <div class="donation-can-widget <?php echo $widget_style_id; ?>">
     <form action="<?php echo $action_url; ?>" method="post" class="donation-form">
-        <input type="hidden" name="cause" value="<?php echo $goal["id"]; ?>"/>
-
+        <?php if ($goal["id"] != "__all__") : ?>
+            <input type="hidden" name="cause" value="<?php echo $goal["id"]; ?>"/>
+        <?php endif; ?>
         <?php
             foreach ($elements as $id => $element) {
                 $element_object = donation_can_get_style_element_from_data($element);
 
-                if ($element_object) {
+                if ($element_object && is_object($element_object)) {
                     $element_object->render_view($widget_options);
                 }
             }

@@ -36,6 +36,7 @@ class DonationWidget extends WP_Widget {
         extract($args);
 
         $goal_id = esc_attr($instance["goal_id"]);
+
         $show_progress = esc_attr($instance["show_progress"]);
         $show_description = esc_attr($instance["show_description"]);
         $show_donations = esc_attr($instance["show_donations"]);
@@ -43,9 +44,18 @@ class DonationWidget extends WP_Widget {
         $general_settings = get_option("donation_can_general");
 
         $goals = get_option("donation_can_causes");
-        $goal = $goals[$goal_id];
 
-        if ($goal_id == null || $goal == null) {
+        if ($goal_id == "__all__") {
+            $goal = array(
+                "id" => "__all__",
+                "name" => "Summary (All goals)",
+                "donation_goal" => donation_can_get_total_target_for_all_causes()
+            );
+        } else {
+            $goal = $goals[$goal_id];
+        }
+
+        if ($goal_id == null || ($goal == null && $goal_id != "__all__")) {
             return get_donation_can_view_as_string("donation_form_no_cause");
         }
 
@@ -65,13 +75,21 @@ class DonationWidget extends WP_Widget {
         $style = donation_can_get_widget_style_by_id($widget_style_id);
 
         $donation_sums = $general_settings["donation_sums"];
-        if ($goal["donation_sums"] != null && count($goal["donation_sums"]) > 0) {
-            $donation_sums = $goal["donation_sums"];
+        if ($goal != null) {
+            if ($goal["donation_sums"] != null && count($goal["donation_sums"]) > 0) {
+                $donation_sums = $goal["donation_sums"];
+            }
         }
 
-        $raised_so_far = donation_can_get_total_raised_for_cause($goal_id);
+        if ($goal_id == "__all__") {
+            $raised_so_far = donation_can_get_total_raised_for_all_causes();
 
-        $currency = donation_can_get_currency_for_goal($goal);
+            // Use the currency from general settings... --> update currency when the user chooses a cause
+            $currency = donation_can_get_current_currency();
+        } else {
+            $raised_so_far = donation_can_get_total_raised_for_cause($goal_id);
+            $currency = donation_can_get_currency_for_goal($goal);
+        }
 
         global $wp_rewrite;
         $action_url = "/donation_can_ipn/start_donation";
@@ -175,6 +193,9 @@ class DonationWidget extends WP_Widget {
                 <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
                         name="<?php echo $this->get_field_name('goal_id'); ?>">
 
+                    <?php if (function_exists("donation_competition_init_scripts")) : ?>
+                        <option value="__all__" <?php if ($goal_id == "__all__") { echo "selected"; } ?>><?php _e("Summary (All goals)", "donation_can");?></option>
+                    <?php endif; ?>
                     <?php foreach ($goals as $goal) : ?>
                         <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
                     <?php endforeach; ?>

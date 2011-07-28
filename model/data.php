@@ -575,6 +575,12 @@ function donation_can_get_style_element_from_data($element) {
         return null;
     }
 
+    // Let sub plugins add their own style elements
+    $element_object = apply_filters("donation_can_get_style_element", $element);
+    if ($element_object && is_object($element_object)) {
+        return $element_object;
+    }
+
     switch ($element["type"]) {
         case "title":
             return new DonationCanWidgetTitleElement($element);
