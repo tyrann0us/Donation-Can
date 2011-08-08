@@ -41,13 +41,27 @@ function donation_can_settings_page() {
 
     // Save general settings
     if ($_POST["edit_settings"] == "Y") {
+        // Verify nonce
+        $nonce = $_POST["nonce"];
+        if (!wp_verify_nonce($nonce, "donation-can-general-settings-nonce")) die("Failed to verify NONCE.");
+
         $paypal_email = esc_attr($_POST["paypal_email"]);
+        $paypal_sandbox_email = esc_attr($_POST["paypal_sandbox_email"]);
+
         $require_shipping = esc_attr($_POST["require_shipping"]);
         $ask_for_note = esc_attr($_POST["ask_for_note"]);
+        $note_field_label = esc_attr($_POST["note_field_label"]);
+        
         $return_page = esc_attr($_POST["return_page"]);
         $continue_button_text = esc_attr($_POST["continue_button_text"]);
         $cancel_return_page = esc_attr($_POST["cancel_return_page"]);
+
         $logo_on_paypal_page = esc_attr($_POST["logo_on_paypal_page"]);
+        $header_on_paypal_page = esc_attr($_POST["header_on_paypal_page"]);
+        $bg_on_paypal_page = esc_attr($_POST["bg_on_paypal_page"]);
+        $header_bg_on_paypal_page = esc_attr($_POST["header_bg_on_paypal_page"]);
+        $header_border_on_paypal_page = esc_attr($_POST["header_border_on_paypal_page"]);
+
         $notify_email = esc_attr($_POST["notify_email"]);
         $style = esc_attr($_POST["style"]);
         $custom = esc_attr($_POST["custom"]);
@@ -75,14 +89,21 @@ function donation_can_settings_page() {
         }
 
         $general_settings["paypal_email"] = $paypal_email;
+        $general_settings["paypal_sandbox_email"] = $paypal_sandbox_email;
+
         $general_settings["require_shipping"] = $require_shipping;
         $general_settings["ask_for_note"] = $ask_for_note;
+        $general_settings["note_field_label"] = $note_field_label;
         $general_settings["continue_button_text"] = $continue_button_text;
 
         $general_settings["return_page"] = $return_page;
         $general_settings["cancel_return_page"] = $cancel_return_page;
 
         $general_settings["logo_on_paypal_page"] = $logo_on_paypal_page;
+        $general_settings["header_on_paypal_page"] = $header_on_paypal_page;
+        $general_settings["bg_on_paypal_page"] = $bg_on_paypal_page;
+        $general_settings["header_bg_on_paypal_page"] = $header_bg_on_paypal_page;
+        $general_settings["header_border_on_paypal_page"] = $header_border_on_paypal_page;
 
         $general_settings["notify_email"] = $notify_email;
 

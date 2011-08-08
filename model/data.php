@@ -422,7 +422,7 @@ function donation_can_currency_defaults($currency, $convert_to_symbols = true) {
         $currency = "USD";
     }
     if ($convert_to_symbols) {
-        if ($currency == "USD") {
+        if ($currency == "USD" || $currency == "CAD") {
             $currency = "$";
         }
         if ($currency == "EUR") {
@@ -470,6 +470,15 @@ function donation_can_has_multiple_currencies_in_use() {
     }
                     
     return $multiple_currencies_found;
+}
+
+function donation_can_get_paypal_email() {
+    $general_settings = donation_can_get_general_settings();
+    if ($general_settings["debug_mode"]) {
+        return $general_settings["paypal_sandbox_email"];
+    }
+    
+    return $general_settings["paypal_email"];
 }
 
 function donation_can_get_donation_count($goal_id = null) {
@@ -670,22 +679,35 @@ function donation_can_process_start_donation($wp) {
     // the rest of the process
     $item_number = donation_can_create_item_number($cause_id);
 
+    // Pick the right paypal email
+    $paypal_email = donation_can_get_paypal_email();
+
     // Generate parameters to post
     $paypal_args = array(
-        "business" => $general_settings["paypal_email"],
-        "item_name" => $cause['name'],
+        "business" => $paypal_email,
+        "item_name" => apply_filters('donation_can_item_name', $cause['name']),
         "item_number" => $item_number,
         "cmd" => "_donations",
         "notify_url" => $notify_url,
         "currency_code" => donation_can_get_currency_for_goal($cause, false),
-        "no_shipping" => "1",
-        "no_note" => $general_settings["ask_for_note"],
-        "amount" => $amount
+        "no_shipping" => $general_settings["require_shipping"],
+        "no_note" => ($general_settings["ask_for_note"] == "0") ? "1" : "0",
+        "amount" => $amount,
+
+        // Customization
+        "cpp_payflow_color" => $general_settings["bg_on_paypal_page"],
+        "cpp_headerback_color" => $general_settings["header_bg_on_paypal_page"],
+        "cpp_headerborder_color" => $general_settings["header_border_on_paypal_page"],
+        "cn" => $general_settings["note_field_label"]
     );
 
     // Custom logo (add if set)
     if ($general_settings["logo_on_paypal_page"] != "") {
-        $paypal_args["cpp_header_image"] = $general_settings["logo_on_paypal_page"];
+        $paypal_args["image_url"] = $general_settings["logo_on_paypal_page"];
+    }
+
+    if ($general_settings["header_on_paypal_page"] != "") {
+        $paypal_args["cpp_header_image"] = $general_settings["header_on_paypal_page"];
     }
 
     // Return pages (add if set)

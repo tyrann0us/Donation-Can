@@ -164,7 +164,7 @@ function donation_can_admin_notices() {
     if ($options != null && $options["debug_mode"]) {
         echo '<div class="donation-can-admin-notice">';
 
-        $settings_url = get_bloginfo("url") . '/wp-admin/admin.php?page=donation-can/model/settings/settings.php';
+        $settings_url = get_bloginfo("url") . '/wp-admin/admin.php?page=donation_can_general_settings.php';
         _e('Donation Can is in sandbox mode. Remember to <a href="' . $settings_url . '">switch back to normal mode</a> when done testing.');
         echo '</div>';
     }

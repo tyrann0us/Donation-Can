@@ -25,6 +25,17 @@ function clearDonationGoal(checkBoxElement) {
     }
 }
 
+function toggleSandboxEmailField(checkBoxElement) {
+    var checkBox = jQuery(checkBoxElement);    
+    var sandboxEmailRow = jQuery("#paypal-sandbox-email-row");
+
+    if (checkBox.is(':checked')) {
+        sandboxEmailRow.show();
+    } else {
+        sandboxEmailRow.hide();
+    }
+}
+
 function resetDonationGoalCheckbox() {
     jQuery('input[name=no_goal]').attr("checked", false);
 }
@@ -130,7 +141,7 @@ function showCurrencyOptions() {
 function hideCurrencySelection() {
     var selectedCurrency = jQuery("select[name=currency]").val();
 
-    if (selectedCurrency == "USD") {
+    if (selectedCurrency == "USD" || selectedCurrency == "CAD") {
         selectedCurrency = "$";
     } else if (selectedCurrency == "EUR") {
         selectedCurrency = "&euro;";

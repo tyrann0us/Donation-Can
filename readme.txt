@@ -104,7 +104,12 @@ This version contains many of improvements that make Donation Can easier to use.
 == Changelog ==
 
 = 1.5.5 =
+* Reorganized the general setting page
+* Added new settings fields for customizing the PayPal checkout page
+* Added support for uploading an image to use on the PayPal checkout page
+* Added separate field for configuring the PayPal sandbox email address
 * Made logging a configurable setting. By default logging is turned off, and if you turn it on, you must make sure the log file is writeable.
+* Removed the CSS styling options from general settings page. Styling should now be done using the "Widget styles" menu.
 
 = 1.5.4 =
 * Added support for replacing the default donation button with your own graphic.
