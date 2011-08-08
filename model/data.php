@@ -858,6 +858,15 @@ function donation_can_process_paypal_ipn($wp) {
                     // TODO Depending on the original status, do different updates...
                     $data["cause_code"] = $saved_transaction->cause_code;
 
+                    if ($data["payment_status"] == "Refunded") {
+                        // Refunds send back the change in the donation amount
+                        $change = intval($data["amount"]);
+                        $fee_change = intval($data["fee"]);
+
+                        $data["amount"] = $saved_transaction->amount + $change;
+                        $data["fee"] = $saved_transaction->fee + $fee_change;
+                    }
+
                     $wpdb->update($table_name,
                             $data,
                             array("item_number" => $data["item_number"]),
@@ -883,16 +892,29 @@ function donation_can_process_paypal_ipn($wp) {
 
                     $admin_email = get_option('admin_email');
 
-                    $subject = '[Donation Can] New Donation to ' . $data["cause_code"];
-                    $message = 'A new donation was made to your cause, "' . $goal["name"] . "\":\r\n\r\n"
-                                      . $data["payer_name"] . ' (' . $data["payer_email"] . ') donated ' . donation_can_get_currency_for_goal($goal, false) . " " . $data["amount"] . ' (PayPal fee: ' . $data["fee"] . ') to "'. $goal["name"] . '" (' . $data["cause_code"] . ').'
-                                      . "\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n"
-                                      . get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php" . "\r\n\r\nThanks,\r\nDonation Can";
-                    $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
-                        'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
-                        'X-Mailer: PHP/' . phpversion();
+                    if ($data["payment_status"] == "Completed") {
+                        $subject = '[Donation Can] New Donation to ' . $data["cause_code"];
+                        $message = 'A new donation was made to your cause, "' . $goal["name"] . "\":\r\n\r\n"
+                                          . $data["payer_name"] . ' (' . $data["payer_email"] . ') donated ' . donation_can_get_currency_for_goal($goal, false) . " " . $data["amount"] . ' (PayPal fee: ' . $data["fee"] . ') to "'. $goal["name"] . '" (' . $data["cause_code"] . ').'
+                                          . "\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n"
+                                          . get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php" . "\r\n\r\nThanks,\r\nDonation Can";
+                        $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
+                            'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion();
 
-                    mail($to, $subject, $message, $headers);
+                        mail($to, $subject, $message, $headers);
+                    } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
+                        $subject = '[Donation Can] Pending Donation to ' . $data["cause_code"];
+                        $message = 'A new donation was made to your cause, "' . $goal["name"] . "\":\r\n\r\n"
+                                          . $data["payer_name"] . ' (' . $data["payer_email"] . ') donated ' . donation_can_get_currency_for_goal($goal, false) . " " . $data["amount"] . ' (PayPal fee: ' . $data["fee"] . ') to "'. $goal["name"] . '" (' . $data["cause_code"] . ').'
+                                          . "\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n"
+                                          . get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php" . "\r\n\r\nThanks,\r\nDonation Can";
+                        $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
+                            'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
+                            'X-Mailer: PHP/' . phpversion();
+
+                        mail($to, $subject, $message, $headers);
+                    }
                 }
             } else if (strcmp ($res, "INVALID") == 0) {
                 // TODO log more info on this into the db?
