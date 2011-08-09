@@ -321,3 +321,31 @@ padding-top: 6px;
     font-size: 8pt;
     color: #aaa;
 }
+
+#add-new-donation-option-div {
+    margin: 10px 0px 10px 0px;
+}
+
+  #goal-div input.donation-goal {
+        width: 200px;
+        font-size: 2.0em;
+    }
+
+    #goal-div input.checkbox {
+        width: auto;
+    }
+
+
+    input.donation-option {
+        width: 200px;
+        margin-right: 5px;
+    }
+
+    #goal-currency {
+        font-size: 2.0em;
+        margin-left: 5px;
+    }
+
+    #goal-currency a {
+        text-decoration: none;
+    }

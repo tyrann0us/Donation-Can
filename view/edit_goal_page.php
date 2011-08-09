@@ -20,37 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 <script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation-can/view/scripts.js"></script>
 
-<style type="text/css">
-    /* TODO move this to CSS file! */
-    #goal-div input.donation-goal {
-        width: 200px;
-        font-size: 2.0em;
-    }
-
-    #goal-div input.checkbox {
-        width: auto;
-    }
-
-    #add-new-donation-option-div {
-        margin: 10px 0px 10px 0px;
-    }
-
-    input.donation-option {
-        width: 200px;
-        margin-right: 5px;
-    }
-
-    #goal-currency {
-        font-size: 2.0em;
-        margin-left: 5px;
-    }
-
-    #goal-currency a {
-        text-decoration: none;
-    }
-}
-</style>
-
 <div class="wrap">
     <?php if ($edit) : ?>
         <h2><?php _e("Edit Cause", "donation_can"); ?></h2>

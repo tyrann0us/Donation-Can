@@ -221,6 +221,20 @@ function donation_can_media_button_form() {
     require_donation_can_view("add_shortcode", array("goals" => donation_can_get_goals(), "styles" => donation_can_get_widget_styles()));
 }
 
+function donation_can_update_roles() {
+    $roles_version = get_option("donation_can_roles_version", "0.0");
+    if ($roles_version != "1.0") {
+        $role = get_role('administrator');
+        $role->add_cap('dc_general_settings');
+        $role->add_cap('dc_causes');
+        $role->add_cap('dc_donations');
+        $role->add_cap('dc_styles');
+        $role->add_cap('dc_dashboard');
+
+        update_option("donation_can_roles_version", "1.0");
+    }
+}
+
 // I develop the plugin outside wp-content using a symlink so I can't use __FILE__ here.
 register_activation_hook(WP_PLUGIN_DIR . "/donation-can/donation_can.php", 'donation_can_install');
 
@@ -244,5 +258,5 @@ add_action("media_upload_donation-can", "donation_can_media_button_form");
 
 // Check that the database tables are up to date
 add_action("plugins_loaded", 'donation_can_db_upgrade');
-
+add_action("plugins_loaded", 'donation_can_update_roles');
 ?>

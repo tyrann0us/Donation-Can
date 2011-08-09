@@ -110,7 +110,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					</div>
 					<input type="hidden" name="donation_sum_num" 
 						value="<?php echo count($general_settings["donation_sums"]);?>" id="donation_sum_num"/>
-					<a href="#" onclick="return addFormTextField('donation_sum_num', 'donation_sum_list', 'donation_sum_');"><?php _e("Add new", "donation_can");?></a>
+                                        <div id="add-new-donation-option-div">
+                                            <a href="#" class="button" onclick="return addFormTextField('donation_sum_num', 'donation_sum_list', 'donation_sum_');"><?php _e("Add new", "donation_can");?></a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr valign="top">
