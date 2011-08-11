@@ -754,12 +754,16 @@ function donation_can_process_start_donation($wp) {
         "anonymous" => $anonymous,
         "time" => current_time('mysql')
     );
+
+    if ($general_settings["debug_mode"]) {
+        $data["sandbox"] = 1;
+    }
     
     // Let sub plugins add their own fields if necessary
-    $data = apply_filters("donation_can_transaction_data", $data, $_POST);
-       
+    $data = apply_filters("donation_can_transaction_data", $data);
+
     $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%f", "%s");
-    $types = apply_filters("donation_can_transaction_types", $data, $_POST);
+    $types = apply_filters("donation_can_transaction_types", $types);
     
     $table_name = donation_can_get_table_name($wpdb);
 

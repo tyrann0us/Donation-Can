@@ -126,7 +126,7 @@ class DonationWidget extends WP_Widget {
                 }
             }
         }
-         
+        
         $out = "";
 
         $out .= $before_widget;
@@ -160,7 +160,7 @@ class DonationWidget extends WP_Widget {
         }
 
         $out .= ob_get_contents();
-        ob_clean();
+        ob_end_clean();
 
         $out .= $after_widget;
 

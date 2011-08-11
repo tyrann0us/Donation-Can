@@ -48,7 +48,7 @@ function get_donation_can_view_as_string($view_name, $args = null) {
     require_donation_can_view($view_name, $args);
 
     $out .= ob_get_contents();
-    ob_clean();
+    ob_end_clean();
 
     return $out;
 }
