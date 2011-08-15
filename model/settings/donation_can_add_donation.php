@@ -56,23 +56,11 @@ function donation_can_add_donation_menu() {
         }
         
         if ($cause_code_valid && $amount_valid) {
-            // Save data
-            $data = array(
-                "item_number" => donation_can_create_item_number($cause_code),
-                "cause_code" => $cause_code,
-                "payment_status" => "Completed",
-                "amount" => $amount,
-                "transaction_id" => "offline",
-                "payer_email" => $payer_email,
-                "payer_name" => $payer_name,
-                "note" => $note,
-                "fee" => 0,
-                "time" => current_time('mysql'),
-                "offline" => 1
-            );
+            $item_number = donation_can_create_item_number($cause_code);
 
-            $table_name = donation_can_get_table_name($wpdb);
-            $wpdb->insert($table_name, $data, $types);
+            donation_can_insert_donation($item_number, $cause_code, 'Completed', $amount, false,
+                '', 0, $payer_email, $payer_name, "offline", 1);
+
 
             render_user_notification(__("Added offline donation", "donation_can")
                 . ". <a href=\"" . get_bloginfo("url") . "/wp-admin/admin.php?page=donation_can_donations.php\">" . __("Browse donations", "donation_can") . "</a>");

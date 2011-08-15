@@ -640,6 +640,44 @@ function w2log($msg) {
     }
 }
 
+function donation_can_insert_donation($item_number, $cause_code, $status, $amount, $anonymous,
+        $time = "", $fee = 0, $payer_email = "", $payer_name = "", $transaction_id = "", $offline = 0) {
+    global $wpdb;
+
+    if ($time == "") {
+        $time = current_time('mysql');
+    }
+
+    // Save the request to database
+    $data = array(
+        "item_number" => $item_number,
+        "cause_code" => $cause_code,
+        "payment_status" => $status,
+        "amount" => $amount,
+        "transaction_id" => $transaction_id,
+        "payer_email" => $payer_email,
+        "payer_name" => $payer_name,
+        "fee" => $fee,
+        "anonymous" => $anonymous,
+        "time" => $time,
+        "offline" => $offline
+    );
+
+    if ($general_settings["debug_mode"]) {
+        $data["sandbox"] = 1;
+    }
+
+    // Let sub plugins add their own fields if necessary
+    $data = apply_filters("donation_can_transaction_data", $data);
+
+    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%f", "%s");
+    $types = apply_filters("donation_can_transaction_types", $types);
+
+    $table_name = donation_can_get_table_name($wpdb);
+
+    $wpdb->insert($table_name, $data, $types);
+}
+
 function donation_can_process_start_donation($wp) {
     global $wpdb;
 
@@ -741,33 +779,7 @@ function donation_can_process_start_donation($wp) {
 
     w2log("Donation started to " . $cause_id . " - Item Number: " . $item_number);
 
-    // Save the request to database
-    $data = array(
-        "item_number" => $item_number,
-        "cause_code" => $cause_id,
-        "payment_status" => 'dc_started',
-        "amount" => $amount,
-        "transaction_id" => "",
-        "payer_email" => "",
-        "payer_name" => "",
-        "fee" => 0,
-        "anonymous" => $anonymous,
-        "time" => current_time('mysql')
-    );
-
-    if ($general_settings["debug_mode"]) {
-        $data["sandbox"] = 1;
-    }
-    
-    // Let sub plugins add their own fields if necessary
-    $data = apply_filters("donation_can_transaction_data", $data);
-
-    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%f", "%s");
-    $types = apply_filters("donation_can_transaction_types", $types);
-    
-    $table_name = donation_can_get_table_name($wpdb);
-
-    $wpdb->insert($table_name, $data, $types);
+    donation_can_insert_donation($item_number, $cause_id, 'dc_started', $amount, $anonymous);
 
     w2log("Inserted to database. Redirecting to payment provider.");
 
