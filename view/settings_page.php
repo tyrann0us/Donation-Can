@@ -269,7 +269,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <tr valign="top">
                                     <th scope="row" valign="center"><?php _e("Email notification template:", "donation_can");?></th>
                                     <td>
-                                        <textarea cols="50" rows="5" class="widefat"><?php echo $general_settings["email_template"]; ?></textarea>
+                                        <textarea cols="50" rows="5" class="widefat" name="email_template"><?php echo $general_settings["email_template"]; ?></textarea>
                                         <br/><span class="description">This template is used for sending email notifications of received donations</span>
                                     </td>
                                 </tr>
