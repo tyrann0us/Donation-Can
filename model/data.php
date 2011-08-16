@@ -936,7 +936,7 @@ function donation_can_process_paypal_ipn($wp) {
 
 
 function donation_can_send_email($to, $subject, $general_settings, $goal, $data, $admin_email) {
-    $message = $general_settings["email_tempate"];
+    $message = $general_settings["email_template"];
     if ($message == null || $message == "") {
         // Default version
         $message = donation_can_get_default_email_template();
