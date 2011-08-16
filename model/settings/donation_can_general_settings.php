@@ -35,6 +35,10 @@ function donation_can_render_error($message) {
  */
 function donation_can_settings_page() {	
     $general_settings = get_option("donation_can_general");
+    if ($general_settings["email_template"] == null || $general_settings["email_template"] == "") {
+        $general_settings["email_template"] = donation_can_get_default_email_template();
+    }
+
     $pages = get_pages();
 
     $style_options = array("default" => "Default", "custom" => "Customize");
@@ -88,6 +92,8 @@ function donation_can_settings_page() {
             }
         }
 
+        $email_template = esc_attr($_POST["email_template"]);
+
         $general_settings["paypal_email"] = $paypal_email;
         $general_settings["paypal_sandbox_email"] = $paypal_sandbox_email;
 
@@ -128,6 +134,8 @@ function donation_can_settings_page() {
         $general_settings["link_back"] = $show_back_link;
 
         $general_settings["subtract_paypal_fees"] = $subtract_fees;
+
+        $general_settings["email_template"] = $email_template;
 
         update_option("donation_can_general", $general_settings);
         render_user_notification(__("Donation Can settings updated", "donation_can"));

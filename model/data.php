@@ -93,6 +93,15 @@ function donation_can_get_general_settings() {
     return get_option("donation_can_general");
 }
 
+function donation_can_get_default_email_template() {
+    $message = 'A new donation was made to your cause, "#CAUSE_NAME#":\r\n\r\n'
+                 . '#USER_NAME# (#USER_EMAIL#) donated #CURRENCY# #AMOUNT# (PayPal fee: #FEE#) to #CAUSE_NAME# #CAUSE_CODE#.'
+                 . '\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n'
+                 . '#DONATIONS_URL#\r\n\r\nThanks,\r\nDonation Can';
+
+    return $message;
+}
+
 function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
@@ -909,27 +918,11 @@ function donation_can_process_paypal_ipn($wp) {
                     $admin_email = get_option('admin_email');
 
                     if ($data["payment_status"] == "Completed") {
-                        $subject = '[Donation Can] New Donation to ' . $data["cause_code"];
-                        $message = 'A new donation was made to your cause, "' . $goal["name"] . "\":\r\n\r\n"
-                                          . $data["payer_name"] . ' (' . $data["payer_email"] . ') donated ' . donation_can_get_currency_for_goal($goal, false) . " " . $data["amount"] . ' (PayPal fee: ' . $data["fee"] . ') to "'. $goal["name"] . '" (' . $data["cause_code"] . ').'
-                                          . "\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n"
-                                          . get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php" . "\r\n\r\nThanks,\r\nDonation Can";
-                        $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
-                            'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
-                            'X-Mailer: PHP/' . phpversion();
-
-                        mail($to, $subject, $message, $headers);
+                        $subject = '[Donation Can] New Donation to ' . $goal["name"];
+                        donation_can_send_email($subject, $general_settings, $goal, $data, $admin_email);
                     } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
                         $subject = '[Donation Can] Pending Donation to ' . $data["cause_code"];
-                        $message = 'A new donation was made to your cause, "' . $goal["name"] . "\":\r\n\r\n"
-                                          . $data["payer_name"] . ' (' . $data["payer_email"] . ') donated ' . donation_can_get_currency_for_goal($goal, false) . " " . $data["amount"] . ' (PayPal fee: ' . $data["fee"] . ') to "'. $goal["name"] . '" (' . $data["cause_code"] . ').'
-                                          . "\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n"
-                                          . get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php" . "\r\n\r\nThanks,\r\nDonation Can";
-                        $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
-                            'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
-                            'X-Mailer: PHP/' . phpversion();
-
-                        mail($to, $subject, $message, $headers);
+                        donation_can_send_email($subject, $general_settings, $goal, $data, $admin_email);
                     }
                 }
             } else if (strcmp ($res, "INVALID") == 0) {
@@ -939,6 +932,31 @@ function donation_can_process_paypal_ipn($wp) {
 	}
 	fclose ($fp);
     }
+}
+
+
+function donation_can_send_email($subject, $general_settings, $goal, $data, $admin_email) {
+    $message = $general_settings["email_tempate"];
+    if ($message == null || $message == "") {
+        // Default version
+        $message = donation_can_get_default_email_template();
+    }
+
+    $message = str_replace('#CAUSE_NAME#', $goal["name"], $message);
+    $message = str_replace('#USER_NAME#', $data["payer_name"], $message);
+    $message = str_replace('#USER_EMAIL#', $data["payer_email"], $message);
+    $message = str_replace('#CURRENCY#', donation_can_get_currency_for_goal($goal, false), $message);
+    $message = str_replace('#AMOUNT#', $data["amount"], $message);
+    $message = str_replace('#FEE#', $data["fee"], $message);
+    $message = str_replace('#CAUSE_CODE#', $data["cause_code"], $message);
+    $message = str_replace('#DONATIONS_URL#', get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php", $message);
+
+    $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
+        'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+
+    mail($to, $subject, $message, $headers);
+
 }
 
 function donation_can_nicedate($date) {
