@@ -911,8 +911,6 @@ function donation_can_process_paypal_ipn($wp) {
                 if (!empty($emails) || !empty($goal_emails)) {
                     $all_emails = array_merge($emails, $goal_emails);
 
-                    $
-
                     //TODO tässä välissä voisi varmistella vielä, että kaikki on oikein formatoitu...
                     $to = join(",", $all_emails);
                     w2log("Sending email to: " . $to);
