@@ -911,6 +911,8 @@ function donation_can_process_paypal_ipn($wp) {
                 if (!empty($emails) || !empty($goal_emails)) {
                     $all_emails = array_merge($emails, $goal_emails);
 
+                    $
+
                     //TODO tässä välissä voisi varmistella vielä, että kaikki on oikein formatoitu...
                     $to = join(",", $all_emails);
                     w2log("Sending email to: " . $to);
@@ -919,10 +921,10 @@ function donation_can_process_paypal_ipn($wp) {
 
                     if ($data["payment_status"] == "Completed") {
                         $subject = '[Donation Can] New Donation to ' . $goal["name"];
-                        donation_can_send_email($subject, $general_settings, $goal, $data, $admin_email);
+                        donation_can_send_email($to, $subject, $general_settings, $goal, $data, $admin_email);
                     } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
-                        $subject = '[Donation Can] Pending Donation to ' . $data["cause_code"];
-                        donation_can_send_email($subject, $general_settings, $goal, $data, $admin_email);
+                        $subject = '[Donation Can] Pending Donation to ' . $goal["name"];
+                        donation_can_send_email($to, $subject, $general_settings, $goal, $data, $admin_email);
                     }
                 }
             } else if (strcmp ($res, "INVALID") == 0) {
@@ -935,7 +937,7 @@ function donation_can_process_paypal_ipn($wp) {
 }
 
 
-function donation_can_send_email($subject, $general_settings, $goal, $data, $admin_email) {
+function donation_can_send_email($to, $subject, $general_settings, $goal, $data, $admin_email) {
     $message = $general_settings["email_tempate"];
     if ($message == null || $message == "") {
         // Default version
@@ -954,6 +956,8 @@ function donation_can_send_email($subject, $general_settings, $goal, $data, $adm
     $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
         'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
+
+    w2log("Message: " . $message);
 
     mail($to, $subject, $message, $headers);
 
