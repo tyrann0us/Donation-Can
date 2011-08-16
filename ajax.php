@@ -61,6 +61,8 @@ if (isset($_GET['donation_can_style_autocomplete'])) :
     }
 
     die();
+elseif (isset($_GET["donation_can_test_email"])) :
+    $admin_email = get_option("admin_email");
+    donation_can_send_email($admin_email, "Test email", donation_can_get_general_settings(), array(), array(), $admin_email);
 endif;
-
 ?>

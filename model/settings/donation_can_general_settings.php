@@ -135,7 +135,7 @@ function donation_can_settings_page() {
 
         $general_settings["subtract_paypal_fees"] = $subtract_fees;
 
-        $general_settings["email_template"] = $email_template;
+        $general_settings["email_template"] = stripslashes($email_template);
 
         update_option("donation_can_general", $general_settings);
         render_user_notification(__("Donation Can settings updated", "donation_can"));

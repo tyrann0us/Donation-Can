@@ -94,10 +94,10 @@ function donation_can_get_general_settings() {
 }
 
 function donation_can_get_default_email_template() {
-    $message = 'A new donation was made to your cause, "#CAUSE_NAME#":\r\n\r\n'
-                 . '#USER_NAME# (#USER_EMAIL#) donated #CURRENCY# #AMOUNT# (PayPal fee: #FEE#) to #CAUSE_NAME# #CAUSE_CODE#.'
-                 . '\r\n\r\nVisit the WordPress dashboard to see all donations to this goal: \r\n'
-                 . '#DONATIONS_URL#\r\n\r\nThanks,\r\nDonation Can';
+    $message = "A new donation was made to your cause, \"#CAUSE_NAME#\":\n\n"
+                 . "#USER_NAME# (#USER_EMAIL#) donated #CURRENCY# #AMOUNT# (PayPal fee: #FEE#) to #CAUSE_NAME# #CAUSE_CODE#."
+                 . "\n\nVisit the WordPress dashboard to see all donations to this goal:\n"
+                 . "#DONATIONS_URL#\n\nThanks,\nDonation Can";
 
     return $message;
 }
