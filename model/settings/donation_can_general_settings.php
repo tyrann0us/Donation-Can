@@ -92,7 +92,7 @@ function donation_can_settings_page() {
             }
         }
 
-        $email_template = esc_attr($_POST["email_template"]);
+        $email_template = $_POST["email_template"];
 
         $general_settings["paypal_email"] = $paypal_email;
         $general_settings["paypal_sandbox_email"] = $paypal_sandbox_email;
