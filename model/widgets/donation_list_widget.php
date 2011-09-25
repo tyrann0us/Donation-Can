@@ -53,7 +53,7 @@ class DonationListWidget extends WP_Widget {
 
             $num_donations = esc_attr($instance["num_donations"]);
             if ($num_donations == null || $num_donations == "") {
-                    $num_donations = 5;
+                $num_donations = 5;
             }
 
             if ($goal_id == "__all__") {
@@ -72,11 +72,11 @@ class DonationListWidget extends WP_Widget {
 
                 // Sort the donations and drop the extra
                 usort($donations, array("DonationListWidget", "donation_list_sort_function"));
-                
+                $donations = array_slice($donations, 0, $num_donations);
             } else {
                 $goal = $goals[$goal_id];
                 if ($title == null || $title == "") {
-                        $title = "Latest Donations for " . $goal["name"];
+                    $title = "Latest Donations for " . $goal["name"];
                 }
                 $donations = donation_can_get_donations(0, $num_donations, $goal_id);
             }

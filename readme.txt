@@ -110,9 +110,10 @@ This version contains many of improvements that make Donation Can easier to use.
 * Added separate field for configuring the PayPal sandbox email address
 * Made logging a configurable setting. By default logging is turned off, and if you turn it on, you must make sure the log file is writeable.
 * Removed the CSS styling options from general settings page. Styling should now be done using the "Widget styles" menu.
-* Bug fix: Refunds from PayPal work correctly now.
 * Added a widget style customization option for letting the user define his custom donation sum using a text field (only available when using radio buttons)
 * Restricted Donation Can menus to administrator level. --> is this what most people really want?
+* Bug fix: Refunds from PayPal work correctly now.
+* Bug fix: Setting the number of recent donations to show in the latest donations widget wasn't working.
 
 = 1.5.4 =
 * Added support for replacing the default donation button with your own graphic.
