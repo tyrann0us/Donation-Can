@@ -426,7 +426,7 @@ function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null, $i
 }
 
 function donation_can_currency_defaults($currency, $convert_to_symbols = true) {
-        // Default to USD as that was the original currency
+    // Default to USD as that was the original currency
     if ($currency == "" || $currency == null) {
         $currency = "USD";
     }
