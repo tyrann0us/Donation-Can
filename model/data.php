@@ -305,7 +305,8 @@ function donation_can_get_goal($goal_id, $include_raised_data = false) {
 }
 
 // if include_raised_data, adds the raised money as a cell in the array
-function donation_can_get_goals($include_raised_data = false, $include_before_reset = false) {
+function donation_can_get_goals($include_raised_data = false, $include_before_reset = false,
+        $start_time = 0, $end_time = 0) {
     global $wpdb;
 
     $general_settings = donation_can_get_general_settings();
@@ -321,7 +322,7 @@ function donation_can_get_goals($include_raised_data = false, $include_before_re
             $goals[$goal["id"]] = $goal;
         }
 
-        $donations = donation_can_get_donations();
+        $donations = donation_can_get_donations(0, 0, null, true, $start_time, $end_time);
         if ($donations != null && is_array($donations)) {
             foreach ($donations as $donation) {
                 $reset_after_id = $goal["reset_after_id"];
@@ -376,7 +377,9 @@ function donation_can_delete_donation($id) {
     $wpdb->query($query);    
 }
 
-function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null, $include_donations_before_reset = false) {
+function donation_can_get_donations($offset = 0, $limit = 0,
+        $goal_id = null, $include_donations_before_reset = false,
+        $start_time = 0, $end_time = 0) {
     global $wpdb;
 
     $query = "SELECT * FROM " . donation_can_get_table_name($wpdb) . " WHERE deleted = 0";
@@ -414,6 +417,15 @@ function donation_can_get_donations($offset = 0, $limit = 0, $goal_id = null, $i
     $goal_list_string = implode(",", $goal_list);
 
     $query .= " AND cause_code IN (" . $goal_list_string . ")";
+
+    // Limit by time of donation
+    if ($start_time > 0) {
+        $query .= " AND time >= \"" . date("Y-m-d H:i", $start_time) . "\"";
+    }
+
+    if ($end_time > 0) {
+        $query .= " AND time <= \"" . date("Y-m-d H:i", $end_time) . "\"";
+    }
 
     $query .= " ORDER BY time DESC";
 

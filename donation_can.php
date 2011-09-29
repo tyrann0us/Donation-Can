@@ -160,13 +160,15 @@ function donation_can_flush_rules() {
 }
 
 function donation_can_admin_notices() {
-    $options = get_option("donation_can_general");
-    if ($options != null && $options["debug_mode"]) {
-        echo '<div class="donation-can-admin-notice">';
+    if (current_user_can('manage_options')) {
+        $options = get_option("donation_can_general");
+        if ($options != null && $options["debug_mode"]) {
+            echo '<div class="donation-can-admin-notice">';
 
-        $settings_url = get_bloginfo("url") . '/wp-admin/admin.php?page=donation_can_general_settings.php';
-        _e('Donation Can is in sandbox mode. Remember to <a href="' . $settings_url . '">switch back to normal mode</a> when done testing.');
-        echo '</div>';
+            $settings_url = get_bloginfo("url") . '/wp-admin/admin.php?page=donation_can_general_settings.php';
+            _e('Donation Can is in sandbox mode. Remember to <a href="' . $settings_url . '">switch back to normal mode</a> when done testing.');
+            echo '</div>';
+        }
     }
 }
 
