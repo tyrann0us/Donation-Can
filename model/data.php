@@ -992,7 +992,7 @@ function donation_can_replace_attributes($text, $data, $goal) {
     $text = str_replace('#AMOUNT#', $data["amount"], $text);
     $text = str_replace('#FEE#', $data["fee"], $text);
     $text = str_replace('#CAUSE_CODE#', $data["cause_code"], $text);
-    $text = str_replace('#DONATIONS_URL#', get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php", $text);
+    $text = str_replace('#DONATIONS_URL#', admin_url("/wp-admin/admin.php?page=donation_can_goals.php"), $text);
 
     $text = str_replace('#ITEM_NUMBER#', $data["item_number"], $text);
     $text = str_replace('#TRANSACTION_ID#', $data["transaction_id"], $text);
