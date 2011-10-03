@@ -36,6 +36,17 @@ function toggleSandboxEmailField(checkBoxElement) {
     }
 }
 
+function togglePayPalNoteFields(checkBoxElement) {
+    var checkBox = jQuery(checkBoxElement);
+    var sandboxEmailRow = jQuery("#paypal-note-field-row");
+
+    if (checkBox.is(':checked')) {
+        sandboxEmailRow.show();
+    } else {
+        sandboxEmailRow.hide();
+    }
+}
+
 function resetDonationGoalCheckbox() {
     jQuery('input[name=no_goal]').attr("checked", false);
 }

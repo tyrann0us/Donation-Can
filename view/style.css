@@ -349,3 +349,7 @@ padding-top: 6px;
     #goal-currency a {
         text-decoration: none;
     }
+
+#send-receipt-action {
+    padding: 10px;
+}

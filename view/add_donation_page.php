@@ -51,6 +51,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <h3 class="hndle"><span><?php _e("Save");?></span></h3>
                         <div class="inside">
                             <div class="submitbox" id="submitlink">
+                                <div id="send-receipt-action">
+                                    <input type="checkbox" name="send_receipt" value="1" <?php if ($send_receipt) { echo "checked"; } ?>/> <?php _e("Send an email receipt to donor."); ?>
+                                </div>
+
                                 <div id="major-publishing-actions">
                                     <div id="delete-action"></div>
                                     <div id="publishing-action">
@@ -93,6 +97,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <h3><label for="amount"><?php _e("Amount", "donation_can");?></label></h3>
                         <div class="inside" id="amount-div">
                             <span id="goal-currency"><?php echo donation_can_get_current_currency(); ?></span> <input type="text" name="amount" value="<?php echo $amount;?>" size="30"/>
+                        </div>
+                    </div>
+
+                    <div class="stuffbox">
+                        <h3><label for="created_at"><?php _e("Donation received at", "donation_can");?></label></h3>
+                        <div class="inside" id="created-at-div">
+                            <p>
+                                <input type="text" name="created_at" value="<?php echo $created_at; ?>" size="30"/>
+                            </p>
+                            <p>
+                                <?php _e("Enter the date of the donation as YYYY-MM-DD and time in 24 hour format (e.g. \"2011-10-03 20:50:20\").", "donation_can"); ?>
+                            </p>
                         </div>
                     </div>
 

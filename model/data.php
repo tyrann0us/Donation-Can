@@ -299,7 +299,9 @@ function donation_can_get_total_raised_for_all_causes() {
 function donation_can_get_goal($goal_id, $include_raised_data = false) {
     $goals = donation_can_get_goals($include_raised_data);
     if ($goals != null && $goal_id != null) {
-        return $goals[$goal_id];
+        if (isset($goals[$goal_id])) {
+            return $goals[$goal_id];
+        }
     }
     return null;
 }
@@ -697,6 +699,8 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
     $table_name = donation_can_get_table_name($wpdb);
 
     $wpdb->insert($table_name, $data, $types);
+
+    return $data;
 }
 
 function donation_can_process_start_donation($wp) {
@@ -927,16 +931,26 @@ function donation_can_process_paypal_ipn($wp) {
                     $to = join(",", $all_emails);
                     w2log("Sending email to: " . $to);
 
-                    $admin_email = get_option('admin_email');
+                    $message = $general_settings["email_template"];
+                    if ($message == null || $message == "") {
+                        // Default version
+                        $message = donation_can_get_default_email_template();
+                    }
 
                     if ($data["payment_status"] == "Completed") {
                         $subject = '[Donation Can] New Donation to ' . $goal["name"];
-                        donation_can_send_email($to, $subject, $general_settings, $goal, $data, $admin_email);
+                        donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data);
                     } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
                         $subject = '[Donation Can] Pending Donation to ' . $goal["name"];
-                        donation_can_send_email($to, $subject, $general_settings, $goal, $data, $admin_email);
+                        donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data);
                     }
                 }
+
+                // Send a receipt to donor
+                if ($general_settings["send_receipt"]) {
+                    donation_can_send_receipt($data);
+                }
+
             } else if (strcmp ($res, "INVALID") == 0) {
                 // TODO log more info on this into the db?
                 w2log("Invalid");
@@ -946,31 +960,63 @@ function donation_can_process_paypal_ipn($wp) {
     }
 }
 
+function donation_can_send_receipt($donation_data, $cause) {
+    if ($donation_data != null) {
+        $general_settings = donation_can_get_general_settings();
+        $email_template = $general_settings["receipt_template"];
 
-function donation_can_send_email($to, $subject, $general_settings, $goal, $data, $admin_email) {
-    $message = $general_settings["email_template"];
-    if ($message == null || $message == "") {
-        // Default version
-        $message = donation_can_get_default_email_template();
+        if ($general_settings["receipt_threshold"] > 0) {
+            w2log("Receipt threshold for receipts set to " . $general_settings["receipt_threshold"]);
+            if ($general_settings["receipt_threshold"] > intval($donation_data["amount"])) {
+                w2log("Donation didn't exceed donation threshold. Not sending receipt.");
+                return false;
+            }
+        }
+
+        if ($email_template != null && $email_template != "") {
+            $to = $donation_data["payer_name"] . " <" . $donation_data["payer_email"] . ">";
+
+            $subject = $general_settings["receipt_subject"];
+            $subject = donation_can_replace_attributes($subject, $donation_data, $cause);
+
+            donation_can_send_email($to, $subject, $email_template, $general_settings, $cause, $donation_data);
+        }
     }
+}
 
-    $message = str_replace('#CAUSE_NAME#', $goal["name"], $message);
-    $message = str_replace('#USER_NAME#', $data["payer_name"], $message);
-    $message = str_replace('#USER_EMAIL#', $data["payer_email"], $message);
-    $message = str_replace('#CURRENCY#', donation_can_get_currency_for_goal($goal, false), $message);
-    $message = str_replace('#AMOUNT#', $data["amount"], $message);
-    $message = str_replace('#FEE#', $data["fee"], $message);
-    $message = str_replace('#CAUSE_CODE#', $data["cause_code"], $message);
-    $message = str_replace('#DONATIONS_URL#', get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php", $message);
+function donation_can_replace_attributes($text, $data, $goal) {
+    $text = str_replace('#CAUSE_NAME#', $goal["name"], $text);
+    $text = str_replace('#USER_NAME#', $data["payer_name"], $text);
+    $text = str_replace('#USER_EMAIL#', $data["payer_email"], $text);
+    $text = str_replace('#CURRENCY#', donation_can_get_currency_for_goal($goal, false), $text);
+    $text = str_replace('#AMOUNT#', $data["amount"], $text);
+    $text = str_replace('#FEE#', $data["fee"], $text);
+    $text = str_replace('#CAUSE_CODE#', $data["cause_code"], $text);
+    $text = str_replace('#DONATIONS_URL#', get_bloginfo("url") . "/wp-admin/admin.php?page=goals.php", $text);
 
+    $text = str_replace('#ITEM_NUMBER#', $data["item_number"], $text);
+    $text = str_replace('#TRANSACTION_ID#', $data["transaction_id"], $text);
+    $text = str_replace('#DONATION_TIME#', $data["time"], $text);
+
+    return $text;
+}
+
+function donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data) {
+    $message = donation_can_replace_attributes($message, $data, $goal);
+
+    $admin_email = get_option('admin_email');
     $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
         'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
-
+    
+    if ($general_settings["use_html_emails"]) {
+        $headers .= "\r\n" .
+            'MIME-Version: 1.0' . "\r\n" .
+            'Content-type: text/html; charset=UTF-8' . "\r\n";
+    }
+       
     w2log("Message: " . $message);
-
     mail($to, $subject, $message, $headers);
-
 }
 
 function donation_can_nicedate($date) {
@@ -996,5 +1042,14 @@ function donation_can_nicedate($date) {
     return $date_string;
 
 }
+
+function donation_can_is_valid_date($date_string) {
+    $x = strtotime($date_string);
+    if ($x === false || $x == -1) {
+        return false;
+    }
+    return true;
+}
+
 
 ?>

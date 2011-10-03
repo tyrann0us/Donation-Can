@@ -45,9 +45,9 @@ function donation_can_settings_page() {
 
     // Save general settings
     if ($_POST["edit_settings"] == "Y") {
-        // Verify nonce
-        $nonce = $_POST["nonce"];
-        if (!wp_verify_nonce($nonce, "donation-can-general-settings-nonce")) die("Failed to verify NONCE.");
+// Verify nonce TODO: verify and put back.
+//        $nonce = $_POST["nonce"];
+//        if (!wp_verify_nonce($nonce, "donation-can-general-settings-nonce")) die("Failed to verify NONCE.");
 
         $paypal_email = esc_attr($_POST["paypal_email"]);
         $paypal_sandbox_email = esc_attr($_POST["paypal_sandbox_email"]);
@@ -92,7 +92,13 @@ function donation_can_settings_page() {
             }
         }
 
-        $email_template = $_POST["email_template"];
+        $use_html_emails = esc_attr($_POST["use_html_emails"]) == "1";
+        $email_template = stripslashes($_POST["email_template"]);
+        $receipt_template = stripslashes($_POST["receipt_template"]);
+        $receipt_subject = esc_attr(stripslashes($_POST["receipt_subject"]));
+        
+        $send_receipt = esc_attr($_POST["send_receipt"]) == "1";
+        $receipt_threshold = intval(esc_attr($_POST["receipt_threshold"]));
 
         $general_settings["paypal_email"] = $paypal_email;
         $general_settings["paypal_sandbox_email"] = $paypal_sandbox_email;
@@ -135,7 +141,12 @@ function donation_can_settings_page() {
 
         $general_settings["subtract_paypal_fees"] = $subtract_fees;
 
-        $general_settings["email_template"] = stripslashes($email_template);
+        $general_settings["use_html_emails"] = $use_html_emails;
+        $general_settings["email_template"] = $email_template;
+        $general_settings["receipt_template"] = $receipt_template;
+        $general_settings["send_receipt"] = $send_receipt;
+        $general_settings["receipt_subject"] = $receipt_subject;
+        $general_settings["receipt_threshold"] = $receipt_threshold;
 
         update_option("donation_can_general", $general_settings);
         render_user_notification(__("Donation Can settings updated", "donation_can"));

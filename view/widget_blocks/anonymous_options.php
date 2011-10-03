@@ -1,6 +1,6 @@
 <li class="widget-element anonymous-element" id="<?php echo $id; ?>">
     <div class="widget-element-title">
-        <h4><?php _e("Anonymous Donation Checkbox", "donation_can");?></h4>
+        <h3><?php _e("Anonymous Donation Checkbox", "donation_can");?></h3>
     </div>
 
     <div class="element-options" <?php if (!$show_options) : ?>style="display:none;"<?php endif; ?>>

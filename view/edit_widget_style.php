@@ -475,11 +475,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
                         <div id="css-element-container">
                             <?php $css_counter = 0; if (isset($style["css"])) : foreach ($style["css"] as $selector => $css_element) : ?>
-                                <div class="donation-can-css-element" id="css-element-<?php echo $css_counter++; ?>">
-                                    <a href="#" class="remove-css-row" onclick="removeElement('css-element-<?php echo $css_counter;?>');">Remove</a>
+                                <div class="donation-can-css-element" id="css-element-<?php echo $css_counter; ?>">
+                                    <a href="#" class="remove-css-row" onclick="removeStyleRow('css-element-<?php echo $css_counter;?>');">Remove</a>
                                     <input type="text" name="css-selector" value="<?php echo $selector;?>"><br/>
                                     <textarea name="css-definition" cols="60" rows="5"><?php echo str_replace('; ', ";\n", $css_element);?></textarea>
                                 </div>
+                                <?php $css_counter++; ?>
                             <?php endforeach; endif; ?>
                         </div>
 

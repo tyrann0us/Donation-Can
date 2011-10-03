@@ -104,16 +104,23 @@ This version contains many of improvements that make Donation Can easier to use.
 == Changelog ==
 
 = 1.5.5 =
-* Reorganized the general setting page
-* Added new settings fields for customizing the PayPal checkout page
-* Added support for uploading an image to use on the PayPal checkout page
-* Added separate field for configuring the PayPal sandbox email address
+* Reorganized the general setting page.
+* Added new settings fields for customizing the PayPal checkout page.
+* Added support for uploading an image to use on the PayPal checkout page.
+* Added separate field for configuring the PayPal sandbox email address.
 * Made logging a configurable setting. By default logging is turned off, and if you turn it on, you must make sure the log file is writeable.
+* Added a settings field for customizing the email notification template.
+* Added support for sending receipts to donors. The receipt template is customizable.
 * Removed the CSS styling options from general settings page. Styling should now be done using the "Widget styles" menu.
+* Added a date field on the "Add donation" page for defining the date when the donation was actually received.
 * Added a widget style customization option for letting the user define his custom donation sum using a text field (only available when using radio buttons)
-* Restricted Donation Can menus to administrator level. --> is this what most people really want?
+* Restricted Donation Can menus to administrator level. If you want to grand other roles access to Donation Can menus, you can give one or more of the following capabilities to the role of your choice: dc_general_settings, dc_causes, dc_donations, dc_styles, dc_dashboard.
+* Layout fixes to make everything look good with the latest WordPress version.
 * Bug fix: Refunds from PayPal work correctly now.
-* Bug fix: Setting the number of recent donations to show in the latest donations widget wasn't working.
+* Bug fix: Setting the number of recent donations to show in the latest donations widget is working correctly now.
+* Bug fix: Removing CSS definitions from widget styles wasn't working properly.
+* Bug fix: Saving widget styles in WordPress 3.2.1 works now.
+
 
 = 1.5.4 =
 * Added support for replacing the default donation button with your own graphic.
