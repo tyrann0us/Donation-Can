@@ -996,7 +996,9 @@ function donation_can_replace_attributes($text, $data, $goal) {
 
     $text = str_replace('#ITEM_NUMBER#', $data["item_number"], $text);
     $text = str_replace('#TRANSACTION_ID#', $data["transaction_id"], $text);
-    $text = str_replace('#DONATION_TIME#', $data["time"], $text);
+
+    $date = date("Y/m/d H:i", strtotime($data["time"]));
+    $text = str_replace('#DONATION_TIME#', $date, $text);
 
     return $text;
 }
@@ -1004,9 +1006,18 @@ function donation_can_replace_attributes($text, $data, $goal) {
 function donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data) {
     $message = donation_can_replace_attributes($message, $data, $goal);
 
-    $admin_email = get_option('admin_email');
-    $headers = 'From: Donation Can <'.$admin_email.'>' . "\r\n" .
-        'Reply-To: Donation Can <'.$admin_email.'>' . "\r\n" .
+    $from_email = $general_settings["email_from"];
+    if (!$from_email) {
+        $from_email = get_option('admin_email');
+    }
+
+    $from_name = $general_settings["email_from_name"];
+    if (!$from_name) {
+        $from_name = "Donation Can";
+    }
+   
+    $headers = 'From: ' . $from_name . ' <'.$from_email . '>' . "\r\n" .
+        'Reply-To: ' . $from_name . ' <' . $from_email . '>' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
     
     if ($general_settings["use_html_emails"]) {

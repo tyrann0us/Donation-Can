@@ -283,6 +283,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             </div>
                             <table class="form-table">
                                 <tr valign="top">
+                                    <th scope="row" valign="center"><?php _e("Send email messages from:", "donation_can");?></th>
+                                    <td>
+                                        <input type="text" class="widefat" name="email_from" value="<?php echo $general_settings["email_from"];?>"/>
+                                        <br/><span class="description">The email address to use as sender in email messages.</span>
+
+                                        <input type="text" class="widefat" name="email_from_name" value="<?php echo $general_settings["email_from_name"];?>"/>
+                                        <br/><span class="description">The name to use as sender in email messages.</span>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
                                     <td colspan="2">
                                         <input type="checkbox" name="use_html_emails" value="1" <?php if ($general_settings["use_html_emails"]) { echo "checked"; } ?>/> <?php _e("Use HTML in email messages.", "donation_can"); ?>
                                     </td>

@@ -43,6 +43,8 @@ function donation_can_settings_page() {
 
     $style_options = array("default" => "Default", "custom" => "Customize");
 
+    // TODO: add parameter validation to general settings!
+
     // Save general settings
     if ($_POST["edit_settings"] == "Y") {
 // Verify nonce TODO: verify and put back.
@@ -100,6 +102,9 @@ function donation_can_settings_page() {
         $send_receipt = esc_attr($_POST["send_receipt"]) == "1";
         $receipt_threshold = intval(esc_attr($_POST["receipt_threshold"]));
 
+        $email_from = esc_attr($_POST["email_from"]);
+        $email_from_name = stripslashes($_POST["email_from_name"]);
+
         $general_settings["paypal_email"] = $paypal_email;
         $general_settings["paypal_sandbox_email"] = $paypal_sandbox_email;
 
@@ -148,9 +153,21 @@ function donation_can_settings_page() {
         $general_settings["receipt_subject"] = $receipt_subject;
         $general_settings["receipt_threshold"] = $receipt_threshold;
 
+        $general_settings["email_from"] = $email_from;
+        $general_settings["email_from_name"] = $email_from_name;
+
         update_option("donation_can_general", $general_settings);
         render_user_notification(__("Donation Can settings updated", "donation_can"));
     }
+
+    // Default values for email
+    if ($general_settings["email_from"] == null || $general_settings["email_from"] == "") {
+        $general_settings["email_from"] = get_option('admin_email');
+    }
+    if ($general_settings["email_from_name"] == null || $general_settings["email_from_name"] == "") {
+        $general_settings["email_from_name"] = "Donation Can";
+    }
+
 
     require_donation_can_view('settings_page', array("general_settings" => $general_settings,
         "pages" => $pages, "style_options" => $style_options));
