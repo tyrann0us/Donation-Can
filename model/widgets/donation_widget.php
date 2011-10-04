@@ -101,14 +101,59 @@ class DonationWidget extends WP_Widget {
 
         $donation_strings = array();
         if ($show_donations) {
-            $num_donations = 5;
-            $donations = donation_can_get_donations(0, $num_donations, $goal_id);
+            $num_donations = $instance["num_donations"];
+            if (!$num_donations) {
+                $num_donations = 5;
+            }
+            if ($goal_id == "__all__") {
+                $donations = donation_can_get_donations(0, $num_donations);
+            } else {
+                $donations = donation_can_get_donations(0, $num_donations, $goal_id);
+                $donation_currency = donation_can_get_currency_for_goal($goals[$goal_id]);
+            }
+
+            // TODO: configure!
+            $show_donor_name = true;
+            if (isset($instance["show_donor_name"])) {
+                $show_donor_name = $instance["show_donor_name"];
+            }
+            $show_donation_sum = true;
+            if (isset($instance["show_donation_sum"])) {
+                $show_donation_sum = $instance["show_donation_sum"];
+            }
 
             foreach ($donations as $donation) {
-                if (!$donation->anonymous) {
-                    $donation_string = __("%NAME donated %CURRENCY %SUM", "donation_can");
+                if ($donation->cause_code != $goal_id) {
+                    $donation_goal = $goals[$donation->cause_code];
+                    $donation_currency = donation_can_get_currency_for_goal($donation_goal);
+                }
+
+                $donation_string = "";
+
+                if (($show_donor_name && !$donation->anonymous) && $show_donation_sum) {
+                    if ($goal_id == "__all__") {
+                        $donation_string = __("%NAME gave %CURRENCY %SUM to \"%CAUSE\"", "donation_can");
+                    } else {
+                        $donation_string = __("%NAME donated %CURRENCY %SUM", "donation_can");
+                    }
+                } else if ($show_donor_name && !$donation->anonymous) {
+                    if ($goal_id == "__all__") {
+                        $donation_string = __("%NAME donated to \"%CAUSE\"", "donation_can");
+                    } else {
+                        $donation_string = __("%NAME made a donation", "donation_can");
+                    }
+                } else if ($show_donation_sum) {
+                    if ($goal_id == "__all__") {
+                        $donation_string = __("%CURRENCY %SUM was donated to \"%CAUSE\"", "donation_can");
+                    } else {
+                        $donation_string = __("%CURRENCY %SUM donated", "donation_can");
+                    }
                 } else {
-                    $donation_string = __("Anonymous donated %CURRENCY %SUM", "donation_can");
+                    if ($goal_id == "__all__") {
+                        $donation_string = __("An anonymous donation was made to \"%CAUSE\"", "donation_can");
+                    } else {
+                        $donation_string = "";
+                    }
                 }
 
                 if ($donation_string != "") {
@@ -117,16 +162,17 @@ class DonationWidget extends WP_Widget {
                         $amount -= $donation->fee;
                     }
 
-                    $donation_string = str_replace("%NAME", $donation->payer_name, $donation_string);
+                    $donation_string = str_replace("%NAME", stripslashes($donation->payer_name), $donation_string);
                     $donation_string = str_replace("%SUM", $amount, $donation_string);
-                    $donation_string = str_replace("%CURRENCY", $currency, $donation_string);
+                    $donation_string = str_replace("%CURRENCY", $donation_currency, $donation_string);
                     $donation_string = str_replace("%CAUSE", $goals[$donation->cause_code]["name"], $donation_string);
 
                     $donation_strings[] = array("date" => $donation->time, "text" => $donation_string);
                 }
             }
         }
-        
+
+
         $out = "";
 
         $out .= $before_widget;
@@ -147,7 +193,8 @@ class DonationWidget extends WP_Widget {
                             "show_description" => $show_description,
                             "show_donations" => $show_donations,
                             "goal" => $goal,
-                            "donation_strings" => $donation_strings
+                            "donation_strings" => $donation_strings,
+                            "show_donation_list_title" => true
                         ),
                         "show_back_link" => $show_back_link,
                         "action_url" => $action_url,
@@ -179,6 +226,10 @@ class DonationWidget extends WP_Widget {
         $show_title = esc_attr($instance["show_title"]);
         $title = esc_attr($instance["title"]);
         $style_id = esc_attr($instance["style_id"]);
+
+        if (isset($instance["num_donations"])) {
+            $num_donations = intval(esc_attr($instance["num_donations"]));
+        }
 
         $goals = get_option("donation_can_causes");
         if ($goals == null) {
@@ -248,6 +299,10 @@ class DonationWidget extends WP_Widget {
                                     <input type="checkbox" id="<?php echo $this->get_field_id('show_donations'); ?>" <?php if ($show_donations) { echo "checked"; } ?>
                                             name="<?php echo $this->get_field_name('show_donations'); ?>" /> <?php _e('Display latest donations', "donation_can"); ?>
                             </label>
+                    </p>
+                    <p>
+                            <label for="<?php echo $this->get_field_id('num_donations'); ?>">Number of donations to display:</label>
+                            <input class="widefat" type="text" name="<?php echo $this->get_field_name('num_donations'); ?>" id="<?php echo $this->get_field_id('num_donations'); ?>" value="<?php echo $num_donations; ?>"/>
                     </p>
 
             <?php

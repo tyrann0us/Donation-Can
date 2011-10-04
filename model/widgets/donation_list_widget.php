@@ -125,7 +125,7 @@ class DonationListWidget extends WP_Widget {
                         $amount -= $donation->fee;
                     }
 
-                    $donation_string = str_replace("%NAME", $donation->payer_name, $donation_string);
+                    $donation_string = str_replace("%NAME", stripslashes($donation->payer_name), $donation_string);
                     $donation_string = str_replace("%SUM", $amount, $donation_string);
                     $donation_string = str_replace("%CURRENCY", $donation_currency, $donation_string);
                     $donation_string = str_replace("%CAUSE", $goals[$donation->cause_code]["name"], $donation_string);

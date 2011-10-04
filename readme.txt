@@ -116,10 +116,13 @@ This version contains many of improvements that make Donation Can easier to use.
 * Added a widget style customization option for letting the user define his custom donation sum using a text field (only available when using radio buttons)
 * Restricted Donation Can menus to administrator level. If you want to grand other roles access to Donation Can menus, you can give one or more of the following capabilities to the role of your choice: dc_general_settings, dc_causes, dc_donations, dc_styles, dc_dashboard.
 * Layout fixes to make everything look good with the latest WordPress version.
+* Added the latest donations widget element to the default widget styles ("Default" and "Default Vertical").
+* Added an option to define the number of latest donations to list in widget.
 * Bug fix: Refunds from PayPal work correctly now.
 * Bug fix: Setting the number of recent donations to show in the latest donations widget is working correctly now.
 * Bug fix: Removing CSS definitions from widget styles wasn't working properly.
 * Bug fix: Saving widget styles in WordPress 3.2.1 works now.
+* Bug fix: Improved the handling of special character when listing donors' names.
 
 
 = 1.5.4 =

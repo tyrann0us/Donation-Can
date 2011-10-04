@@ -106,7 +106,7 @@ function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.6") {
+    if ($widget_styles == null || $widget_styles_version != "1.7") {
         if ($widget_styles == null) {
             $widget_styles = array();
         }
@@ -123,7 +123,8 @@ function donation_can_get_widget_styles() {
                     "3" => array("type" => "progress", "text-format" => "<span class=\"currency\">%CURRENCY%</span><span class=\"raised\">%CURRENT%</span><span class=\"raised-label\">Raised</span><span class=\"goal\">%TARGET%</span><span class=\"goal-label\">Target</span>"),
                     "4" => array("type" => "donation-options"),
                     "5" => array("type" => "anonymous", "prompt" => __("Anonymous donation", "donation_can")),
-                    "6" => array("type" => "submit")
+                    "6" => array("type" => "submit"),
+                    "7" => array("type" => "donation-list")
                 ),
                 "css" => array(
                     "" => "border: 1px #ddd solid; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; background-color: #f5f5f5; color: #333;",
@@ -142,7 +143,11 @@ function donation_can_get_widget_styles() {
                     ".donation-options select" => "width: 100%;",
                     ".submit-donation" => "width: 100%;",
                     ".submit-donation input" => "margin: 10px auto 0px auto; width: 147px; display: block;",
-                    ".backlink" => "text-align: center; margin-top: 15px;"
+                    ".backlink" => "text-align: center; margin-top: 15px;",
+                    ".donations-list-container" => "margin: 10px -10px 0px -10px; padding: 10px; border-top: 1px solid #ddd;",
+                    ".donations-list" => "margin: 0px; padding: 0px; font-size: 10pt; list-style: none;",
+                    ".donations-list li" => "list-style: none; background: transparent; padding: 0px; margin: 5px 0px 5px 0px; font-size: 9pt;",
+                    ".donation-date" => "color: #888; font-size: 8pt; display: block;"
                 )
             );
         
@@ -155,7 +160,8 @@ function donation_can_get_widget_styles() {
                     "2" => array("type" => "title"),
                     "3" => array("type" => "description"),
                     "4" => array("type" => "donation-options", "list-format" => "buttons"),
-                    "5" => array("type" => "anonymous", "prompt" => __("Anonymous donation", "donation_can"))
+                    "5" => array("type" => "anonymous", "prompt" => __("Anonymous donation", "donation_can")),
+                    "6" => array("type" => "donation-list")
                 ),
                 "css" => array(
                     "" => "text-align: left; border: 1px solid #ccc; border-radius: 5px; -moz-border-radius: 5px; padding: 0px 10px 10px 0px; background-color: #f5f5f5; font-family: Verdana; font-size: 8pt; color: #333;",
@@ -177,12 +183,17 @@ function donation_can_get_widget_styles() {
                     ".goal-label" => "display: none;",
                     ".of-label" => "display: block; text-align: center; color: #999; font-size: 8pt;",
                     ".currency" => "color: #999; font-size: 8pt;",
-                    ".goal" => "color: #999; text-align: center; font-size: 8pt;"
+                    ".goal" => "color: #999; text-align: center; font-size: 8pt;",
+                    ".donations-list-container" => "overflow: auto; clear: left; margin: 0px; padding: 0px;",
+                    ".donations-list-inner" => "margin: 10px 0px 0px 0px; padding: 10px;",
+                    ".donations-list" => "font-size: 10pt; list-style: none;",
+                    ".donations-list li" => "list-style: none; background: transparent; padding: 0px; margin: 5px 0px 5px 0px; font-size: 9pt;",
+                    ".donation-date" => "color: #888; font-size: 8pt; display: block;"
                 )            
             );
 
         update_option("donation_can_widget_styles", $widget_styles);
-        update_option("donation_can_widget_styles_version", "1.6");
+        update_option("donation_can_widget_styles_version", "1.7");
     }
 
     return $widget_styles;
@@ -679,7 +690,7 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
         "amount" => $amount,
         "transaction_id" => $transaction_id,
         "payer_email" => $payer_email,
-        "payer_name" => $payer_name,
+        "payer_name" => stripslashes($payer_name),
         "fee" => $fee,
         "anonymous" => $anonymous,
         "time" => $time,
@@ -857,6 +868,9 @@ function donation_can_process_paypal_ipn($wp) {
     $fp = fsockopen ($url, 80, $errno, $errstr, 30);
 
     // Assign posted variables to data array for saving to database
+    $payer_name = $_POST['first_name'] . " " . $_POST['last_name'];
+    $payer_name = stripslashes($payer_name);
+
     $data = array(
         "item_number" => $_POST["item_number"],
         "cause_code" => "",
@@ -864,7 +878,7 @@ function donation_can_process_paypal_ipn($wp) {
         "amount" => $_POST['mc_gross'],
         "transaction_id" => $_POST['txn_id'],
         "payer_email" => $_POST['payer_email'],
-        "payer_name" => $_POST['first_name'] . " " . $_POST['last_name'],
+        "payer_name" => $payer_name,
         "fee" => $_POST['mc_fee'],
         "time" => current_time('mysql')
     );
