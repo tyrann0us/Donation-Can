@@ -960,11 +960,12 @@ function donation_can_process_paypal_ipn($wp) {
                     }
                 }
 
-                // Send a receipt to donor
-                if ($general_settings["send_receipt"]) {
-                    donation_can_send_receipt($data);
+                // Send a receipt to donor (only if completed)
+                if ($data["payment_status"] == "Completed") {
+                    if ($general_settings["send_receipt"]) {
+                        donation_can_send_receipt($data, $goal);
+                    }
                 }
-
             } else if (strcmp ($res, "INVALID") == 0) {
                 // TODO log more info on this into the db?
                 w2log("Invalid");
