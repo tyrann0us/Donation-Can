@@ -146,7 +146,7 @@ function donation_can_get_widget_styles() {
                     ".backlink" => "text-align: center; margin-top: 15px;",
                     ".donations-list-container" => "margin: 10px -10px 0px -10px; padding: 10px; border-top: 1px solid #ddd;",
                     ".donations-list" => "margin: 0px; padding: 0px; font-size: 10pt; list-style: none;",
-                    ".donations-list li" => "list-style: none; background: transparent; padding: 0px; margin: 5px 0px 5px 0px; font-size: 9pt;",
+                    ".donations-list li" => "list-style: none; background: transparent; padding: 0px !important; margin: 5px 0px 5px 0px !important; font-size: 9pt;",
                     ".donation-date" => "color: #888; font-size: 8pt; display: block;"
                 )
             );
@@ -187,7 +187,7 @@ function donation_can_get_widget_styles() {
                     ".donations-list-container" => "overflow: auto; clear: left; margin: 0px; padding: 0px;",
                     ".donations-list-inner" => "margin: 10px 0px 0px 0px; padding: 10px;",
                     ".donations-list" => "font-size: 10pt; list-style: none;",
-                    ".donations-list li" => "list-style: none; background: transparent; padding: 0px; margin: 5px 0px 5px 0px; font-size: 9pt;",
+                    ".donations-list li" => "list-style: none; background: transparent; padding: 0px !important; margin: 5px 0px 5px 0px !important; font-size: 9pt;",
                     ".donation-date" => "color: #888; font-size: 8pt; display: block;"
                 )            
             );
