@@ -3,7 +3,7 @@ Contributors: jarkkolaine
 Donate link: http://treehouseapps.com/donation-can
 Tags: donations, paypal, fundraising, money
 Requires at least: 2.8
-Tested up to: 3.1.3
+Tested up to: 3.2.1
 Stable tag: 1_5_4
 
 Collect PayPal donations towards multiple goals on your blog and show the progress to your visitors using sidebar widgets.
@@ -86,6 +86,9 @@ Coming soon...
 
 == Upgrade Notice ==
 
+= 1.5.5 =
+Improvements to settings and e-mail communication. Bug fixes.
+
 = 1.5.4 =
 Improvements to the widget style editor and several other small fixes.
 
@@ -111,19 +114,19 @@ This version contains many of improvements that make Donation Can easier to use.
 * Made logging a configurable setting. By default logging is turned off, and if you turn it on, you must make sure the log file is writeable.
 * Added a settings field for customizing the email notification template.
 * Added support for sending receipts to donors. The receipt template is customizable.
-* Removed the CSS styling options from general settings page. Styling should now be done using the "Widget styles" menu.
-* Added a date field on the "Add donation" page for defining the date when the donation was actually received.
+* Added support for sending e-mail messages as HTML.
+* Removed CSS styling options from the general settings page. Styling should now be done using the "Widget styles" menu.
+* Added a date field on the "Add donation" page for defining the date when the donation was received.
 * Added a widget style customization option for letting the user define his custom donation sum using a text field (only available when using radio buttons)
 * Restricted Donation Can menus to administrator level. If you want to grand other roles access to Donation Can menus, you can give one or more of the following capabilities to the role of your choice: dc_general_settings, dc_causes, dc_donations, dc_styles, dc_dashboard.
-* Layout fixes to make everything look good with the latest WordPress version.
-* Added the latest donations widget element to the default widget styles ("Default" and "Default Vertical").
+* Added the latest donations element to the default widget styles ("Default" and "Default Vertical").
 * Added an option to define the number of latest donations to list in widget.
-* Bug fix: Refunds from PayPal work correctly now.
-* Bug fix: Setting the number of recent donations to show in the latest donations widget is working correctly now.
-* Bug fix: Removing CSS definitions from widget styles wasn't working properly.
-* Bug fix: Saving widget styles in WordPress 3.2.1 works now.
+* Small layout fixes to make everything look good with the latest WordPress version.
+* Bug fix: Refunds from PayPal now work correctly.
+* Bug fix: Setting the number of recent donations to show in the latest donations widget is now working correctly.
+* Bug fix: Removing CSS definitions from widget styles fixed.
+* Bug fix: Saving widget styles in WordPress 3.2.1 fixed.
 * Bug fix: Improved the handling of special character when listing donors' names.
-
 
 = 1.5.4 =
 * Added support for replacing the default donation button with your own graphic.
