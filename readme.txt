@@ -108,6 +108,7 @@ This version contains many of improvements that make Donation Can easier to use.
 
 = 1.5.6 =
 * Donation widget settings now show only the settings that are applicable to the selected style.
+* Localization: Special characters now work in UTF8, also on the PayPal page. Make sure your WordPress installation is configured to use UTF-8 to benefit from this update.
 * Bug fix: Fixed the link from plugin list to general settings
 
 = 1.5.5 =
