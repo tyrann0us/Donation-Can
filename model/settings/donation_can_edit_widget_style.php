@@ -31,14 +31,15 @@ function donation_can_edit_widget_style_menu() {
     }
 
     if (isset($_POST["style_action"])) {
-        $style_action = attribute_escape($_POST["style_action"]);
+        $style_action = esc_attr($_POST["style_action"]);
 
         if ($style_action == "update" || $style_action == "add") {
-            $name = attribute_escape($_POST["name"]);
+            $name = stripslashes(esc_attr($_POST["name"]));
 
             // STRUCTURE
 
-            $structure = html_entity_decode(utf8_encode(attribute_escape($_POST["widget-structure"])));
+            $structure = esc_attr($_POST["widget-structure"]);
+            $structure = html_entity_decode($structure);
             $structure = stripslashes(str_replace(array("\n","\r","\0"), "", $structure));
             $structure = preg_replace('/([{,])(\s*)([^"]+?)\s*:/','$1"$3":',$structure);
 
@@ -61,7 +62,7 @@ function donation_can_edit_widget_style_menu() {
 
             // CSS
 
-            $css = html_entity_decode(utf8_encode(attribute_escape($_POST["widget-style"])));
+            $css = html_entity_decode(esc_attr($_POST["widget-style"]));
             $css = stripslashes(str_replace(array("\n","\r","\0"), "", $css));
             $css = preg_replace('/([{,])(\s*)([^"]+?)\s*:/','$1"$3":',$css);
 

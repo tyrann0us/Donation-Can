@@ -102,11 +102,21 @@ function donation_can_get_default_email_template() {
     return $message;
 }
 
+function donation_can_append_error($error_object, $error_code, $message) {
+    if ($error_object == null) {
+        $error_object = new WP_Error();
+    }
+
+    $error_object->add($error_code, $message);
+
+    return $error_object;
+}
+
 function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.7") {
+    if ($widget_styles == null || $widget_styles_version != "1.8") {
         if ($widget_styles == null) {
             $widget_styles = array();
         }
@@ -132,6 +142,7 @@ function donation_can_get_widget_styles() {
                     ".description" => "margin: 10px 0px 0px 0px;",
                     ".donation_meter" => "background-color: #fafafa; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; margin: 10px -10px 10px -10px; padding: 10px;",
                     ".progress-meter" => "border: 0px; height: 10px;",
+                    ".progress-meter .past-goal" => "background-color: #ddee00;",
                     ".progress-container" => "background-color: #ddd; height: 10px; border-radius: 4px; -moz-border-radius: 4px;",
                     ".progress-bar" => "background-color: #87C442; height: 10px; border-radius: 4px; -moz-border-radius: 4px;",
                     ".progress-text" => "position: relative; margin-top: 10px; font-size: 8pt; color: #444; height: 30px;",
@@ -321,15 +332,13 @@ function donation_can_get_goal($goal_id, $include_raised_data = false) {
 function donation_can_get_goals($include_raised_data = false, $include_before_reset = false,
         $start_time = 0, $end_time = 0) {
     global $wpdb;
-
-    $general_settings = donation_can_get_general_settings();
-
     $goals = get_option("donation_can_causes");
     if ($goals == null) {
         $goals = array();
     }
 
     if ($include_raised_data) {
+        $general_settings = donation_can_get_general_settings();
         foreach ($goals as $goal) {
             $goal["collected"] = 0;
             $goals[$goal["id"]] = $goal;
@@ -542,19 +551,25 @@ function donation_can_create_cause_id_from_name($name) {
  * @param Array $post
  * @param String $id
  * 
- * @return Array The newly created cause object
+ * @return Array The newly created cause object or error object
  */
-function donation_can_create_cause($post, $unique_id, $id = -1) {
-    $name = attribute_escape($post["name"]);
+function donation_can_create_cause($post, $unique_id, $id = -1, $check_errors = true) {
+    $error = null;
+    
+    $name = stripslashes(esc_attr($post["name"]));
+    if (!$name || strlen($name) < 1) {
+        echo "ERROR: name missing!";
+        $error = donation_can_append_error($error, 'name-missing', __("No name specified for cause", "donation_can"));
+    }
 
     if ($id == -1) {
-        $id = attribute_escape($post["id"]);
+        $id = esc_attr($post["id"]);
 
         if ($id == null || $id == "") {
             $id = donation_can_create_cause_id_from_name($name);
         }
 
-        // If the id is already in use, append a rolling number
+        // If the id is already in use, append a rotating number
         if ($unique_id == true) {
             $causes = donation_can_get_goals();
             $rotating_number = 1;
@@ -566,28 +581,38 @@ function donation_can_create_cause($post, $unique_id, $id = -1) {
         }
     }
     
-    $description = attribute_escape($post["description"]);
-    $currency = attribute_escape($post["currency"]);
+    $description = stripslashes(esc_attr($post["description"]));
+    $currency = esc_attr($post["currency"]); // TODO: should we validate the input so that paypal won't fail?
 
-    $donation_goal = attribute_escape($post["donation_goal"]);
+    $donation_goal = esc_attr($post["donation_goal"]);
     if ($donation_goal) {
         // Remove all non-numerical characters
         $donation_goal = preg_replace('/[^0-9]+/', "", $donation_goal);
     }
 
-    $return_page = attribute_escape($post["return_page"]);
-    $cancelled_return_page = attribute_escape($post["cancelled_return_page"]);
-    $continue_button_text = attribute_escape($post["continue_button_text"]);
-    $notify_email = attribute_escape($post["notify_email"]);
-    $allow_freeform_donation_sum = attribute_escape($post["allow_freeform_donation_sum"]);
+    $return_page = esc_attr($post["return_page"]);
+    $cancelled_return_page = esc_attr($post["cancelled_return_page"]);
+    $continue_button_text = stripslashes(esc_attr($post["continue_button_text"]));
+    
+    $notify_email = esc_attr($post["notify_email"]);
+    if ($notify_email) {
+        $email_addresses = split(',', $notify_email);
+        foreach ($email_addresses as $email) {
+            if (!is_email(trim($email))) {
+                $error = donation_can_append_error($error, "notify-email", sprintf(__("Malformed email address %s", "donation_can"), trim($email)));
+            }
+        }
+    }
 
-    $donation_sum_num = attribute_escape($post["donation_sum_num"]);
+    $allow_freeform_donation_sum = esc_attr($post["allow_freeform_donation_sum"]);
+
+    $donation_sum_num = esc_attr($post["donation_sum_num"]);
     $donation_sums = array();
     
     for ($i = 0; $i < $donation_sum_num; $i++) {
-        $sum_value = attribute_escape($post["donation_sum_" . $i]);
+        $sum_value = esc_attr($post["donation_sum_" . $i]);
         if ($sum_value != null && $sum_value != "") {
-                $donation_sums[] = $sum_value;
+            $donation_sums[] = $sum_value;
         }
     }
 
@@ -605,6 +630,10 @@ function donation_can_create_cause($post, $unique_id, $id = -1) {
     $cause["notify_email"] = $notify_email;
     $cause["donation_sums"] = $donation_sums;
     $cause["allow_freeform_donation_sum"] = $allow_freeform_donation_sum;
+
+    if ($check_errors && $error != null) {
+        return $error;
+    }
 
     return $cause;
 }
@@ -767,6 +796,7 @@ function donation_can_process_start_donation($wp) {
         "no_shipping" => $general_settings["require_shipping"],
         "no_note" => ($general_settings["ask_for_note"] == "0") ? "1" : "0",
         "amount" => $amount,
+        "charset" => "utf-8",
 
         // Customization
         "cpp_payflow_color" => $general_settings["bg_on_paypal_page"],

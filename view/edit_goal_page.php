@@ -20,6 +20,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 <script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation-can/view/scripts.js"></script>
 
+<script type="text/javascript">
+    createCauseIdFromName();
+</script>
+
 <div class="wrap">
     <?php if ($edit) : ?>
         <h2><?php _e("Edit Cause", "donation_can"); ?></h2>

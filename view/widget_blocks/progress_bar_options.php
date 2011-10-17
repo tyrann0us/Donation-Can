@@ -19,7 +19,7 @@
 
         <p>
             <label for="text-format">Text format:</label><br/>
-            <input class="widefat" type="text" name="text-format" value="<?php echo htmlentities($data['text-format']);?>"/>
+            <input class="widefat" type="text" name="text-format" value="<?php echo htmlentities($data['text-format'], ENT_COMPAT | ENT_HTML401, "UTF-8");?>"/>
         </p>
         <p>
             <em>Use the following placeholders to mark variable data:<br/>%CURRENCY%, %TARGET%, %CURRENT%, %PERCENTAGE%</em>

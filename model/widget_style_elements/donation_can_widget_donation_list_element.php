@@ -35,6 +35,20 @@ class DonationCanWidgetDonationListElement extends DonationCanWidgetStyleElement
         return "<li class=\"widget-element donation-list-element\" id=\"$id\"><h3>Recent Donations</h3></li>";
     }
 
+    function get_widget_options() {
+        return array(
+            "show_donations" => array(
+                "type" => "checkbox",
+                "value" => "1",
+                "label" => __('Display latest donations', "donation_can")
+            ),
+            "num_donations" => array(
+                "type" => "text",
+                "label" => __("Number of donations to display:", "donation_can")
+            )
+        );
+    }
+
 }
 
 ?>

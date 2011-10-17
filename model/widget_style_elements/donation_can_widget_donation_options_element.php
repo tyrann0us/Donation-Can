@@ -42,6 +42,10 @@ class DonationCanWidgetDonationOptionsElement extends DonationCanWidgetStyleElem
         return get_donation_can_view_as_string('widget_blocks/donation_options_options', array('data' => $this->element_data, 'show_options' => $show_options, "id" => $id));
     }
 
+    function get_widget_options() {
+        return array();
+    }
+
 }
 
 ?>

@@ -38,6 +38,20 @@ class DonationCanWidgetTitleElement extends DonationCanWidgetStyleElement {
         return "<li class=\"widget-element title-element\" id=\"$id\"><h3>Title</h3></li>";
     }
 
+    function get_widget_options() {
+        return array(
+            "show_title" => array(
+                "label" => __("Display title", "donation_can"),
+                "type" => "checkbox",
+                "value" => "1"
+            ),
+            "title" => array(
+                "label" => __("Title (leave empty for default):", "donation_can"),
+                "type" => "text"
+            )
+        );
+    }
+
 }
 
 ?>

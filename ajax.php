@@ -62,5 +62,24 @@ if (isset($_GET['donation_can_style_autocomplete'])) :
 
     die();
 
+elseif (isset($_GET['donation_can_get_style_options'])): 
+    
+    // Style options (TODO: verify nonce!)
+    // TODO: where do we get the widget and instance from?
+    $widget = new DonationWidget();
+    $instance = array();
+
+    $style_id = $_GET['donation_can_get_style_options'];
+
+    $number = $_GET["wn"];
+    $settings = $widget->get_settings();
+    if (is_array($settings)) {
+        $instance = $settings[$number];
+    }
+
+    echo $widget->get_widget_options($style_id, $instance);
+
+    die();
+
 endif;
 ?>

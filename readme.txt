@@ -106,6 +106,10 @@ This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
 
+= 1.5.6 =
+* Donation widget settings now show only the settings that are applicable to the selected style.
+* Bug fix: Fixed the link from plugin list to general settings
+
 = 1.5.5 =
 * Reorganized the general setting page.
 * Added new settings fields for customizing the PayPal checkout page.

@@ -35,6 +35,10 @@ class DonationCanWidgetSubmitElement extends DonationCanWidgetStyleElement {
         return get_donation_can_view_as_string('widget_blocks/submit_button_options', array('data' => $this->element_data, 'show_options' => $show_options, "id" => $id));
     }
 
+    function get_widget_options() {
+        return array();
+    }
+
 }
 
 ?>

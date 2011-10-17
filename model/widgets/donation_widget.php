@@ -180,28 +180,33 @@ class DonationWidget extends WP_Widget {
         // Use output buffering to get the widget HTML into the string rather than straight on screen
         ob_start();
 
+        $widget_options = array(
+            "currency" => $currency,
+            "raised_so_far" => $raised_so_far,
+            "donation_sums" => $donation_sums,
+            "goal" => $goal,
+            "donation_strings" => $donation_strings,
+            "show_donation_list_title" => true
+        );
+
+        foreach ($instance as $key => $value) {
+            $widget_options[$key] = $value;
+        }
+
+        // Some elements require special handling
+        $widget_options["title"] = $title;
+
+
         if ($wp_rewrite->using_permalinks()) {
             require_donation_can_view('donation_form_single',
-                    array(
-                        "widget_options" => array(
-                            "currency" => $currency,
-                            "raised_so_far" => $raised_so_far,
-                            "donation_sums" => $donation_sums,
-                            "title" => $title,
-                            "show_title" => $show_title,
-                            "show_progress" => $show_progress,
-                            "show_description" => $show_description,
-                            "show_donations" => $show_donations,
-                            "goal" => $goal,
-                            "donation_strings" => $donation_strings,
-                            "show_donation_list_title" => true
-                        ),
-                        "show_back_link" => $show_back_link,
-                        "action_url" => $action_url,
-                        "goal" => $goal,
-                        "elements" => $style["elements"],
-                        "widget_style_id" => $widget_style_id
-                    ));
+                array(
+                    "widget_options" => $widget_options,
+                    "show_back_link" => $show_back_link,
+                    "action_url" => $action_url,
+                    "goal" => $goal,
+                    "elements" => $style["elements"],
+                    "widget_style_id" => $widget_style_id
+                ));
         } else {
             require_donation_can_view('permalinks');
         }
@@ -237,8 +242,36 @@ class DonationWidget extends WP_Widget {
         }
 
         $widget_styles = donation_can_get_widget_styles();
-            
+
+        $widget_style_options = $this->get_widget_options($style_id, $instance);
+
         ?>
+
+<script type="text/javascript">
+    function loadStyleOptions(styleElement) {
+        var styleElement = jQuery(styleElement);
+        var styleId = styleElement.val();
+
+        //alert("style id " + styleId);
+
+        var parent = jQuery(styleElement).closest("div.widget-inside");
+        var number = jQuery("input[name=wn]", parent).val();
+        var customizationDiv = jQuery(".donation-can-widget-customization", parent);
+
+        // Do an AJAX call to get all members for a given team
+        jQuery.ajax({
+            url: "<?php bloginfo('url'); ?>?donation_can_get_style_options=" + styleId,
+            data: { wn: number },
+            success: function(data) {
+                customizationDiv.html(jQuery(data));
+                //customizationDiv.show();
+            }
+        });
+
+    }
+</script>
+
+<input type="hidden" value="<?php echo $this->number; ?>" name="wn"/>
             <p>
                 <label for="<?php echo $this->get_field_id('goal_id'); ?>"><?php _e('Goal:'); ?></label><br/>
                 <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
@@ -258,7 +291,7 @@ class DonationWidget extends WP_Widget {
 
             <p>
                 <label for="<?php echo $this->get_field_id('style_id'); ?>"><?php _e("Widget style:", "donation_can");?></label><br/>
-                <select class="widefat" name="<?php echo $this->get_field_name('style_id');?>">
+                <select class="widefat" name="<?php echo $this->get_field_name('style_id');?>" onchange="loadStyleOptions(this);">
                     <?php foreach ($widget_styles as $style) : ?>
                         <option value="<?php echo $style["id"];?>" <?php if ($style["id"] == $style_id) { echo "selected"; }?>><?php echo $style["name"];?></option>
                     <?php endforeach; ?>
@@ -268,44 +301,68 @@ class DonationWidget extends WP_Widget {
                 <a href="<?php bloginfo('url');?>/wp-admin/admin.php?page=donation_can_widget_styles.php" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
             </p>
 
-                    <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
-                    
-                    <p>
-                            <label for="<?php echo $this->get_field_id('show_title'); ?>">
-                                    <input type="checkbox" id="<?php echo $this->get_field_id('show_title'); ?>" <?php if ($show_title) { echo "checked"; } ?>
-                                            name="<?php echo $this->get_field_name('show_title'); ?>"/> <?php _e('Display title', "donation_can"); ?>
-                            </label>
-                    </p>
-                    <p>
-                            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e("Title (leave empty for default):", "donation_can"); ?>
-                                    <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" value="<?php echo $title; ?>"
-                                            name="<?php echo $this->get_field_name('title'); ?>"/>
-                            </label>
-                    </p>
-                    <p>
-                            <label for="<?php echo $this->get_field_id('show_progress'); ?>">
-                                    <input type="checkbox" id="<?php echo $this->get_field_id('show_progress'); ?>" <?php if ($show_progress) { echo "checked"; } ?>
-                                            name="<?php echo $this->get_field_name('show_progress'); ?>"/> <?php _e('Display progress', "donation_can"); ?>
-                            </label>
-                    </p>
-                    <p>
-                            <label for="<?php echo $this->get_field_id('show_description'); ?>">
-                                    <input type="checkbox" id="<?php echo $this->get_field_id('show_description'); ?>" <?php if ($show_description) { echo "checked"; } ?>
-                                            name="<?php echo $this->get_field_name('show_description'); ?>" /> <?php _e('Display description', "donation_can"); ?>
-                            </label>
-                    </p>
-                    <p>
-                            <label for="<?php echo $this->get_field_id('show_donations'); ?>">
-                                    <input type="checkbox" id="<?php echo $this->get_field_id('show_donations'); ?>" <?php if ($show_donations) { echo "checked"; } ?>
-                                            name="<?php echo $this->get_field_name('show_donations'); ?>" /> <?php _e('Display latest donations', "donation_can"); ?>
-                            </label>
-                    </p>
-                    <p>
-                            <label for="<?php echo $this->get_field_id('num_donations'); ?>">Number of donations to display:</label>
-                            <input class="widefat" type="text" name="<?php echo $this->get_field_name('num_donations'); ?>" id="<?php echo $this->get_field_id('num_donations'); ?>" value="<?php echo $num_donations; ?>"/>
-                    </p>
+            <div class="donation-can-widget-customization">
+                <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
+
+                <?php echo $widget_style_options; ?>
+            </div>
 
             <?php
     }
+
+    function get_widget_options($style_id, $instance = null) {
+        if ($instance == null) {
+            $settings = $this->get_settings();
+            if (is_array($settings)) {
+                $instance = $settings[$this->number];
+            }
+        }
+
+        if ($instance == null) {
+            $instance = array();
+        }
+
+        $style = donation_can_get_widget_style_by_id($style_id);
+
+        $html = "";
+
+        foreach ($style["elements"] as $order => $element_data) {
+            $element = donation_can_get_style_element_from_data($element_data);
+            if ($element != null) {
+                $options = $element->get_widget_options();
+
+                foreach ($options as $name => $data) {
+                    $html .= "<p>";
+
+                    switch ($data["type"]) {
+                        case "checkbox":
+                            $checked = ($instance[$name] == $data["value"]);
+
+                            $html .= "<input type=\"checkbox\" id=\"" . $this->get_field_id($name)
+                                    . "\" name=\"" . $this->get_field_name($name)
+                                    . "\" value=\"" . $data["value"]
+                                    . "\"" . ($checked ? "checked" : "") ." /> ";
+                            $html .= "<label for=\"" . $this->get_field_id($name) . "\">" . $data["label"] . "</label>";
+                            break;
+
+                        case "text":
+                            $html .= "<label for=\"" . $this->get_field_id($name) . "\">" . $data["label"] . "</label><br/>";
+                            $html .= "<input type=\"text\" class=\"widefat\" id=\"" . $this->get_field_id($name)
+                                    . "\" name=\"" . $this->get_field_name($name)
+                                    . "\" value=\"" . $instance[$name] . "\" />";
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    $html .= "</p>";
+                }
+            }
+        }
+
+        return $html;
+    }
+
 }
 ?>

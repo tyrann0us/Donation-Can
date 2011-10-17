@@ -29,14 +29,20 @@ class DonationCanWidgetProgressElement extends DonationCanWidgetStyleElement {
 
     function render_view($widget_options) {
         $goal = $widget_options["goal"];
-        
+        $past_goal = false;
+
         if ($widget_options["show_progress"]) {
             if ($goal["donation_goal"] == 0) {
                 $percentage = 0;
             } else {
-                $percentage = ($widget_options["raised_so_far"] / $goal["donation_goal"]) * 100;
-                if ($percentage > 100) {
-                    $percentage = 100;
+                if ($widget_options["show_past_goal"] == "1" && $widget_options["raised_so_far"] > $goal["donation_goal"]) {
+                    $past_goal = true;
+                    $percentage = ($goal["donation_goal"] / $widget_options["raised_so_far"]) * 100;
+                } else {
+                    $percentage = ($widget_options["raised_so_far"] / $goal["donation_goal"]) * 100;
+                    if ($percentage > 100) {
+                        $percentage = 100;
+                    }
                 }
             }
 
@@ -54,12 +60,28 @@ class DonationCanWidgetProgressElement extends DonationCanWidgetStyleElement {
                         "current" => $widget_options["raised_so_far"],
                         "percentage" => $percentage,
                         "progress_text" => $progress_text,
-                        "currency" => $widget_options["currency"]));
+                        "currency" => $widget_options["currency"],
+                        "past_goal" => $past_goal));
         }
     }
 
     function get_admin_view($show_options, $id) {
         return get_donation_can_view_as_string('widget_blocks/progress_bar_options', array('data' => $this->element_data, 'show_options' => $show_options, "id" => $id));
+    }
+
+    function get_widget_options() {
+        return array(
+            "show_progress" => array(
+                "type" => "checkbox",
+                "value" => "1",
+                "label" => __('Display progress', "donation_can")
+            ),
+            "show_past_goal" => array(
+                "type" => "checkbox",
+                "value" => "1",
+                "label" => __("Display donations exceeding goal", "donation_can")
+            )
+        );
     }
 
 }

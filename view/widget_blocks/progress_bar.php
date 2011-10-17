@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <?php echo $currency; ?> <?php echo $current; ?> <?php _e("raised", "donation_can");?>
 	<?php else : ?> 
             <div class="donation_progress progress-meter">
-                <div class="donation_progress_container progress-container">
+                <div class="donation_progress_container progress-container <?php if ($past_goal) echo "past-goal"; ?>">
                     <?php if (isset($element["direction"]) && $element["direction"] == "vertical") : ?>
                         <div class="donation_progress_bar progress-bar" style="height: <?php echo $percentage; ?>%;"></div>
                     <?php else : ?>

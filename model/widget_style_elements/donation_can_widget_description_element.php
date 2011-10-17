@@ -38,6 +38,16 @@ class DonationCanWidgetDescriptionElement extends DonationCanWidgetStyleElement 
         return "<li class=\"widget-element description-element\" id=\"$id\"><h3>Description</h3></li>";
     }
 
+    function get_widget_options() {
+        return array(
+            "show_description" => array(
+                "label" => __("Display description", "donation_can"),
+                "type" => "checkbox",
+                "value" => "1"
+            )
+        );
+    }
+
 }
 
 ?>

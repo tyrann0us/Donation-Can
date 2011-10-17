@@ -58,16 +58,24 @@ class DonationListWidget extends WP_Widget {
 
             if ($goal_id == "__all__") {
                 if ($title == null || $title == "") {
-                        $title = "Latest Donations";
+                    $title = __("Latest Donations", "donation_can");
                 }
 
                 // The donations are retrieved one by one to make sure we can filter out the reset donations
                 $goals = donation_can_get_goals(false);
 
                 $donations = array();
+                $donations_ids = array();
+
                 foreach ($goals as $cause_id => $goal) {
                     $donation_tmp = donation_can_get_donations(0, $num_donations, $cause_id);
-                    $donations = array_merge($donations, $donation_tmp);
+
+                    foreach ($donation_tmp as $donation) {
+                        if (!in_array($donation->id, $donations_ids)) {
+                            $donations[] = $donation;
+                            $donations_ids[] = $donation->id;
+                        }
+                    }
                 }
 
                 // Sort the donations and drop the extra

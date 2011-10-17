@@ -28,11 +28,23 @@ class DonationCanWidgetAnonymousElement extends DonationCanWidgetStyleElement {
     }
 
     function render_view($widget_options) {
-        require_donation_can_view('widget_blocks/anonymous', array("prompt" => $this->element_data["prompt"]));
+        if ($widget_options["allow_anonymous_donations"] == "1") {
+            require_donation_can_view('widget_blocks/anonymous', array("prompt" => $this->element_data["prompt"]));
+        }
     }
 
     function get_admin_view($show_options, $id) {
         return get_donation_can_view_as_string('widget_blocks/anonymous_options', array('data' => $this->element_data, 'show_options' => $show_options, "id" => $id));
+    }
+
+    function get_widget_options() {
+        return array(
+            "allow_anonymous_donations" => array(
+                "label" => __("Allow anonymous donations", "donation_can"),
+                "type" => "checkbox",
+                "value" => "1"
+            )
+        );
     }
 
 }

@@ -15,6 +15,14 @@ abstract class DonationCanWidgetStyleElement {
 
     abstract function render_view($widget_options);
     abstract function get_admin_view($show_options, $id);
+
+    /**
+     * Returns settings that can be configured for the widget style
+     * element. The settings are displayed on the "Widgets" settings tab.
+     *
+     * TODO: format?
+     */
+    abstract function get_widget_options();
 }
 
 require("donation_can_widget_title_element.php");
