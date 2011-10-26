@@ -998,6 +998,8 @@ function donation_can_process_paypal_ipn($wp) {
             } else if (strcmp ($res, "INVALID") == 0) {
                 // TODO log more info on this into the db?
                 w2log("Invalid");
+            } else {
+                w2log("Unknown response: " . $res);
             }
 	}
 	fclose ($fp);
