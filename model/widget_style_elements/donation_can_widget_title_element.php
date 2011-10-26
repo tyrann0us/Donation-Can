@@ -35,7 +35,7 @@ class DonationCanWidgetTitleElement extends DonationCanWidgetStyleElement {
     }
 
     function get_admin_view($show_options, $id) {
-        return "<li class=\"widget-element title-element\" id=\"$id\"><h3>Title</h3></li>";
+        return "<li class=\"widget-element title-element\" id=\"$id\"><h3>" . __("Title", "donation_can") . "</h3></li>";
     }
 
     function get_widget_options() {

@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 class DonationWidget extends WP_Widget {
     function DonationWidget() {
-        parent::WP_Widget(false, $name = 'Donation Form');
+        parent::WP_Widget(false, $name = __("Donation Form", "donation_can"));
     }
 
     function widget($args, $instance) {
@@ -48,7 +48,7 @@ class DonationWidget extends WP_Widget {
         if ($goal_id == "__all__") {
             $goal = array(
                 "id" => "__all__",
-                "name" => "Summary (All goals)",
+                "name" => __("Summary (All goals)", "donation_can"),
                 "donation_goal" => donation_can_get_total_target_for_all_causes()
             );
         } else {
@@ -185,6 +185,7 @@ class DonationWidget extends WP_Widget {
             "raised_so_far" => $raised_so_far,
             "donation_sums" => $donation_sums,
             "goal" => $goal,
+            "goal_id" => $goal_id,
             "donation_strings" => $donation_strings,
             "show_donation_list_title" => true
         );
@@ -273,22 +274,16 @@ class DonationWidget extends WP_Widget {
 
 <input type="hidden" value="<?php echo $this->number; ?>" name="wn"/>
             <p>
-                <label for="<?php echo $this->get_field_id('goal_id'); ?>"><?php _e('Goal:'); ?></label><br/>
+                <label for="<?php echo $this->get_field_id('goal_id'); ?>"><?php _e('Goal:', "donation_can"); ?></label><br/>
                 <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
                         name="<?php echo $this->get_field_name('goal_id'); ?>">
 
-                    <?php if (function_exists("donation_competition_init_scripts")) : ?>
-                        <option value="__all__" <?php if ($goal_id == "__all__") { echo "selected"; } ?>><?php _e("Summary (All goals)", "donation_can");?></option>
-                    <?php endif; ?>
+                    <option value="__all__" <?php if ($goal_id == "__all__") { echo "selected"; } ?>><?php _e("Summary (All goals)", "donation_can");?></option>
                     <?php foreach ($goals as $goal) : ?>
                         <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
                     <?php endforeach; ?>
                 </select>
             </p>
-                    <!--<p>
-                            <a href="" class="button">Edit goal settings</a>
-                    </p>-->
-
             <p>
                 <label for="<?php echo $this->get_field_id('style_id'); ?>"><?php _e("Widget style:", "donation_can");?></label><br/>
                 <select class="widefat" name="<?php echo $this->get_field_name('style_id');?>" onchange="loadStyleOptions(this);">
@@ -298,16 +293,15 @@ class DonationWidget extends WP_Widget {
                 </select>
             </p>
             <p>
-                <a href="<?php bloginfo('url');?>/wp-admin/admin.php?page=donation_can_widget_styles.php" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
+                <a href="<?php echo admin_url("admin.php?page=donation_can_widget_styles.php");?>" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
             </p>
 
+            <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
             <div class="donation-can-widget-customization">
-                <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
-
                 <?php echo $widget_style_options; ?>
             </div>
 
-            <?php
+        <?php
     }
 
     function get_widget_options($style_id, $instance = null) {
@@ -346,10 +340,15 @@ class DonationWidget extends WP_Widget {
                             break;
 
                         case "text":
+                            $value = $instance[$name];
+                            if ($value == null || $value == "") {
+                                $value = $data["default"];
+                            }
+
                             $html .= "<label for=\"" . $this->get_field_id($name) . "\">" . $data["label"] . "</label><br/>";
                             $html .= "<input type=\"text\" class=\"widefat\" id=\"" . $this->get_field_id($name)
                                     . "\" name=\"" . $this->get_field_name($name)
-                                    . "\" value=\"" . $instance[$name] . "\" />";
+                                    . "\" value=\"" . $value . "\" />";
                             break;
 
                         default:

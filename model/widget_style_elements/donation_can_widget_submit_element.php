@@ -28,7 +28,7 @@ class DonationCanWidgetSubmitElement extends DonationCanWidgetStyleElement {
     }
 
     function render_view($widget_options) {
-        require_donation_can_view('widget_blocks/submit_button', array("data" => $this->element_data));
+        require_donation_can_view('widget_blocks/submit_button', array("data" => $this->element_data, "cause_id" => $widget_options["goal_id"]));
     }
 
     function get_admin_view($show_options, $id) {

@@ -79,7 +79,7 @@ function donation_can_add_donation_menu() {
             }
 
             render_user_notification(__("Added offline donation", "donation_can")
-                . ". <a href=\"" . get_bloginfo("url") . "/wp-admin/admin.php?page=donation_can_donations.php\">" . __("Browse donations", "donation_can") . "</a>");
+                . ". <a href=\"" . admin_url("admin.php?page=donation_can_donations.php") . "\">" . __("Browse donations", "donation_can") . "</a>");
         }
     }
 

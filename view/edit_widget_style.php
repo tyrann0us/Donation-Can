@@ -203,7 +203,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     function uploadImage(element) {
         uploadToField = jQuery(element).closest('div.element-options');
 
-        tb_show('', '<?php echo bloginfo('url') ?>/wp-admin/media-upload.php?type=image&amp;TB_iframe=true');
+        tb_show('', '<?php echo admin_url("media-upload.php?type=image&amp;TB_iframe=true");?>');
         return false;
     };
 
@@ -215,10 +215,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <?php else : ?>
         <?php if ($edit) : ?>
             <h2><?php _e("Edit Widget Style", "donation_can"); ?></h2>
-            <?php $save_button_text = "Update Style"; ?>
+            <?php $save_button_text = __("Update Style", "donation_can"); ?>
         <?php else : ?>
             <h2><?php _e("Create Widget Style", "donation_can"); ?></h2>
-            <?php $save_button_text = "Add Style"; ?>
+            <?php $save_button_text = __("Add Style", "donation_can"); ?>
         <?php endif; ?>
     <?php endif; ?>
 
@@ -229,7 +229,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <div class="handlediv" title="Click to toggle">
                         <br/>
                     </div>
-                    <h3 class="hndle"><span><?php _e("Save");?></span></h3>
+                    <h3 class="hndle"><span><?php _e("Save", "donation_can");?></span></h3>
                     <div class="inside">
                         <div class="submitbox" id="submitlink">
                             <div id="major-publishing-actions">
@@ -241,7 +241,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                         </div>
                                     <?php else : ?>
                                         <input type="button" onclick="storeJSONStructureAndSubmit();" class="button-primary" id="publish"
-                                               value="<?php _e($save_button_text, "donation_can");?>"/>
+                                               value="<?php echo $save_button_text; ?>"/>
                                     <?php endif; ?>
                                 </div>
                                 <div class="clear"></div>
@@ -276,8 +276,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <div class="donation-can-admin-tabs">
 
                     <ul class="tab-items">
-                        <li class="first"><a href="#" class="selected" onclick="return switchTab(this, 'widget-structure');">Structure</a></li>
-                        <li class="last"><a href="#" onclick="return switchTab(this, 'widget-style');">Stylesheet</a></li>
+                        <li class="first"><a href="#" class="selected" onclick="return switchTab(this, 'widget-structure');"><?php _e("Structure", "donation_can");?></a></li>
+                        <li class="last"><a href="#" onclick="return switchTab(this, 'widget-style');"><?php _e("Stylesheet", "donation_can");?></a></li>
                     </ul>
 
 
@@ -286,7 +286,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <div id="css-element-container">
                             <?php $css_counter = 0; if (isset($style["css"])) : foreach ($style["css"] as $selector => $css_element) : ?>
                                 <div class="donation-can-css-element" id="css-element-<?php echo $css_counter; ?>">
-                                    <a href="#" class="remove-css-row" onclick="removeStyleRow('css-element-<?php echo $css_counter;?>');">Remove</a>
+                                    <a href="#" class="remove-css-row" onclick="removeStyleRow('css-element-<?php echo $css_counter;?>');"><?php _e("Remove", "donation_can");?></a>
                                     <input type="text" name="css-selector" value="<?php echo $selector;?>"><br/>
                                     <textarea name="css-definition" cols="60" rows="5"><?php echo str_replace('; ', ";\n", $css_element);?></textarea>
                                 </div>
@@ -298,14 +298,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
                         <div id="style-row-template" style="display:none;">
                             <div class="donation-can-css-element">
-                                <a href="#" class="remove-css-row">Remove</a>
+                                <a href="#" class="remove-css-row"><?php _e("Remove", "donation_can");?></a>
                                 <input type="text" class="css-selector" name="css-selector" value=""><br/>
                                 <textarea name="css-definition" cols="60" rows="5"></textarea>
                             </div>
                         </div>
 
                         <div id="add-style-row-button">
-                            <a class="button" onclick="addStyleRow();">Add new CSS definition</a>
+                            <a class="button" onclick="addStyleRow();"><?php _e("Add new CSS definition", "donation_can");?></a>
                         </div>
 
                     </div>
@@ -316,7 +316,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <div id="widget-list">
                                 <ul>
                                 <?php
-                                    $available_elements = array("title", "description", "donation-options", "donation-list", "progress", "text", "anonymous", "submit");
+                                    $available_elements = donation_can_get_available_widget_style_elements();
                                     foreach ($available_elements as $el) {
                                         $element_object = donation_can_get_style_element_from_data(array('type' => $el));
                                         echo $element_object->to_string(false);
@@ -328,7 +328,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
                         <div class="donation-can-widget-right">
                             <div class="sidebar-name">
-                                <h3>Widget</h3>
+                                <h3><?php _e("Widget", "donation_can");?></h3>
                             </div>
 
                             <div id="widget-contents">
@@ -339,7 +339,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                             <?php if ($element_object != null) { echo $element_object->to_string(true, $counter++); } ?>
                                         <?php endforeach; ?>
                                     <?php else : ?>
-                                        <div class="clean-slate">Drop elements from right side palette to this canvas</div>
+                                        <div class="clean-slate"><?php _e("Drop elements from right side palette to this canvas.", "donation_can");?></div>
                                     <?php endif; ?>
                                 </ul>
 

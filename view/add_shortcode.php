@@ -30,7 +30,7 @@
                     <?php _e("You haven't created any fundraising causes yet.", "donation-can"); ?>
                 </p>
                 <p>
-                    <a target="_top" href="<?php bloginfo("url");?>/wp-admin/admin.php?page=donation_can_add_goal.php"><?php _e("Click here to create one.", "donation_can");?></a>
+                    <a target="_top" href="<?php admin_url("admin.php?page=donation_can_add_goal.php");?>"><?php _e("Click here to create one.", "donation_can");?></a>
                     (<?php _e("Note that clicking on the link will move you out of this post editor.", "donation-can"); ?>)
                 </p>
 

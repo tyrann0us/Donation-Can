@@ -25,8 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
     jQuery(document).ready(function() {
         window.send_to_editor = function(html) {
-            alert("send to editor called");
-
             imgurl = jQuery('img', html).attr('src');
             jQuery('input', uploadToField).val(imgurl);
             tb_remove();
@@ -35,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
     function uploadImage(element) {
         uploadToField = jQuery(element).closest('td');
-        tb_show('', '<?php echo bloginfo('url') ?>/wp-admin/media-upload.php?type=image&amp;TB_iframe=true');
+        tb_show('', '<?php echo admin_url("media-upload.php?type=image&amp;TB_iframe=true");?>');
         return false;
     };
 </script>
@@ -57,7 +55,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <div class="inside" id="payment-info-div">
                             <table class="form-table">
                                 <tr>
-                                    <th scope="row" valign="center"><label for="paypal_email">PayPal account email:</label></th>
+                                    <th scope="row" valign="center"><label for="paypal_email"><?php _e("PayPal account email:", "donation_can"); ?></label></th>
                                     <td valign="center"><input type="text" class="regular-text"  name="paypal_email" value="<?php echo $general_settings["paypal_email"];?>" size="40"/></td>
                                 </tr>
                                 <tr>
@@ -66,14 +64,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                             <?php if ($general_settings["debug_mode"]) { echo "checked"; }?>
                                             onclick="toggleSandboxEmailField(this);"
                                         />
-                                        Enable PayPal sandbox mode for testing donations
+                                        <?php _e("Enable PayPal sandbox mode for testing donations.", "donation_can"); ?>
                                     </td>
                                 </tr>
                                 <tr id="paypal-sandbox-email-row" <?php if ($general_settings["debug_mode"] != 1) { echo "style=\"display:none;\""; }?>>
-                                    <th scope="row" valign="center"><label for="paypal_sandbox_email">Sandbox test account email:</label></th>
+                                    <th scope="row" valign="center"><label for="paypal_sandbox_email"><?php _e("Sandbox test account email:", "donation_can"); ?></label></th>
                                     <td>
-                                        <input type="text" class="regular-text" name="paypal_sandbox_email" value="<?php echo $general_settings["paypal_sandbox_email"];?>" size="40"/><br/>
-                                        <a href="https://developer.paypal.com/" target="_blank">Sign in to PayPal Sandbox to create a test account</a>
+                                        <input type="text" class="regular-text" name="paypal_sandbox_email" value="<?php echo $general_settings["paypal_sandbox_email"]; ?>" size="40"/><br/>
+                                        <a href="https://developer.paypal.com/" target="_blank"><?php _e("Sign in to PayPal Sandbox to create a test account", "donation_can"); ?></a>
                                     </td>
                                 </tr>
                             </table>
@@ -100,7 +98,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                                     <div id="donation_sum_<?php echo $id; ?>">
                                                         <input type="text" class="regular-text" 
                                                             name="donation_sum_<?php echo $id; ?>" value="<?php echo $sum; ?>" size="40"/>
-                                                        <a href="#" onClick="return removeFormTextField('donation_sum_list', 'donation_sum_<?php echo $id; ?>')"><?php _e("Remove");?></a>
+                                                        <a href="#" onClick="return removeFormTextField('donation_sum_list', 'donation_sum_<?php echo $id; ?>')"><?php _e("Remove", "donation_can");?></a>
                                                     </div>
                                                     <?php $id++; ?>
                                                 <?php endforeach; ?>
@@ -165,14 +163,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <tr valign="top">
                                     <td colspan="2" scope="row" valign="center">
                                         <input type="checkbox" name="subtract_fees" value="1" <?php if ($general_settings["subtract_paypal_fees"]) { echo "checked"; }?>/>
-                                        <label for="subtract_fees"><?php _e("Subtract PayPal fees from donation amounts shown to site visitors", "donation_can");?></label>
+                                        <label for="subtract_fees"><?php _e("Subtract PayPal fees from donation amounts shown to site visitors.", "donation_can");?></label>
                                     </td>
                                 </tr>
 
                                 <tr valign="top">
                                     <td scope="row" valign="center" colspan="2">
                                         <input type="checkbox" name="link_back" value="1" <?php if ($general_settings["link_back"]) { echo "checked"; }?>/>
-                                        <label for="link_back"><?php _e("Hide Donation Can back link", "donation_can");?></label>
+                                        <label for="link_back"><?php _e("Hide Donation Can back link.", "donation_can");?></label>
                                     <td>
                                 </tr>
 
@@ -188,7 +186,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             $options = get_option("donation_can_general");
                             if ($options != null && $options["debug_mode"]) :
                             ?>
-                                <div class='donation_can_notice'>Customizations made to the PayPal checkout page are not visible in PayPal sandbox. To test the changes, turn off sandbox mode.</div>
+                                <div class='donation_can_notice'><?php _e("Customizations made to the PayPal checkout page are not visible in PayPal sandbox. To test the changes, turn off sandbox mode.", "donation_can");?></div>
                             <?php endif; ?>
 
                             <table class="form-table">
@@ -249,9 +247,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Ask for shipping address:", "donation_can");?></th>
                                     <td>
                                         <select name="require_shipping">
-                                            <option value="0" <?php if ($general_settings["require_shipping"] == 0) { echo "selected"; }?>>Prompt for an address, but do not require one</option>
-                                            <option value="1" <?php if ($general_settings["require_shipping"] == 1) { echo "selected"; }?>>Do not prompt for an address</option>
-                                            <option value="2" <?php if ($general_settings["require_shipping"] == 2) { echo "selected"; }?>>Prompt for an address, and require one</option>
+                                            <option value="0" <?php if ($general_settings["require_shipping"] == 0) { echo "selected"; }?>><?php _e("Prompt for an address, but do not require one.", "donation_can");?></option>
+                                            <option value="1" <?php if ($general_settings["require_shipping"] == 1) { echo "selected"; }?>><?php _e("Do not prompt for an address.", "donation_can"); ?></option>
+                                            <option value="2" <?php if ($general_settings["require_shipping"] == 2) { echo "selected"; }?>><?php _e("Prompt for an address, and require one.", "donation_can"); ?></option>
                                         </select>
                                     </td>
         			</tr>
@@ -265,20 +263,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <div class="inside" id="email-settings-div">
                             <div class="donation_can_notice">
                                 <p>
-                                    In the email templates below, you can use the following tags to represent data
-                                    about the donation:
+                                    <?php _e("In the email templates below, you can use the following tags to represent data about the donation:", "donation_can"); ?>
                                 </p>
                                 <ul>
-                                    <li><code>#USER_NAME#</code> The name of the person making the donation.</li>
-                                    <li><code>#USER_EMAIL#</code> The email address of the person making the donation.</li>
-                                    <li><code>#CURRENCY#</code> Currency used in the donation.</li>
-                                    <li><code>#AMOUNT#</code> Amount donated.</li>
-                                    <li><code>#FEE#</code> PayPal fee.</li>
-                                    <li><code>#CAUSE_NAME#</code> Name of the cause.</li>
-                                    <li><code>#CAUSE_CODE#</code> ID of the cause.</li>
-                                    <li><code>#TRANSACTION_ID#</code> Unique ID for the donation, generated by <strong>PayPal</strong>.</li>
-                                    <li><code>#ITEM_NUMBER#</code> Unique ID for the donation, generated by Donation Can.</li>
-                                    <li><code>#DONATION_TIME#</code> Date and time of donation.</li>
+                                    <li><code>#USER_NAME#</code> <?php _e("The name of the person making the donation.", "donation_can");?></li>
+                                    <li><code>#USER_EMAIL#</code> <?php _e("The email address of the person making the donation.", "donation_can");?></li>
+                                    <li><code>#CURRENCY#</code> <?php _e("Currency used in the donation.", "donation_can");?></li>
+                                    <li><code>#AMOUNT#</code> <?php _e("Amount donated.", "donation_can");?></li>
+                                    <li><code>#FEE#</code> <?php _e("PayPal fee.", "donation_can");?></li>
+                                    <li><code>#CAUSE_NAME#</code> <?php _e("Name of the cause.", "donation_can");?></li>
+                                    <li><code>#CAUSE_CODE#</code> <?php _e("ID of the cause.", "donation_can");?></li>
+                                    <li><code>#TRANSACTION_ID#</code> <?php _e("Unique ID for the donation, generated by <strong>PayPal</strong>.", "donation_can");?></li>
+                                    <li><code>#ITEM_NUMBER#</code> <?php _e("Unique ID for the donation, generated by Donation Can.", "donation_can");?></li>
+                                    <li><code>#DONATION_TIME#</code> <?php _e("Date and time of donation.", "donation_can");?></li>
                                 </ul>
                             </div>
                             <table class="form-table">
@@ -286,10 +283,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Send email messages from:", "donation_can");?></th>
                                     <td>
                                         <input type="text" class="widefat" name="email_from" value="<?php echo $general_settings["email_from"];?>"/>
-                                        <br/><span class="description">The email address to use as sender in email messages.</span>
+                                        <br/><span class="description"><?php _e("The email address to use as sender in email messages.", "donation_can");?></span>
 
                                         <input type="text" class="widefat" name="email_from_name" value="<?php echo $general_settings["email_from_name"];?>"/>
-                                        <br/><span class="description">The name to use as sender in email messages.</span>
+                                        <br/><span class="description"><?php _e("The name to use as sender in email messages.", "donation_can");?></span>
                                     </td>
                                 </tr>
                                 <tr valign="top">
@@ -301,7 +298,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Email notification template:", "donation_can");?></th>
                                     <td>
                                         <textarea cols="50" rows="5" class="widefat" name="email_template"><?php echo $general_settings["email_template"]; ?></textarea>
-                                        <br/><span class="description">This template is used for sending email notifications of received donations</span>
                                     </td>
                                 </tr>
                                 <tr valign="top">
@@ -314,7 +310,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Minimum donation for sending receipt:", "donation_can"); ?></th>
                                     <td>
                                         <input type="text" class="widefat" name="receipt_threshold" value="<?php echo $general_settings["receipt_threshold"];?>"/>
-                                        <br/><span class="description">Receipts are not sent for donations lower than the value specified here.</span>
+                                        <br/><span class="description"><?php _e("Receipts are not sent for donations lower than the value specified here.", "donation_can");?></span>
                                     </td>
                                 </tr>
                                 <tr valign="top">
@@ -327,7 +323,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Email receipt template:", "donation_can");?></th>
                                     <td>
                                         <textarea cols="50" rows="10" class="widefat" name="receipt_template"><?php echo $general_settings["receipt_template"]; ?></textarea>
-                                        <br/><span class="description">This template is used for sending receipts to donors.</span>
                                     </td>
                                 </tr>
                             </table>
@@ -357,22 +352,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <th scope="row" valign="center"><?php _e("Sort donation causes by:", "donation_can");?></th>
                 <td>
                     <select name="sort_causes_field">
-                        <option value="1" <?php if ($general_settings["sort_causes_field"] == 1) { echo "selected"; } ?>><?php _e("Name", "donation-can");?></option>
-                        <option value="2" <?php if ($general_settings["sort_causes_field"] == 2) { echo "selected"; } ?>><?php _e("Added by", "donation-can");?></option>
-                        <option value="3" <?php if ($general_settings["sort_causes_field"] == 3) { echo "selected"; } ?>><?php _e("Fundraising goal", "donation-can");?></option>
-                        <option value="4" <?php if ($general_settings["sort_causes_field"] == 4) { echo "selected"; } ?>><?php _e("Raised so far", "donation-can");?></option>
-                        <option value="5" <?php if ($general_settings["sort_causes_field"] == 5) { echo "selected"; } ?>><?php _e("Date added", "donation-can");?></option>
+                        <option value="1" <?php if ($general_settings["sort_causes_field"] == 1) { echo "selected"; } ?>><?php _e("Name", "donation_can");?></option>
+                        <option value="2" <?php if ($general_settings["sort_causes_field"] == 2) { echo "selected"; } ?>><?php _e("Added by", "donation_can");?></option>
+                        <option value="3" <?php if ($general_settings["sort_causes_field"] == 3) { echo "selected"; } ?>><?php _e("Fundraising goal", "donation_can");?></option>
+                        <option value="4" <?php if ($general_settings["sort_causes_field"] == 4) { echo "selected"; } ?>><?php _e("Raised so far", "donation_can");?></option>
+                        <option value="5" <?php if ($general_settings["sort_causes_field"] == 5) { echo "selected"; } ?>><?php _e("Date added", "donation_can");?></option>
                     </select>
 
                     <select name="sort_causes_order">
-                        <option value="ASC" <?php if ($general_settings["sort_causes_order"] == "ASC") { echo "selected"; } ?>><?php _e("Ascending", "donation-can");?></option>
-                        <option value="DESC" <?php if ($general_settings["sort_causes_order"] == "DESC") { echo "selected"; } ?>><?php _e("Descending", "donation-can");?></option>
+                        <option value="ASC" <?php if ($general_settings["sort_causes_order"] == "ASC") { echo "selected"; } ?>><?php _e("Ascending", "donation_can");?></option>
+                        <option value="DESC" <?php if ($general_settings["sort_causes_order"] == "DESC") { echo "selected"; } ?>><?php _e("Descending", "donation_can");?></option>
                     </select>
                 </td>
             </tr>
 
 												
-		</table>
-		<p class="submit"><input name="Submit" value="<?php _e('Save Changes'); ?>" type="submit" class="button-primary" /></p>
-	</form>
+        </table>
+        
+        <p class="submit"><input name="Submit" value="<?php _e('Save Changes', "donation_can"); ?>" type="submit" class="button-primary" /></p>
+    </form>
 </div>

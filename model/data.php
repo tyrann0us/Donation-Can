@@ -116,7 +116,7 @@ function donation_can_get_widget_styles() {
     $widget_styles = get_option("donation_can_widget_styles");
     $widget_styles_version = get_option("donation_can_widget_styles_version", "0.0");
 
-    if ($widget_styles == null || $widget_styles_version != "1.8") {
+    if ($widget_styles == null || $widget_styles_version != "1.9") {
         if ($widget_styles == null) {
             $widget_styles = array();
         }
@@ -131,10 +131,11 @@ function donation_can_get_widget_styles() {
                     "1" => array("type" => "title"),
                     "2" => array("type" => "description"),
                     "3" => array("type" => "progress", "text-format" => "<span class=\"currency\">%CURRENCY%</span><span class=\"raised\">%CURRENT%</span><span class=\"raised-label\">Raised</span><span class=\"goal\">%TARGET%</span><span class=\"goal-label\">Target</span>"),
-                    "4" => array("type" => "donation-options"),
-                    "5" => array("type" => "anonymous", "prompt" => __("Anonymous donation", "donation_can")),
-                    "6" => array("type" => "submit"),
-                    "7" => array("type" => "donation-list")
+                    "4" => array("type" => "cause-selection"),
+                    "5" => array("type" => "donation-options"),
+                    "6" => array("type" => "anonymous", "prompt" => __("Anonymous donation", "donation_can")),
+                    "7" => array("type" => "submit"),
+                    "8" => array("type" => "donation-list")
                 ),
                 "css" => array(
                     "" => "border: 1px #ddd solid; border-radius: 5px; -moz-border-radius: 5px; padding: 10px; background-color: #f5f5f5; color: #333;",
@@ -158,7 +159,8 @@ function donation_can_get_widget_styles() {
                     ".donations-list-container" => "margin: 10px -10px 0px -10px; padding: 10px; border-top: 1px solid #ddd;",
                     ".donations-list" => "margin: 0px; padding: 0px; font-size: 10pt; list-style: none;",
                     ".donations-list li" => "list-style: none; background: transparent; padding: 0px !important; margin: 5px 0px 5px 0px !important; font-size: 9pt;",
-                    ".donation-date" => "color: #888; font-size: 8pt; display: block;"
+                    ".donation-date" => "color: #888; font-size: 8pt; display: block;",
+                    ".donation-can-cause-selection select" => "width: 100%;"
                 )
             );
         
@@ -204,7 +206,7 @@ function donation_can_get_widget_styles() {
             );
 
         update_option("donation_can_widget_styles", $widget_styles);
-        update_option("donation_can_widget_styles_version", "1.7");
+        update_option("donation_can_widget_styles_version", "1.9");
     }
 
     return $widget_styles;
@@ -271,8 +273,10 @@ function donation_can_delete_widget_style($style_id) {
     return true;
 }
 
-function donation_can_get_total_raised_for_cause($cause_id, $include_before_reset = false) {
-    $donations = donation_can_get_donations(0, 0, $cause_id, $include_before_reset);
+function donation_can_get_total_raised_for_cause($cause_id, $include_before_reset = false,
+        $start_time = 0, $end_time = 0) {
+    $donations = donation_can_get_donations(0, 0, $cause_id, $include_before_reset,
+            $start_time, $end_time);
 
     $general_settings = donation_can_get_general_settings();
 
@@ -305,8 +309,8 @@ function donation_can_get_total_target_for_all_causes() {
     return $total_target;
 }
 
-function donation_can_get_total_raised_for_all_causes() {
-    $goals = donation_can_get_goals(true);
+function donation_can_get_total_raised_for_all_causes($include_before_reset = false) {
+    $goals = donation_can_get_goals(true, $include_before_reset);
 
     $total = 0;
     if ($goals != null && is_array($goals)) {
@@ -318,11 +322,15 @@ function donation_can_get_total_raised_for_all_causes() {
     return $total;
 }
 
-function donation_can_get_goal($goal_id, $include_raised_data = false) {
-    $goals = donation_can_get_goals($include_raised_data);
+function donation_can_get_goal($goal_id, $include_raised_data = false, $include_before_reset = false) {
+    $goals = donation_can_get_goals(false);
     if ($goals != null && $goal_id != null) {
         if (isset($goals[$goal_id])) {
-            return $goals[$goal_id];
+            $goal = $goals[$goal_id];
+            if ($include_raised_data) {
+                $goal["collected"] = donation_can_get_total_raised_for_cause($goal_id, $include_before_reset);
+            }
+            return $goal;
         }
     }
     return null;
@@ -331,7 +339,6 @@ function donation_can_get_goal($goal_id, $include_raised_data = false) {
 // if include_raised_data, adds the raised money as a cell in the array
 function donation_can_get_goals($include_raised_data = false, $include_before_reset = false,
         $start_time = 0, $end_time = 0) {
-    global $wpdb;
     $goals = get_option("donation_can_causes");
     if ($goals == null) {
         $goals = array();
@@ -340,22 +347,9 @@ function donation_can_get_goals($include_raised_data = false, $include_before_re
     if ($include_raised_data) {
         $general_settings = donation_can_get_general_settings();
         foreach ($goals as $goal) {
-            $goal["collected"] = 0;
+            // Retrieve each goal separately so that we can handle the reset properly
+            $goal["collected"] = donation_can_get_total_raised_for_cause($goal["id"], $include_before_reset, $start_time, $end_time);
             $goals[$goal["id"]] = $goal;
-        }
-
-        $donations = donation_can_get_donations(0, 0, null, true, $start_time, $end_time);
-        if ($donations != null && is_array($donations)) {
-            foreach ($donations as $donation) {
-                $reset_after_id = $goal["reset_after_id"];
-                if ($donation->id > $reset_after_id || $include_before_reset) {
-                    $goals[$donation->cause_code]["collected"] += $donation->amount;
-
-                    if ($general_settings["subtract_paypal_fees"]) {
-                        $goals[$donation->cause_code]["collected"] -= $donation->fee;
-                    }
-                }
-            }
         }
     }
 
@@ -367,17 +361,8 @@ function donation_can_reset_goal($goal_id) {
     if ($goals != null && $goal_id != null && isset($goals[$goal_id])) {
         $goal = $goals[$goal_id];
 
-        $donations = donation_can_get_donations(0, 0, $goal_id);
-
-        // Find the id of the last donation saved
-        $id = 0;
-        foreach ($donations as $donation) {
-            if ($donation->id > $id) {
-                $id = $donation->id;
-            }
-        }
-
-        $goal["reset_after_id"] = $id;
+        // Set the current time stamp as reset time
+        $goal["reset_after_date"] = time();
 
         $goals[$goal_id] = $goal;
         update_option("donation_can_causes", $goals);
@@ -390,7 +375,9 @@ function donation_can_goal_has_been_reset($goal_id) {
         return false;
     }
 
-    return (isset($goal["reset_after_id"]) && $goal["reset_after_id"] > 0);
+    // Support both old and new method, at least for a few versions (since 1.5.6)
+    return ((isset($goal["reset_after_id"]) && $goal["reset_after_id"] > 0) 
+            || (isset($goal["reset_after_date"]) && $goal["reset_after_date"] > 0));
 }
 
 function donation_can_delete_donation($id) {
@@ -414,9 +401,18 @@ function donation_can_get_donations($offset = 0, $limit = 0,
     if ($goal_id != null) {
         $query .= " AND cause_code = \"" . $goal_id . "\"";
 
+        // IMPORTANT: NEVER ASK FOR "COLLECTED" HERE... IT WILL CAUSE A FOREVER LOOP.
         $goal = donation_can_get_goal($goal_id);
-        if (isset($goal["reset_after_id"]) && !$include_donations_before_reset) {
-            $query .= " AND id > \"" . $goal["reset_after_id"] . "\"";
+        if (!$include_donations_before_reset) {        
+            // New reset method
+            if (isset($goal["reset_after_date"])) {
+                $reset_after_time = $goal["reset_after_date"];
+                $query .= " AND time > \"" . date("Y-m-d H:i", $reset_after_time) . "\"";
+            } 
+            // Old reset method (before 1.5.6), kept for backwards compatibility
+            else if (isset($goal["reset_after_id"])) {
+                $query .= " AND id > \"" . $goal["reset_after_id"] . "\"";
+            }
         }
     }
     
@@ -678,6 +674,9 @@ function donation_can_get_style_element_from_data($element) {
         case "anonymous":
             return new DonationCanWidgetAnonymousElement($element);
 
+        case "cause-selection":
+            return new DonationCanWidgetCauseSelectionElement($element);
+        
         default:
             break;
     }
@@ -1076,8 +1075,8 @@ function donation_can_send_email($to, $subject, $message, $general_settings, $go
 }
 
 function donation_can_nicedate($date) {
-    $date_string = mysql2date(__('Y/m/d g:i A'), $date);
-    $time_string = mysql2date(__('g:i A'), $date);
+    $date_string = mysql2date(__("Y/m/d g:i A", "donation_can"), $date);
+    $time_string = mysql2date(__("g:i A", "donation_can"), $date);
 
     $date_data = date_parse($date_string);
     $now_data = getdate();

@@ -27,10 +27,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <div class="wrap">
     <?php if ($edit) : ?>
         <h2><?php _e("Edit Cause", "donation_can"); ?></h2>
-        <?php $save_button_text = "Update Cause"; ?>
+        <?php $save_button_text = __("Update Cause", "donation_can"); ?>
     <?php else : ?>
         <h2><?php _e("Add New Cause", "donation_can"); ?></h2>
-        <?php $save_button_text = "Add Cause"; ?>
+        <?php $save_button_text = __("Add Cause", "donation_can"); ?>
     <?php endif; ?>
 	
     <form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
@@ -47,14 +47,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <div class="handlediv" title="Click to toggle">
                             <br/>
                         </div>
-                        <h3 class="hndle"><span><?php _e("Save");?></span></h3>
+                        <h3 class="hndle"><span><?php _e("Save", "donation_can");?></span></h3>
                         <div class="inside">
                             <div class="submitbox" id="submitlink">
                                 <div id="major-publishing-actions">
                                     <div id="delete-action"></div>
                                     <div id="publishing-action">
                                         <input type="submit" onclick="return verifyAddCauseFormFields();" class="button-primary" id="publish"
-                                               value="<?php _e($save_button_text, "donation_can");?>"/>
+                                               value="<?php echo $save_button_text; ?>"/>
                                     </div>
                                     <div class="clear"></div>
                                 </div>
@@ -78,7 +78,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         </div>
                         <div class="inside">
                             <div id="edit-slug-box" <?php if ($id == null) : ?>style="display:none;"<?php endif; ?>>
-                                <strong>Cause ID</strong>: <span id="id-preview"><?php echo $id; ?></span> <?php if (!$edit) : ?><a class="button" id="edit-id-button" onclick="editCauseId();">Edit</a><?php endif; ?>
+                                <strong><?php _e("Cause ID:", "donation_can");?></strong> <span id="id-preview"><?php echo $id; ?></span> <?php if (!$edit) : ?><a class="button" id="edit-id-button" onclick="editCauseId();"><?php _e("Edit", "donation_can");?></a><?php endif; ?>
                                 <input type="text" name="id" value="<?php echo $id; ?>" style="display:none;">
                                 <a class="button" id="save-id-button" onclick="saveCauseId();" style="display:none;">Save</a>
                             </div>
@@ -129,7 +129,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             </div>
 
                             <p>
-                                <input type="checkbox" value="1" name="allow_freeform_donation_sum" <?php if ($goal["allow_freeform_donation_sum"]) { echo "checked"; } ?>> <?php _e("Include the option for your visitors to pick their donation sums freely.", "donation-can");?>
+                                <input type="checkbox" value="1" name="allow_freeform_donation_sum" <?php if ($goal["allow_freeform_donation_sum"]) { echo "checked"; } ?>> <?php _e("Include the option for your visitors to pick their donation sums freely.", "donation_can");?>
                             </p>
                         </div>
                     </div>

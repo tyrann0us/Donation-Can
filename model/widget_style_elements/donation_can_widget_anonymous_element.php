@@ -29,7 +29,7 @@ class DonationCanWidgetAnonymousElement extends DonationCanWidgetStyleElement {
 
     function render_view($widget_options) {
         if ($widget_options["allow_anonymous_donations"] == "1") {
-            require_donation_can_view('widget_blocks/anonymous', array("prompt" => $this->element_data["prompt"]));
+            require_donation_can_view('widget_blocks/anonymous', array("prompt" => $this->element_data["prompt"], "cause_id" => $widget_options["goal_id"]));
         }
     }
 

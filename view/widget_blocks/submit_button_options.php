@@ -10,14 +10,14 @@
         </p>
 
         <p>
-            <a href="#" class="button" title="Upload image" onclick="uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
+            <a href="#" class="button" title="<?php _e("Upload image", "donation_can");?>" onclick="uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
         </p>
 
 
         <?php if ($data["button-image"]) : ?>
             <hr/>
-            Current image:<br/>
-            <img src="<?php echo $data["button-image"];?>"/>
+            <?php _e("Current image:", "donation_can");?><br/>
+            <img src="<?php echo $data["button-image"];?>" alt="<?php _e("Current image:", "donation_can");?>"/>
         <?php endif; ?>
 
     </div>

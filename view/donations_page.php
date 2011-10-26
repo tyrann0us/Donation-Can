@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         $goal_name = sprintf(__("Donations to \"%s\"", "donation_can"), $selected_goal["name"]);
     }
 
-    $url =  get_bloginfo("url") . "/wp-admin/admin.php?page=donation_can_donations.php";
+    $url = admin_url("admin.php?page=donation_can_donations.php");
 ?>
 
 <div class="wrap">
@@ -35,36 +35,33 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     </form>
 
     <div class="tablenav">
-	<form method="post" name="filter_donations" action="<?php echo $url; ?>">
+	<form method="get" name="filter_donations" action="<?php echo $url; ?>">
+            <input type="hidden" name="page" value="donation_can_donations.php"/>
             <div class="alignleft actions">
                 <select class="postform" name="filter_goal">
                     <option value=""><?php _e("View all goals", "donation_can");?></option>
                     <?php foreach ($goals as $id => $goal) : ?>
-                            <option value="<?php echo $id; ?>" <?php if ($filter_goal == $id) { echo "selected"; }?>><?php echo $goal["name"];?></option>
+                        <option value="<?php echo $id; ?>" <?php if ($filter_goal == $id) { echo "selected"; }?>><?php echo $goal["name"];?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="submit" class="button-secondary" value="Filter"/>
+                <input type="submit" class="button-secondary" value="<?php _e("Filter", "donation_can");?>"/>
             </div>
 
             <div class="tablenav-pages">
                 <span class="displaying-num"><?php echo sprintf(__("Displaying %d-%d of %d", "donation_can"), $start_index, $start_index + count($donations), $total_donations); ?></span>
-			
+
                 <?php if ($total_pages > 1) : ?>
-                    <?php if ($page > 0) : ?>
-                        <a class="previous page-numbers" href="<?php echo $url; ?>&paged=<?php echo $page - 1; ?>">&laquo;</a>
-                    <?php endif; ?>
-			
-                    <?php for ($i = 0; $i < $total_pages; $i++) : ?>
-                        <?php if ($i == $page) : ?>
-                            <span class="page-numbers current"><?php echo $i + 1; ?></span>
-                        <?php else : ?>
-                            <a class="page-numbers" href="<?php echo $url; ?>&paged=<?php echo $i; ?>"><?php echo $i + 1; ?></a>
-                        <?php endif; ?>
-                    <?php endfor; ?>
-			
-                    <?php if ($page < $total_pages - 1) : ?>
-                        <a class="next page-numbers" href="<?php echo $url; ?>&paged=<?php echo ($page + 1);?>">&raquo;</a>
-                    <?php endif; ?>
+
+                    <span class="pagination-links">
+                        <a class="first-page <?php if ($page <= 1) { echo "disabled"; } ?>" title="<?php _e("Go to the first page");?>" href="<?php echo $url; ?>&paged=1">&laquo;</a>
+                        <a class="prev-page <?php if ($page <= 1) { echo "disabled"; } ?>" title="<?php _e("Go to the previous page");?>" href="<?php echo $url;?>&paged=<?php echo $page - 1; ?>">&lsaquo;</a>
+                
+                        <span class="paging-input"><input class="current-page" title="<?php _e("Current page");?>" type="text" name="paged" value="<?php echo $page; ?>" size="2"> of <span class="total-pages"><?php echo $total_pages; ?></span></span>
+
+                        <a class="next-page <?php if ($page >= $total_pages) { echo "disabled"; } ?>" title="<?php _e("Go to the next page"); ?>" href="<?php echo $url; ?>&paged=<?php echo $page + 1; ?>">&rsaquo;</a>
+                        <a class="last-page <?php if ($page >= $total_pages) { echo "disabled"; } ?>" title="<?php _e("Go to the last page"); ?>" href="<?php echo $url; ?>&paged=<?php echo $total_pages; ?>">&raquo;</a>
+                    </span>
+                
                 <?php endif; ?>
             </div>
 	</form>	
@@ -144,7 +141,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <td>
                         <?php echo donation_can_nicedate(mysql2date(__('Y/m/d g:i:s A'), $donation->time)); ?>
                         <div class="row-actions">
-                            <span class="delete"><a href="#" onclick="return do_delete_donation('<?php echo $donation->id; ?>');"><?php _e("Delete");?></a></span>
+                            <span class="delete"><a href="#" onclick="return do_delete_donation('<?php echo $donation->id; ?>');"><?php _e("Delete", "donation_can");?></a></span>
                         </div>
                     </td>
                     <td><?php echo $goals[$donation->cause_code]["name"]; ?></td>

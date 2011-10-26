@@ -86,6 +86,9 @@ Coming soon...
 
 == Upgrade Notice ==
 
+= 1.5.6 =
+Bug fixes.
+
 = 1.5.5 =
 Improvements to settings and e-mail communication. Bug fixes.
 
@@ -108,8 +111,12 @@ This version contains many of improvements that make Donation Can easier to use.
 
 = 1.5.6 =
 * Donation widget settings now show only the settings that are applicable to the selected style.
+* Donation widget now allows selecting a "Summary (all causes)" option which shows all causes in the widget with a drop down list for choosing the cause to donate to. Only available when using the default widget style right now.
 * Localization: Special characters now work in UTF8, also on the PayPal page. Make sure your WordPress installation is configured to use UTF-8 to benefit from this update.
-* Bug fix: Fixed the link from plugin list to general settings
+* Improved paging for donations. Now works well also when the number of donations rise very high.
+* Resetting donations from a cause is now done using the time of donation rather than id to prevent problems with eChecks clearing only after reset.
+* Bug fix: Fixed the link from plugin list to general settings.
+* Bug fix: Fixed links within admin pages to work properly also when WordPress admin is moved to a custom location.
 
 = 1.5.5 =
 * Reorganized the general setting page.

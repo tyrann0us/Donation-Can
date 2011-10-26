@@ -53,11 +53,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
     <?php else : ?>
 
-        <form method="post" id="remove_style_form" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_widget_styles.php">
+        <form method="post" id="remove_style_form" action="<?php echo admin_url("admin.php?page=donation_can_widget_styles.php"); ?>">
             <input type="hidden" name="remove_style" value=""/>
         </form>
 
-        <form method="post" id="clone_style_form" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_widget_styles.php">
+        <form method="post" id="clone_style_form" action="<?php echo admin_url("admin.php?page=donation_can_widget_styles.php"); ?>">
             <input type="hidden" name="clone_style" value=""/>
             <input type="hidden" name="new_name" value=""/>
         </form>
@@ -82,15 +82,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <tr id="style-row-<?php echo $id; ?>" <?php if ($style["locked"]) : ?>class="donation-can-locked"<?php endif;?>>
                         <th scope="row" class="check-column"><!--<input type="checkbox"/>--></th>
                         <td>
-                            <a class="row-title" href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_edit_widget_style.php&style_id=<?php echo $id; ?>"><?php echo $style["name"]; ?></a>
+                            <a class="row-title" href="<?php echo admin_url("admin.php?page=donation_can_edit_widget_style.php&style_id=" . $id); ?>"><?php echo $style["name"]; ?></a>
 
                             <div class="row-actions">
-                                <span class="edit"><a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_edit_widget_style.php&style_id=<?php echo $id; ?>"><?php echo $style["locked"] ? __("View", "donation_can") : __("Edit", "donation_can"); ?></a></span>
+                                <span class="edit"><a href="<?php echo admin_url("admin.php?page=donation_can_edit_widget_style.php&style_id=" . $id); ?>"><?php echo $style["locked"] ? __("View", "donation_can") : __("Edit", "donation_can"); ?></a></span>
 
                                 <span class="clone"> | <a href="#" onclick="clone_style('<?php echo $id; ?>');"><?php _e("Clone", "donation_can");?></a></span>
 
                                 <?php if (!$style["locked"]) : ?>
-                                    <span class="delete"> | <a href="#" onclick="return delete_style('<?php echo $id; ?>', '<?php echo $style['name'];?>');"><?php _e("Delete");?></a></span>
+                                    <span class="delete"> | <a href="#" onclick="return delete_style('<?php echo $id; ?>', '<?php echo $style['name'];?>');"><?php _e("Delete", "donation_can");?></a></span>
                                 <?php endif; ?>
                             </div>
                         </td>
@@ -103,7 +103,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <?php endif; ?>
 
     <p>
-        <a class="button" href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_edit_widget_style.php"><?php _e("Add style", "donation-can");?></a>
+        <a class="button" href="<?php echo admin_url("admin.php?page=donation_can_edit_widget_style.php"); ?>"><?php _e("Add style", "donation_can");?></a>
     </p>
 
 </div>

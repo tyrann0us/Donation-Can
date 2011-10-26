@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class DonationListWidget extends WP_Widget {
     function DonationListWidget() {
-            parent::WP_Widget(false, $name = 'Latest Donations');
+        parent::WP_Widget(false, $name = __("Latest Donations", "donation_can"));
     }
 
     static function donation_list_sort_function($a, $b) {
@@ -63,19 +63,12 @@ class DonationListWidget extends WP_Widget {
 
                 // The donations are retrieved one by one to make sure we can filter out the reset donations
                 $goals = donation_can_get_goals(false);
-
+                
                 $donations = array();
-                $donations_ids = array();
 
                 foreach ($goals as $cause_id => $goal) {
                     $donation_tmp = donation_can_get_donations(0, $num_donations, $cause_id);
-
-                    foreach ($donation_tmp as $donation) {
-                        if (!in_array($donation->id, $donations_ids)) {
-                            $donations[] = $donation;
-                            $donations_ids[] = $donation->id;
-                        }
-                    }
+                    $donations = array_merge($donations, $donation_tmp);
                 }
 
                 // Sort the donations and drop the extra
@@ -170,48 +163,49 @@ class DonationListWidget extends WP_Widget {
             }
     ?>
             <p>
-                    <label for="<?php echo $this->get_field_id('goal_id'); ?>">
-                            <?php _e('Goal:'); ?>
-                            <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
-                                    name="<?php echo $this->get_field_name('goal_id'); ?>">
+                <label for="<?php echo $this->get_field_id('goal_id'); ?>">
+                    <?php _e("Cause:", "donation_can"); ?>
+                </label>
+                <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
+                    name="<?php echo $this->get_field_name('goal_id'); ?>">
 
-                                    <option value="__all__" <?php if ("__all__" == $goal_id) { echo "selected"; }?>>All goals (summary)</option>
+                    <option value="__all__" <?php if ("__all__" == $goal_id) { echo "selected"; }?>><?php _e("All goals (summary)", "donation_can");?></option>
 
-                                    <?php foreach ($goals as $goal) : ?>
-                                            <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
-                                    <?php endforeach; ?>
-                            </select>
-                    </label>
+                    <?php foreach ($goals as $goal) : ?>
+                        <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </p>
             <p>
-                    <label for="<?php echo $this->get_field_id('show_title'); ?>">
-                            <input type="checkbox" id="<?php echo $this->get_field_id('show_title'); ?>" <?php if ($show_title) { echo "checked"; } ?>
-                                    name="<?php echo $this->get_field_name('show_title'); ?>"/> <?php _e('Display title'); ?>
-                    </label>
+                <input type="checkbox" id="<?php echo $this->get_field_id('show_title'); ?>" <?php if ($show_title) { echo "checked"; } ?>
+                        name="<?php echo $this->get_field_name('show_title'); ?>"/>
+                <label for="<?php echo $this->get_field_id('show_title'); ?>">
+                    <?php _e('Display title', 'donation_can'); ?>
+                </label>
             </p>
             <p>
-                    <label for="<?php echo $this->get_field_id('title'); ?>">Title (leave empty for default):
-                            <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" value="<?php echo $title; ?>"
-                                    name="<?php echo $this->get_field_name('title'); ?>"/>
-                    </label>
+                <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e("Title (leave empty for default):", "donation_can"); ?></label>
+                <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" value="<?php echo $title; ?>"
+                        name="<?php echo $this->get_field_name('title'); ?>"/>
             </p>
             <p>
-                    <label for="<?php echo $this->get_field_id('show_donor_name'); ?>">
-                            <input type="checkbox" id="<?php echo $this->get_field_id('show_donor_name'); ?>" <?php if ($show_donor_name) { echo "checked"; } ?>
-                                    name="<?php echo $this->get_field_name('show_donor_name'); ?>"/> <?php _e('Display names of donors'); ?>
-                    </label>
+                <input type="checkbox" id="<?php echo $this->get_field_id('show_donor_name'); ?>" <?php if ($show_donor_name) { echo "checked"; } ?>
+                                    name="<?php echo $this->get_field_name('show_donor_name'); ?>"/> 
+                <label for="<?php echo $this->get_field_id('show_donor_name'); ?>">
+                    <?php _e("Display names of donors", "donation_can"); ?>
+                </label>
             </p>
             <p>
-                    <label for="<?php echo $this->get_field_id('show_donation_sum'); ?>">
-                            <input type="checkbox" id="<?php echo $this->get_field_id('show_donation_sum'); ?>" <?php if ($show_donation_sum) { echo "checked"; } ?>
-                                    name="<?php echo $this->get_field_name('show_donation_sum'); ?>"/> <?php _e('Display donation sums'); ?>
-                    </label>
+                <input type="checkbox" id="<?php echo $this->get_field_id('show_donation_sum'); ?>" <?php if ($show_donation_sum) { echo "checked"; } ?>
+                        name="<?php echo $this->get_field_name('show_donation_sum'); ?>"/> 
+                <label for="<?php echo $this->get_field_id('show_donation_sum'); ?>">
+                    <?php _e('Display donation sums', "donation_can"); ?>
+                </label>
             </p>
             <p>
-                    <label for="<?php echo $this->get_field_id('num_donations'); ?>">Number of donations to list:
-                            <input type="text" class="widefat" id="<?php echo $this->get_field_id('num_donations'); ?>" value="<?php echo $num_donations; ?>"
-                                    name="<?php echo $this->get_field_name('num_donations'); ?>"/>
-                    </label>
+                <label for="<?php echo $this->get_field_id('num_donations'); ?>"><?php _e("Number of donations to display:", "donation_can");?></label>
+                <input type="text" class="widefat" id="<?php echo $this->get_field_id('num_donations'); ?>" value="<?php echo $num_donations; ?>"
+                        name="<?php echo $this->get_field_name('num_donations'); ?>"/>
             </p>
 
     <?php

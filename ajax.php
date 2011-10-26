@@ -49,7 +49,8 @@ if (isset($_GET['donation_can_style_autocomplete'])) :
         ".submit-donation",
         ".submit-donation input",
         ".custom-text",
-        ".donation-widget-title"
+        ".donation-widget-title",
+        ".donation-can-cause-selection"
     );
 
     header("Content-type: text/plain");
@@ -65,21 +66,43 @@ if (isset($_GET['donation_can_style_autocomplete'])) :
 elseif (isset($_GET['donation_can_get_style_options'])): 
     
     // Style options (TODO: verify nonce!)
-    // TODO: where do we get the widget and instance from?
     $widget = new DonationWidget();
     $instance = array();
 
-    $style_id = $_GET['donation_can_get_style_options'];
-
-    $number = $_GET["wn"];
+    $style_id = esc_attr($_GET['donation_can_get_style_options']);
+    $number = esc_attr($_GET["wn"]);
+    
+    $widget->number = $number;
     $settings = $widget->get_settings();
     if (is_array($settings)) {
         $instance = $settings[$number];
     }
 
+    // This is run before Donation Can has chance to load the texts properly, so we need to do it here manually...
+    load_plugin_textdomain("donation_can", false, "donation-can");
+
     echo $widget->get_widget_options($style_id, $instance);
 
     die();
 
+elseif (isset($_GET['donation_can_get_cause_data'])):
+
+    // Donation cause data
+    $cause_code = esc_attr($_GET['donation_can_get_cause_data']);
+    $field = esc_attr($_GET['field']);
+
+    $cause = donation_can_get_goal($cause_code);
+
+    $filtered_cause = array(
+        "donation_goal" => $cause["donation_goal"],
+        "currency" => $cause["currency"],
+        "description" => $cause["description"],
+        "donation_options" => $cause["donation_sums"]
+    );
+
+    echo json_encode($filtered_cause);
+
+    die();
+    
 endif;
 ?>

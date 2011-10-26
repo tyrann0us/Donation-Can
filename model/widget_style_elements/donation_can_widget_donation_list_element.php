@@ -32,7 +32,7 @@ class DonationCanWidgetDonationListElement extends DonationCanWidgetStyleElement
     }
 
     function get_admin_view($show_options, $id) {
-        return "<li class=\"widget-element donation-list-element\" id=\"$id\"><h3>Recent Donations</h3></li>";
+        return "<li class=\"widget-element donation-list-element\" id=\"$id\"><h3>" . __("Recent Donations", "donation_can") . "</h3></li>";
     }
 
     function get_widget_options() {

@@ -35,7 +35,7 @@ class DonationCanWidgetDescriptionElement extends DonationCanWidgetStyleElement 
     }
 
     function get_admin_view($show_options, $id) {
-        return "<li class=\"widget-element description-element\" id=\"$id\"><h3>Description</h3></li>";
+        return "<li class=\"widget-element description-element\" id=\"$id\"><h3>" . __("Description", "donation_can") . "</h3></li>";
     }
 
     function get_widget_options() {

@@ -1,4 +1,4 @@
-<div class="submit-donation">
+<div class="submit-donation" <?php if ($cause_id == "__all__") { echo "style=\"display:none;\""; } ?>>
     <?php
     $url = "http://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif";
 

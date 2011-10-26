@@ -52,7 +52,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <div class="inside">
                             <div class="submitbox" id="submitlink">
                                 <div id="send-receipt-action">
-                                    <input type="checkbox" name="send_receipt" value="1" <?php if ($send_receipt) { echo "checked"; } ?>/> <?php _e("Send an email receipt to donor."); ?>
+                                    <input type="checkbox" name="send_receipt" value="1" <?php if ($send_receipt) { echo "checked"; } ?>/> <?php _e("Send an email receipt to donor.", "donation_can"); ?>
                                 </div>
 
                                 <div id="major-publishing-actions">

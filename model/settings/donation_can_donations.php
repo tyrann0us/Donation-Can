@@ -18,8 +18,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 function donation_can_donations_menu() {
-    $page = $_GET["paged"];
-    $filter_goal = attribute_escape($_POST["filter_goal"]);
+    $page = intval(esc_attr($_GET["paged"]));
+    //echo "page: " . $page;
+
+    if (!$page) {
+        $page = 1;
+    }
+
+    $p = $page - 1; // A zero based page
+
+    $filter_goal = esc_attr($_GET["filter_goal"]);
     if ($filter_goal == null || $filter_goal == "") {
         $filter_goal = attribute_escape($_GET["filter_goal"]);
     }
@@ -35,9 +43,9 @@ function donation_can_donations_menu() {
 
     $donations_per_page = 20;
 	
-    $start_index = $page * $donations_per_page;
+    $start_index = $p * $donations_per_page;
     $total_donations = donation_can_get_donation_count($filter_goal);
-    $total_pages =  $total_donations / $donations_per_page;
+    $total_pages =  intval($total_donations / $donations_per_page);
 
     if ($total_donations > $total_pages * $donations_per_page) {
         $total_pages++;

@@ -25,6 +25,11 @@ abstract class DonationCanWidgetStyleElement {
     abstract function get_widget_options();
 }
 
+function donation_can_get_available_widget_style_elements() {
+    return array("title", "description", "cause-selection", "donation-options", "donation-list",
+        "progress", "text", "anonymous", "submit");
+}
+
 require("donation_can_widget_title_element.php");
 require("donation_can_widget_description_element.php");
 require("donation_can_widget_submit_element.php");
@@ -33,4 +38,5 @@ require("donation_can_widget_progress_element.php");
 require("donation_can_widget_donation_list_element.php");
 require("donation_can_widget_text_element.php");
 require("donation_can_widget_anonymous_element.php");
+require("donation_can_widget_cause_selection_element.php");
 ?>

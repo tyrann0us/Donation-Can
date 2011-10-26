@@ -50,11 +50,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
     <?php else : ?>
 
-        <form method="post" name="delete_cause" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php">
+        <form method="post" name="delete_cause" action="<?php echo admin_url("admin.php?page=donation_can_goals.php");?>">
             <input type="hidden" name="remove_cause" value=""/>
         </form>
 
-        <form method="post" name="reset_cause" action="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php">
+        <form method="post" name="reset_cause" action="<?php echo admin_url("admin.php?page=donation_can_goals.php");?>">
             <input type="hidden" name="reset" value=""/>
         </form>
 
@@ -87,13 +87,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <tr id="cause-row-<?php echo $id; ?>">
                         <th scope="row" class="check-column"><!--<input type="checkbox"/>--></th>
                         <td>
-                            <a class="row-title" href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php&edit=<?php echo $id; ?>"><?php echo $cause["name"]; ?></a><br/>
+                            <a class="row-title" href="<?php echo admin_url("admin.php?page=donation_can_goals.php&edit=" . $id); ?>"><?php echo $cause["name"]; ?></a><br/>
                             <?php echo $cause["description"]; ?>
 
                             <div class="row-actions">
-                                <span class="edit"><a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_goals.php&edit=<?php echo $id; ?>">Edit</a></span>
-                                <span class="delete"> | <a href="#" onclick="return delete_goal('<?php echo $id; ?>', '<?php echo $cause['name'];?>');"><?php _e("Delete");?></a></span>
-                                <span class="view-donations"> | <a href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_donations.php&filter_goal=<?php echo $id; ?>"><?php _e("View donations", "donation_can");?></a></span>
+                                <span class="edit"><a href="<?php echo admin_url("admin.php?page=donation_can_goals.php&edit=" . $id); ?>"><?php _e("Edit", "donation_can");?></a></span>
+                                <span class="delete"> | <a href="#" onclick="return delete_goal('<?php echo $id; ?>', '<?php echo $cause['name'];?>');"><?php _e("Delete", "donation_can");?></a></span>
+                                <span class="view-donations"> | <a href="<?php echo admin_url("admin.php?page=donation_can_donations.php&filter_goal=" . $id); ?>"><?php _e("View donations", "donation_can");?></a></span>
                                 <span class="reset-counter"> | <a onclick="return confirm_reset('<?php echo $id; ?>', '<?php echo $cause['name'];?>');" href="#"><?php _e("Reset", "donation_can");?></a></span>
                             </div>
                         </td>
@@ -125,7 +125,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <?php endif; ?>
 
     <p>
-        <a class="button" href="<?php echo get_settings('siteurl'); ?>/wp-admin/admin.php?page=donation_can_add_goal.php"><?php _e("Add cause", "donation-can");?></a>
+        <a class="button" href="<?php echo admin_url("admin.php?page=donation_can_add_goal.php");?>"><?php _e("Add cause", "donation_can");?></a>
     </p>
-
 </div>

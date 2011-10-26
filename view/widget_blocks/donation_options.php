@@ -1,6 +1,6 @@
-<div class="donation-options">
+<div class="donation-options" <?php if ($cause_id == "__all__") { echo "style=\"display:none;\""; } ?>>
 
-    <?php if ($donation_sums != null && count($donation_sums) > 0) : ?>
+    <?php if (($donation_sums != null && count($donation_sums) > 0) || $cause_id == "__all__") : ?>
         <span class="donation-callout"><?php _e("Choose donation amount:", "donation_can"); ?></span>
 
         <?php if ($element["list-format"] == "buttons") : ?>
@@ -17,7 +17,12 @@
                 <input type="hidden" name="amount"/>
 
                 <?php foreach ($donation_sums as $sum) : ?>
-                    <a class="button" onclick="return submitDonation(this, <?php echo $sum; ?>);">Donate <?php echo $currency; ?> <?php echo $sum; ?></a>
+                    <?php
+                        $text = __("Donate %CURRENCY %SUM", "donation_can");
+                        $text = str_replace("%CURRENCY", $currency, $text);
+                        $text = str_replace("%SUM", $sum, $text);
+                    ?>
+                    <a class="button" onclick="return submitDonation(this, <?php echo $sum; ?>);"><?php echo $text; ?></a>
                 <?php endforeach; ?>
                 <?php if ($goal["allow_freeform_donation_sum"]) : ?>
                     <a class="button" onclick="return submitDonation(this, '');"><?php _e("Donate other amount", "donation_can");?></a>

@@ -151,23 +151,26 @@ function showCurrencyOptions() {
 
 function hideCurrencySelection() {
     var selectedCurrency = jQuery("select[name=currency]").val();
-
-    if (selectedCurrency == "USD" || selectedCurrency == "CAD") {
-        selectedCurrency = "$";
-    } else if (selectedCurrency == "EUR") {
-        selectedCurrency = "&euro;";
-    } else if (selectedCurrency == "GBP") {
-        selectedCurrency = "&pound;";
-    } else if (selectedCurrency == "JPY") {
-        selectedCurrency = "&yen;";
-    }
-
-
+    selectedCurrency = getCurrencySymbol(selectedCurrency);
     jQuery("#goal-currency a").html(selectedCurrency);
     jQuery("#goal-currency").show();
     jQuery("#currency-options").hide();
 
     return false;
+}
+
+function getCurrencySymbol(currencyCode) {
+    if (currencyCode == "USD" || currencyCode == "CAD") {
+        currencyCode = "$";
+    } else if (currencyCode == "EUR") {
+        currencyCode = "&euro;";
+    } else if (currencyCode == "GBP") {
+        currencyCode = "&pound;";
+    } else if (currencyCode == "JPY") {
+        currencyCode = "&yen;";
+    }
+
+    return currencyCode;
 }
 
 /**
@@ -217,4 +220,51 @@ function removeFormTextField(parentId, elementId) {
 	}
 	
 	return false;
+}
+
+function donationCauseSelected(url, select) {
+    var causeId = jQuery(select).val();
+    if (causeId) {
+        var parent = jQuery(select).closest("form");
+
+        var descriptionElement = jQuery(".description", parent);
+        var donationOptionsElement = jQuery(".donation-options", parent);
+        var submitDonationElement = jQuery(".submit-donation", parent);
+
+        jQuery.ajax({
+            url: url + "?donation_can_get_cause_data=" + causeId,
+            success: function(dataAsJSON) {
+                var data = jQuery.parseJSON(dataAsJSON);
+
+                descriptionElement.html(jQuery("<p>" + data.description + "</p>"));
+
+                // TODO: handle radio buttons and button list too!
+
+                var donationListElement = jQuery("select[name=amount]", parent);
+                if (donationListElement) {
+                    jQuery(donationListElement).children().remove();
+                }
+
+                if (data.donation_options != null && data.donation_options.length > 0) {
+                    if (donationListElement) {
+                        // Append donation options
+                        var currency = getCurrencySymbol(data.currency);
+                        for (var i = 0; i < data.donation_options.length; i++) {
+                            donationListElement.append(jQuery("<option value=\"" + data.donation_options[i] + "\">" + currency + " " + data.donation_options[i] + "</option>"));
+                        }
+                    }
+
+                    donationOptionsElement.show();
+                } else {
+                    donationOptionsElement.hide();
+                }
+
+                descriptionElement.show();
+                submitDonationElement.show();
+
+                jQuery(".anonymous-prompt", parent).show();
+            }
+        });
+
+    }
 }

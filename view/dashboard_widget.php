@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <!-- Error: Permalink structure not compatible with PayPal -->
     <div class="donation_can_notice">
         <?php _e("You haven't set up your WordPress permalink structure. Donation Can will not be able to receive payment notifications from PayPal.", "donation_can");?><br/>
-        <a href="<?php bloginfo("url");?>/wp-admin/options-permalink.php"><?php _e("Fix permalink settings now.", "donation_can");?></a>
+        <a href="<?php admin_url("options-permalink.php"); ?>"><?php _e("Fix permalink settings now.", "donation_can");?></a>
     </div>
 <?php endif; ?>
 <?php if (empty($goals)) : ?>
@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<!-- Empty Slate: Shown if no goals have been set up -->
 	<div class="donation_can_notice">
 		<?php _e("You haven't set up any goals yet.", "donation_can");?> 
-		<a href="<?php bloginfo("url");?>/wp-admin/admin.php?page=donation_can_add_goal.php"><?php _e("Start by creating your first one.", "donation_can");?></a>
+		<a href="<?php admin_url("admin.php?page=donation_can_add_goal.php");?>"><?php _e("Start by creating your first one.", "donation_can");?></a>
 	</div>
 
 <?php else : ?>
@@ -121,17 +121,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <!-- Empty Slate (PayPal Settings not defined) -->
     <div class="donation_can_notice">
         <?php _e("You haven't set up your PayPal account information yet.", "donation_can");?>
-        <a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can_general_settings.php"><?php _e("Click here to do it now.", "donation_can");?></a>
+        <a href="<?php echo admin_url("admin.php?page=donation_can_general_settings.php");?>"><?php _e("Click here to do it now.", "donation_can");?></a>
     </div>
 <?php else : ?>
     <p><?php _e("PayPal account:", "donation_can");?> <strong><?php echo $paypal_account; ?></strong></p>
 <?php endif; ?>
 
 <p>
-    You are using <strong><a href="http://treehouseapps.com/donation-can">Donation Can</a> <?php echo $version; ?></strong>.
+    <?php
+        $donation_can_version_string = __("You are using <strong><a href=\"%URL\">Donation Can</a> %VERSION.</strong>", "donation_can");
+        $donation_can_version_string = str_replace("%URL", "http://treehouseapps.com/donation-can/", $donation_can_version_string);
+        $donation_can_version_string = str_replace("%VERSION", $version, $donation_can_version_string);
+
+        echo $donation_can_version_string;
+    ?>
 </p>
 
 <p class="textright">
-    <a href="<?php echo bloginfo("url"); ?>/wp-admin/admin.php?page=donation_can_general_settings.php" class="button rbutton"><?php _e("Change Settings", "donation_can");?></a>
-    <a href="<?php echo bloginfo("url");?>/wp-admin/admin.php?page=donation_can_goals.php" class="button rbutton"><?php _e("Update Goals", "donation_can");?></a>
+    <a href="<?php echo admin_url("admin.php?page=donation_can_general_settings.php");?>" class="button rbutton"><?php _e("Change Settings", "donation_can");?></a>
+    <a href="<?php echo admin_url("admin.php?page=donation_can_goals.php");?>" class="button rbutton"><?php _e("Update Goals", "donation_can");?></a>
 </p>

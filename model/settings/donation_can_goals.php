@@ -82,9 +82,6 @@ function donation_can_goals_menu() {
         $causes = array();
     }
 
-    // TODO: make sorting happen depending on user setting (maybe in Javascript?)
-    uasort($causes, "donation_can_sort_goals");
-
     // Edit cause
     if (isset($_POST["edit_cause"])) {
         $id = attribute_escape($_POST["edit_cause"]);
@@ -99,6 +96,8 @@ function donation_can_goals_menu() {
     if (isset($_POST["remove_cause"])) {
         $id = attribute_escape($_POST["remove_cause"]);
         unset($causes[$id]);
+
+        do_action("donation_can_remove_cause", $id);
 
         update_option("donation_can_causes", $causes);
         render_user_notification(__("Deleted goal:", "donation_can") . " " . $id);
@@ -133,6 +132,10 @@ function donation_can_goals_menu() {
             "donation_sums" => $donation_sums,
             "edit" => true));
     } else {
+        // TODO: make sorting happen depending on user setting (maybe in Javascript?)
+        // SORTING IS VERY SLOW WITH A LOT OF DATA...
+//        uasort($causes, "donation_can_sort_goals");
+
         require_donation_can_view('goals_page', array("causes" => $causes));
     }
 }

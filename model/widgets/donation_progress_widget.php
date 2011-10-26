@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class DonationProgressWidget extends WP_Widget {
     function DonationProgressWidget() {
-        parent::WP_Widget(false, $name = __('Fundraising Progress', "donation_can"));
+        parent::WP_Widget(false, $name = __("Fundraising Progress", "donation_can"));
     }
 
     function widget($args, $instance) {
