@@ -889,12 +889,12 @@ function donation_can_process_paypal_ipn($wp) {
     $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
 
     // Use Sandbox version if debug mode is on
-    $url = "www.paypal.com";
+    $url = "ssl://www.paypal.com";
     if ($general_settings["debug_mode"]) {
-        $url = "www.sandbox.paypal.com";
+        $url = "ssl://www.sandbox.paypal.com";
     }
 
-    $fp = fsockopen ($url, 80, $errno, $errstr, 30);
+    $fp = fsockopen ($url, 443, $errno, $errstr, 30);
 
     // Assign posted variables to data array for saving to database
     $payer_name = $_POST['first_name'] . " " . $_POST['last_name'];
@@ -929,8 +929,9 @@ function donation_can_process_paypal_ipn($wp) {
 	while (!feof($fp)) {
             $res = fgets ($fp, 1024);
             if (strcmp ($res, "VERIFIED") == 0) {
+                w2log("Transaction verified --> ");
                 $table_name = donation_can_get_table_name($wpdb);
-                w2log("Transaction verified --> saving donation to $table_name");
+                w2log("Saving donation to $table_name");
 
                 // Check if the transaction has already been saved
                 // and update if payment_status has changed
