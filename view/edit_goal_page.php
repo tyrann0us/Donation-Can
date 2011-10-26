@@ -21,7 +21,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation-can/view/scripts.js"></script>
 
 <script type="text/javascript">
-    createCauseIdFromName();
+jQuery(document).ready(
+    function() {
+        // If a name has been entered, create id
+        var value = jQuery("input[name=name]").val();
+        if (value != null && value.length > 1) {
+            createCauseIdFromName();
+        }
+    }
+);
+
 </script>
 
 <div class="wrap">
