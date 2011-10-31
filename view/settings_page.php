@@ -115,7 +115,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Thank you page:", "donation_can");?></th>
                                     <td>
 					<select name="return_page">
-                                            <option value="-1" <?php if ("-1" == $general_settings["return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default", "donation_can");?> --</option>
+                                            <option value="-1" <?php if ("-1" == $general_settings["return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default (no return link)", "donation_can");?> --</option>
                                             <?php foreach ($pages as $page) : ?>
                                                     <option value="<?php echo $page->ID;?>" <?php if ($page->ID == $general_settings["return_page"]) { echo "selected";}?>><?php echo $page->post_title;?></option>
                                             <?php endforeach; ?>
@@ -126,7 +126,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Payment cancelled page:", "donation_can");?></th>
                                     <td>
 					<select name="cancel_return_page">
-                                            <option value="-1" <?php if ("-1" == $general_settings["cancel_return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default", "donation_can");?> --</option>
+                                            <option value="-1" <?php if ("-1" == $general_settings["cancel_return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default (no return link)", "donation_can");?> --</option>
                                             <?php foreach ($pages as $page) : ?>
                                                 <option value="<?php echo $page->ID;?>" <?php if ($page->ID == $general_settings["cancel_return_page"]) { echo "selected";}?>><?php echo $page->post_title;?></option>
                                             <?php endforeach; ?>

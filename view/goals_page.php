@@ -18,26 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<script type="text/javascript">
-    function delete_goal(id, name) {
-        var agree = confirm("<?php _e("Are you sure you want to delete cause '", "donation_can");?>" + name + "'?");
-        if (agree) {
-            document.delete_cause.remove_cause.value = id;
-            document.delete_cause.submit();
-        }
-        return false;
-    }
-
-    function confirm_reset(id, name) {
-        var agree = confirm("<?php _e("Are you sure you want to reset the donation counter for cause '", "donation_can");?>" + name + "'?'");
-        if (agree) {
-            document.reset_cause.reset.value = id;
-            document.reset_cause.submit();
-        }
-        return false;
-    }
-</script>
-
 <div class="wrap">
     <h2><?php _e("Donation Causes", "donation_can"); ?></h2>
 
@@ -94,9 +74,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
                             <div class="row-actions">
                                 <span class="edit"><a href="<?php echo admin_url("admin.php?page=donation_can_goals.php&edit=" . $id); ?>"><?php _e("Edit", "donation_can");?></a></span>
-                                <span class="delete"> | <a href="#" onclick="return delete_goal('<?php echo $id; ?>', '<?php echo $cause['name'];?>');"><?php _e("Delete", "donation_can");?></a></span>
+                                <span class="delete"> | <a href="#" onclick="return dc_deleteCause('<?php echo $id; ?>', '<?php echo $cause['name'];?>');"><?php _e("Delete", "donation_can");?></a></span>
                                 <span class="view-donations"> | <a href="<?php echo admin_url("admin.php?page=donation_can_donations.php&filter_goal=" . $id); ?>"><?php _e("View donations", "donation_can");?></a></span>
-                                <span class="reset-counter"> | <a onclick="return confirm_reset('<?php echo $id; ?>', '<?php echo $cause['name'];?>');" href="#"><?php _e("Reset", "donation_can");?></a></span>
+                                <span class="reset-counter"> | <a onclick="return dc_resetCause('<?php echo $id; ?>', '<?php echo $cause['name'];?>');" href="#"><?php _e("Reset", "donation_can");?></a></span>
                             </div>
                         </td>
                         <td>

@@ -124,17 +124,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             </tr>
         </tfoot>
         <tbody>
-            <script type="text/javascript">
-                function do_delete_donation(id) {
-                    var agree = confirm("<?php _e("Are you sure you want to delete donation", "donation_can");?> "+id+"?");
-                    if (agree) {
-                        document.delete_donation.remove_donation.value = id;
-                        document.delete_donation.submit();
-                    }
-                    return false;
-                }
-            </script>
-
             <?php foreach ($donations as $donation) : ?>
                 <?php $currency = donation_can_get_currency_for_goal($goals[$donation->cause_code]); ?>
                 <tr>
@@ -142,7 +131,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <td>
                         <?php echo donation_can_nicedate(mysql2date(__('Y/m/d g:i:s A'), $donation->time)); ?>
                         <div class="row-actions">
-                            <span class="delete"><a href="#" onclick="return do_delete_donation('<?php echo $donation->id; ?>');"><?php _e("Delete", "donation_can");?></a></span>
+                            <span class="delete"><a href="#" onclick="return dc_deleteDonation('<?php echo $donation->id; ?>');"><?php _e("Delete", "donation_can");?></a></span>
                         </div>
                     </td>
                     <td><?php echo $goals[$donation->cause_code]["name"]; ?></td>

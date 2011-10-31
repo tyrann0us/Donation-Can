@@ -54,7 +54,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <td class="first date"><?php echo donation_can_nicedate($donation->time); ?></td>
                         <td class="goal"><?php echo sprintf(__("To '%s'", "donation_can"), $goals[$donation->cause_code]["name"]); ?></td>
                         <td class="b"><?php echo $currency . " " . $donation->amount; ?><br/><small style="color:red;">(-<?php echo $donation->fee; ?>)</small></td>
-                        <td class="last t"><span class="<?php if ($donation->payment_status == "Completed") { echo "approved"; } else { echo "waiting"; }?>"><?php echo $donation->payment_status; ?></span></td>
+
+                        <?php
+                        $payment_status = $donation->payment_status;
+                        if ($payment_status == "Completed") {
+                            $payment_status = __("Completed", "donation_can");
+                        } else if ($payment_status == "Pending") {
+                            $payment_status = __("Pending", "donation_can");
+                        }
+                        ?>
+                        <td class="last t"><span class="<?php if ($donation->payment_status == "Completed") { echo "approved"; } else { echo "waiting"; }?>"><?php echo $payment_status; ?></span></td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>

@@ -94,10 +94,10 @@ function donation_can_get_general_settings() {
 }
 
 function donation_can_get_default_email_template() {
-    $message = "A new donation was made to your cause, \"#CAUSE_NAME#\":\n\n"
+    $message = __("A new donation was made to your cause, \"#CAUSE_NAME#\":\n\n"
                  . "#USER_NAME# (#USER_EMAIL#) donated #CURRENCY# #AMOUNT# (PayPal fee: #FEE#) to #CAUSE_NAME# #CAUSE_CODE#."
                  . "\n\nVisit the WordPress dashboard to see all donations to this goal:\n"
-                 . "#DONATIONS_URL#\n\nThanks,\nDonation Can";
+                 . "#DONATIONS_URL#\n\nThanks,\nDonation Can", "donation_can");
 
     return $message;
 }
@@ -227,7 +227,9 @@ function donation_can_save_widget_style($style_id, $style_definition) {
     $styles = donation_can_get_widget_styles();
 
     if ($styles[$style_id]["locked"]) {
-        render_user_notification("Cannot update style " . $style_id);
+        $text = __("Cannot update style %STYLE_ID%", "donation_can");
+        $text = str_replace("%STYLE_ID%", $style_id, $text);
+        render_user_notification($text);
         return false;
     }
 
@@ -241,7 +243,10 @@ function donation_can_clone_widget_style($id, $new_name) {
     $styles = donation_can_get_widget_styles();
 
     if (!isset($styles[$id])) {
-        render_user_notification("No style found with id " . $id);
+        $text = __("No style found with id %ID%", "donation_can");
+        $text = str_replace("%ID%", $id, $text);
+
+        render_user_notification($text);
         return false;
     }
 

@@ -6,21 +6,6 @@
 
 ?>
 
-<script type="text/javascript">
-    function showOtherFormat(element) {
-        var value = (jQuery(element).val() == "radio");
-
-        var parent = jQuery(element).closest(".element-options");
-        var otherFormatP = jQuery("p.other-format", parent);
-
-        if (value == true) {
-            otherFormatP.show();
-        } else {
-            otherFormatP.hide();
-        }
-    }
-</script>
-
 <li class="widget-element donation-options-element" id="<?php echo $id; ?>">
     <div class="widget-element-title">
         <h3><?php _e("Donation Options", "donation_can");?></h3>

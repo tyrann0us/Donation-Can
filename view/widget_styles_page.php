@@ -18,29 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<script type="text/javascript">
-    function delete_style(id, name) {
-        var agree = confirm("<?php _e("Are you sure you want to delete style '", "donation_can");?>" + name + "'?");
-        if (agree) {
-            jQuery("#remove_style_form > input[name=remove_style]").val(id);
-            jQuery("#remove_style_form").submit();
-        }
-        return false;
-    }
-
-    function clone_style(id) {
-        var newName = prompt("Name for new style:", "");
-
-        if (newName) {
-            jQuery("#clone_style_form > input[name=clone_style]").val(id);
-            jQuery("#clone_style_form > input[name=new_name]").val(newName);
-            jQuery("#clone_style_form").submit();
-        }
-
-        return false;
-    }
-</script>
-
 <div class="wrap">
     <h2><?php _e("Donation Widget Styles", "donation_can"); ?></h2>
 
@@ -89,10 +66,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             <div class="row-actions">
                                 <span class="edit"><a href="<?php echo admin_url("admin.php?page=donation_can_edit_widget_style.php&style_id=" . $id); ?>"><?php echo $style["locked"] ? __("View", "donation_can") : __("Edit", "donation_can"); ?></a></span>
 
-                                <span class="clone"> | <a href="#" onclick="clone_style('<?php echo $id; ?>');"><?php _e("Clone", "donation_can");?></a></span>
+                                <span class="clone"> | <a href="#" onclick="cloneStyle('<?php echo $id; ?>');"><?php _e("Clone", "donation_can");?></a></span>
 
                                 <?php if (!$style["locked"]) : ?>
-                                    <span class="delete"> | <a href="#" onclick="return delete_style('<?php echo $id; ?>', '<?php echo $style['name'];?>');"><?php _e("Delete", "donation_can");?></a></span>
+                                    <span class="delete"> | <a href="#" onclick="return deleteStyle('<?php echo $id; ?>', '<?php echo $style['name'];?>');"><?php _e("Delete", "donation_can");?></a></span>
                                 <?php endif; ?>
                             </div>
                         </td>

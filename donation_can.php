@@ -182,6 +182,15 @@ function donation_can_init(){
     wp_enqueue_script('jquery');
     wp_enqueue_script('jquery-ui-core');
 
+    // Generic Donation Can scripts, enqueued for both admin and site
+    wp_enqueue_script('donation-can-scripts', plugins_url("/donation-can/view/scripts.js"));
+    wp_localize_script('donation-can-scripts', 'DonationCanData', array(
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+
+        // Localization
+        'text_currencyFormat' => __("%CURRENCY% %SUM%", "donation_can")
+    ));
+
     if (is_admin()) {
         wp_enqueue_style('thickbox');
         wp_enqueue_script('media-upload');
@@ -192,21 +201,27 @@ function donation_can_init(){
         wp_enqueue_script('jquery-ui-droppable');
         wp_enqueue_script('json2');
         wp_enqueue_script('suggest'); // For autocompletes in admin
+
+        // Donation can Admin scripts
+        wp_enqueue_script('donation-can-admin-scripts', plugins_url("/donation-can/view/admin_scripts.js"));
+
+        wp_localize_script('donation-can-admin-scripts', 'DonationCanData', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'uploadImageUrl' => admin_url("media-upload.php?type=image&amp;TB_iframe=true"),
+
+            // Nonces
+            'styleOptionsNonce' => wp_create_nonce('donation_can_ajax-style_options'),
+
+            // Localization
+            'text_remove' => __("Remove", "donation_can"),
+            'text_deleteStyleConfirmation' => __("Are you sure you want to delete style '%STYLE_NAME%'?", "donation_can"),
+            'text_cloneStylePrompt' => __("Name for new style:", "donation_can"),
+            'text_deleteDonationConfirm' => __("Are you sure you want to delete donation %DONATION_ID%?", "donation_can"),
+            'text_deleteCauseConfirm' => __("Are you sure you want to delete cause '%CAUSE_NAME%'?", "donation_can"),
+            'text_resetCauseConfirm' => __("Are you sure you want to reset the donation counter for cause '%CAUSE_NAME%'?", "donation_can")
+        ));
     }
-
-    // TODO: separate into two: admin / user
-    wp_enqueue_script('donation-can-scripts', plugins_url("/donation-can/view/scripts.js"));
-
-    wp_localize_script('donation-can-scripts', 'DonationCanData', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-
-        // Nonces
-        'styleOptionsNonce' => wp_create_nonce('donation_can_ajax-style_options'),
-
-        // Localization
-        'text_remove' => __("Remove", "donation_can")
-    ));
-
+    
 }
 
 function donation_can_add_tinymce_button($buttons) {

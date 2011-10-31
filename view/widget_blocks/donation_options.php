@@ -31,23 +31,6 @@
 
         <?php elseif ($element["list-format"] == "radio") : $first = true; ?>
 
-            <script type="text/javascript">
-                function showOtherTextField(element, value) {
-                    var parent = jQuery(element).closest(".donation-radio-button-list");
-                    var span = jQuery("span.amount-span", parent);
-
-                    var textField = jQuery("input.amount-text-field", span);
-
-                    if (value == true) {
-                        textField.attr("name", "amount");
-                        span.show();
-                    } else {
-                        textField.removeAttr("name");
-                        span.hide();
-                    }
-                }
-            </script>
-
             <div class="donation-radio-button-list">
 
                 <?php foreach ($donation_sums as $sum) : ?>
