@@ -248,58 +248,34 @@ class DonationWidget extends WP_Widget {
 
         ?>
 
-<script type="text/javascript">
-    function loadStyleOptions(styleElement) {
-        var styleElement = jQuery(styleElement);
-        var styleId = styleElement.val();
+        <input type="hidden" value="<?php echo $this->number; ?>" name="wn"/>
+        <p>
+            <label for="<?php echo $this->get_field_id('goal_id'); ?>"><?php _e('Goal:', "donation_can"); ?></label><br/>
+            <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
+                    name="<?php echo $this->get_field_name('goal_id'); ?>">
 
-        //alert("style id " + styleId);
+                <option value="__all__" <?php if ($goal_id == "__all__") { echo "selected"; } ?>><?php _e("Summary (All goals)", "donation_can");?></option>
+                <?php foreach ($goals as $goal) : ?>
+                    <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('style_id'); ?>"><?php _e("Widget style:", "donation_can");?></label><br/>
+            <select class="widefat" name="<?php echo $this->get_field_name('style_id');?>" onchange="loadStyleOptions(this);">
+                <?php foreach ($widget_styles as $style) : ?>
+                    <option value="<?php echo $style["id"];?>" <?php if ($style["id"] == $style_id) { echo "selected"; }?>><?php echo $style["name"];?></option>
+                <?php endforeach; ?>
+            </select>
+        </p>
+        <p>
+            <a href="<?php echo admin_url("admin.php?page=donation_can_widget_styles.php");?>" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
+        </p>
 
-        var parent = jQuery(styleElement).closest("div.widget-inside");
-        var number = jQuery("input[name=wn]", parent).val();
-        var customizationDiv = jQuery(".donation-can-widget-customization", parent);
-
-        // Do an AJAX call to get all members for a given team
-        jQuery.ajax({
-            url: "<?php bloginfo('url'); ?>?donation_can_get_style_options=" + styleId,
-            data: { wn: number },
-            success: function(data) {
-                customizationDiv.html(jQuery(data));
-                //customizationDiv.show();
-            }
-        });
-
-    }
-</script>
-
-<input type="hidden" value="<?php echo $this->number; ?>" name="wn"/>
-            <p>
-                <label for="<?php echo $this->get_field_id('goal_id'); ?>"><?php _e('Goal:', "donation_can"); ?></label><br/>
-                <select class="widefat" id="<?php echo $this->get_field_id('goal_id'); ?>"
-                        name="<?php echo $this->get_field_name('goal_id'); ?>">
-
-                    <option value="__all__" <?php if ($goal_id == "__all__") { echo "selected"; } ?>><?php _e("Summary (All goals)", "donation_can");?></option>
-                    <?php foreach ($goals as $goal) : ?>
-                        <option value="<?php echo $goal["id"];?>" <?php if ($goal["id"] == $goal_id) { echo "selected"; }?>><?php echo $goal["name"]; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </p>
-            <p>
-                <label for="<?php echo $this->get_field_id('style_id'); ?>"><?php _e("Widget style:", "donation_can");?></label><br/>
-                <select class="widefat" name="<?php echo $this->get_field_name('style_id');?>" onchange="loadStyleOptions(this);">
-                    <?php foreach ($widget_styles as $style) : ?>
-                        <option value="<?php echo $style["id"];?>" <?php if ($style["id"] == $style_id) { echo "selected"; }?>><?php echo $style["name"];?></option>
-                    <?php endforeach; ?>
-                </select>
-            </p>
-            <p>
-                <a href="<?php echo admin_url("admin.php?page=donation_can_widget_styles.php");?>" class="button"><?php _e("Edit widget styles", "donation_can");?></a>
-            </p>
-
-            <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
-            <div class="donation-can-widget-customization">
-                <?php echo $widget_style_options; ?>
-            </div>
+        <h3 style="margin: 25px 0px 10px 0px;"><?php _e("Customize widget:", "donation_can");?></h3>
+        <div class="donation-can-widget-customization">
+            <?php echo $widget_style_options; ?>
+        </div>
 
         <?php
     }

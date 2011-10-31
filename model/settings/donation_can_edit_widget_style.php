@@ -30,7 +30,7 @@ function donation_can_edit_widget_style_menu() {
         $edit = true;
     }
 
-    if (isset($_POST["style_action"])) {
+    if (isset($_POST["style_action"]) && check_admin_referer('donation_can-update_style')) {
         $style_action = esc_attr($_POST["style_action"]);
 
         if ($style_action == "update" || $style_action == "add") {

@@ -17,10 +17,39 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-// Returns the autocomplete options for style designer UI
-if (isset($_GET['donation_can_style_autocomplete'])) :
+function donation_can_ajax_get_style_options() {
+    $nonce = $_REQUEST['nonce'];
+
+    if (!wp_verify_nonce($nonce, 'donation_can_ajax-style_options')) {
+        die('Nonce verification failed.');
+    }
+
+    if (current_user_can('dc_styles')) {
+        $widget = new DonationWidget();
+        $instance = array();
+
+        $style_id = esc_attr($_REQUEST['style']);
+        $number = esc_attr($_REQUEST["wn"]);
+
+        $widget->number = $number;
+        $settings = $widget->get_settings();
+        if (is_array($settings)) {
+            $instance = $settings[$number];
+        }
+
+        // TODO: see if this is needed anymore...?
+        // This is run before Donation Can has chance to load the texts properly, so we need to do it here manually...
+        //load_plugin_textdomain("donation_can", false, "donation-can");
+
+        echo $widget->get_widget_options($style_id, $instance);
+    }
+
+    exit;
+}
+
+function donation_can_ajax_style_autocomplete() {
     $q = strtolower($_REQUEST["q"]);
-    if (!$q) die();
+    if (!$q) exit;
 
     $items = array(
         ".backlink",
@@ -61,36 +90,13 @@ if (isset($_GET['donation_can_style_autocomplete'])) :
 	}
     }
 
-    die();
+    exit;
+}
 
-elseif (isset($_GET['donation_can_get_style_options'])): 
-    
-    // Style options (TODO: verify nonce!)
-    $widget = new DonationWidget();
-    $instance = array();
-
-    $style_id = esc_attr($_GET['donation_can_get_style_options']);
-    $number = esc_attr($_GET["wn"]);
-    
-    $widget->number = $number;
-    $settings = $widget->get_settings();
-    if (is_array($settings)) {
-        $instance = $settings[$number];
-    }
-
-    // This is run before Donation Can has chance to load the texts properly, so we need to do it here manually...
-    load_plugin_textdomain("donation_can", false, "donation-can");
-
-    echo $widget->get_widget_options($style_id, $instance);
-
-    die();
-
-elseif (isset($_GET['donation_can_get_cause_data'])):
+function donation_can_ajax_get_cause_data() {
 
     // Donation cause data
-    $cause_code = esc_attr($_GET['donation_can_get_cause_data']);
-    $field = esc_attr($_GET['field']);
-
+    $cause_code = esc_attr(esc_attr($_REQUEST['cause']));    
     $cause = donation_can_get_goal($cause_code);
 
     $filtered_cause = array(
@@ -101,8 +107,13 @@ elseif (isset($_GET['donation_can_get_cause_data'])):
     );
 
     echo json_encode($filtered_cause);
+    exit;
+}
 
-    die();
-    
-endif;
+add_action('wp_ajax_donation_can-get_style_options', 'donation_can_ajax_get_style_options');
+
+add_action('wp_ajax_nopriv_donation_can-get_cause_data', 'donation_can_ajax_get_cause_data');
+add_action('wp_ajax_donation_can-get_cause_data', 'donation_can_ajax_get_cause_data');
+
+add_action('wp_ajax_donation_can-style_autocomplete', 'donation_can_ajax_style_autocomplete');
 ?>

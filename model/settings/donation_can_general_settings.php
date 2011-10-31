@@ -46,11 +46,7 @@ function donation_can_settings_page() {
     // TODO: add parameter validation to general settings!
 
     // Save general settings
-    if ($_POST["edit_settings"] == "Y") {
-// Verify nonce TODO: verify and put back.
-//        $nonce = $_POST["nonce"];
-//        if (!wp_verify_nonce($nonce, "donation-can-general-settings-nonce")) die("Failed to verify NONCE.");
-
+    if ($_POST["edit_settings"] == "Y" && check_admin_referer('donation_can-general_settings')) {
         $paypal_email = esc_attr($_POST["paypal_email"]);
         $paypal_sandbox_email = esc_attr($_POST["paypal_sandbox_email"]);
 

@@ -18,8 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation-can/view/scripts.js"></script>
-
 <script type="text/javascript">
 jQuery(document).ready(
     function() {
@@ -30,7 +28,6 @@ jQuery(document).ready(
         }
     }
 );
-
 </script>
 
 <div class="wrap">
@@ -44,8 +41,10 @@ jQuery(document).ready(
 	
     <form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
         <?php if ($edit) : ?>
+            <?php wp_nonce_field('donation_can-edit_cause'); ?>
             <input type="hidden" name="edit_cause" value="<?php echo $id; ?>"/>
         <?php else : ?>
+            <?php wp_nonce_field('donation_can-add_cause'); ?>
             <input type="hidden" name="add_cause" value="Y"/>
         <?php endif; ?>
 

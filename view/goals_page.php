@@ -52,10 +52,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
         <form method="post" name="delete_cause" action="<?php echo admin_url("admin.php?page=donation_can_goals.php");?>">
             <input type="hidden" name="remove_cause" value=""/>
+            <?php wp_nonce_field('donation_can-remove_cause'); ?>
         </form>
 
         <form method="post" name="reset_cause" action="<?php echo admin_url("admin.php?page=donation_can_goals.php");?>">
             <input type="hidden" name="reset" value=""/>
+            <?php wp_nonce_field('donation_can-reset_cause'); ?>
         </form>
 
         <table class="widefat fixed" cellspacing="0" style="margin-top: 8px;">

@@ -33,7 +33,7 @@ function donation_can_donations_menu() {
     }
 
     // Remove donation
-    if (isset($_POST["remove_donation"])) {
+    if (isset($_POST["remove_donation"]) && check_admin_referer('donation_can-remove_donation')) {
         $id = attribute_escape($_POST["remove_donation"]);
 
         donation_can_delete_donation($id);

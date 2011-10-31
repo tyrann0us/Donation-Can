@@ -35,7 +35,7 @@ function donation_can_add_goal_menu() {
     $edit = false;
 
     // Add a new cause
-    if ($_POST["add_cause"] == "Y") {
+    if ($_POST["add_cause"] == "Y" && check_admin_referer('donation_can-add_cause')) {
         $cause = donation_can_create_cause($_POST, true);
 
         if (is_wp_error($cause)) {

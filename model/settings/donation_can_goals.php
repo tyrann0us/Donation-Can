@@ -83,7 +83,7 @@ function donation_can_goals_menu() {
     }
 
     // Edit cause
-    if (isset($_POST["edit_cause"])) {
+    if (isset($_POST["edit_cause"]) && check_admin_referer('donation_can-edit_cause')) {
         $id = attribute_escape($_POST["edit_cause"]);
         $cause = donation_can_create_cause($_POST, false, $id);
         $causes[$id] = $cause;
@@ -93,7 +93,7 @@ function donation_can_goals_menu() {
     }
 
     // Remove cause
-    if (isset($_POST["remove_cause"])) {
+    if (isset($_POST["remove_cause"]) && check_admin_referer('donation_can-remove_cause')) {
         $id = attribute_escape($_POST["remove_cause"]);
         unset($causes[$id]);
 
@@ -104,7 +104,7 @@ function donation_can_goals_menu() {
     }
 
     // Reset cause (has to be through POST to make sure the user doesn't do this again by accident...)
-    if (isset($_POST["reset"])) {
+    if (isset($_POST["reset"]) && check_admin_referer('donation_can-reset_cause')) {
         $id = attribute_escape($_POST["reset"]);
         donation_can_reset_goal($id);
 

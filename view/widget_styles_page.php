@@ -55,11 +55,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
         <form method="post" id="remove_style_form" action="<?php echo admin_url("admin.php?page=donation_can_widget_styles.php"); ?>">
             <input type="hidden" name="remove_style" value=""/>
+            <?php wp_nonce_field('donation_can-remove_style'); ?>
         </form>
 
         <form method="post" id="clone_style_form" action="<?php echo admin_url("admin.php?page=donation_can_widget_styles.php"); ?>">
             <input type="hidden" name="clone_style" value=""/>
             <input type="hidden" name="new_name" value=""/>
+            <?php wp_nonce_field('donation_can-clone_style'); ?>
         </form>
 
         <table class="widefat fixed" cellspacing="0" style="margin-top: 8px;">

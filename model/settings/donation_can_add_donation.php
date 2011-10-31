@@ -31,7 +31,7 @@ function donation_can_add_donation_menu() {
     $created_at = current_time('mysql');
 
     // Add a new donation
-    if ($_POST["add_donation"] == "Y") {
+    if ($_POST["add_donation"] == "Y" && check_admin_referer('donation_can-add_donation')) {
         $cause_code = $_POST["cause_code"];
         $amount = $_POST['amount'];
         $payer_email = $_POST['payer_email'];

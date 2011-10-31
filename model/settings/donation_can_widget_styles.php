@@ -20,12 +20,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 function donation_can_widget_styles_menu() {
     
     // Remove style
-    if (isset($_POST["remove_style"])) {
+    if (isset($_POST["remove_style"]) && check_admin_referer('donation_can-remove_style')) {
         $id = attribute_escape($_POST["remove_style"]);
         if (donation_can_delete_widget_style($id)) {
             render_user_notification(__("Deleted style:", "donation_can") . " " . $id);
         }
-    } else if (isset($_POST["clone_style"])) {
+    } else if (isset($_POST["clone_style"]) && check_admin_referer('donation_can-clone_style')) {
         $id = attribute_escape($_POST["clone_style"]);
         $new_name = attribute_escape($_POST["new_name"]);
         if (donation_can_clone_widget_style($id, $new_name)) {

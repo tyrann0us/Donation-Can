@@ -21,8 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <?php $style = $styles[$style_id]; ?>
 
 <script type="text/javascript">
-    var cssElementCounter = 0;
     var uploadToField = null;
+    var dropped = false;
+    var received = false;
 
     function switchTab(link, tabId) {
         jQuery(".tab-contents").hide();
@@ -34,171 +35,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         return false;
     }
 
-    function getStructureAsJson() {
-        var itemIdArray = jQuery("#widget-contents ul").sortable("toArray");
-
-        var dataArray = new Array();
-
-        // Iterate through the item ids and collect their data
-        for (var i = 0; i < itemIdArray.length; i++) {
-            var itemId = itemIdArray[i];
-
-            if (itemId) {
-                var item = jQuery("#" + itemId);
-                var type = itemId.substring(0, itemId.lastIndexOf('-element'));
-
-                var itemData = new Array();
-                item.find(".element-options").find('select,input,textarea').each(function(index) {
-                    var name = jQuery(this).attr('name');
-                    var value = jQuery(this).val();
-
-                    itemData.push({key: name, value: value});
-                });
-
-                dataArray.push({ type: type, data: itemData });
-            }
-        }
-
-        return JSON.stringify(dataArray);
-    }
-
-    function getCssAsJson() {
-        var dataArray = [];
-
-        jQuery("#css-element-container > div.donation-can-css-element").each(function(index) {
-            var selector = jQuery(this).find("input[name=css-selector]").val();
-            var definition = jQuery(this).find("textarea[name=css-definition]").val();
-
-            dataArray.push({ selector: selector, css: definition });
-        });
-
-        return JSON.stringify(dataArray);
-    }
-
-    function storeJSONStructureAndSubmit() {
-        if (jQuery("input[name=name]").val() == "") {
-            jQuery("input[name=name]").val("Untitled");
-        }
-
-        var structureAsJSON = getStructureAsJson();
-        jQuery("input[name=widget-structure]").val(structureAsJSON);
-
-        var cssAsJSON = getCssAsJson();
-        jQuery("input[name=widget-style]").val(cssAsJSON);
-
-        jQuery("#poststuff form").submit();
-    }
-
-    function addStyleRow() {
-        var styleRow = jQuery("#style-row-template > div.donation-can-css-element").clone();
-        var newId = "css-element-" + cssElementCounter++;
-        styleRow.attr("id", newId);
-
-        jQuery("a.remove-css-row", styleRow).click(function() {
-            removeStyleRow(newId);
-        });
-
-        jQuery("#css-element-container").append(styleRow);
-        //styleRow.effect("highlight", {}, 3000);
-
-        // Enable autocomplete for the new row
-        jQuery("#" + newId + " > input").suggest("<?php bloginfo('url'); ?>?donation_can_style_autocomplete=1");
-    }
-
-    function removeStyleRow(id) {       
-        var styleRow = jQuery("#" + id);
-        jQuery("input", styleRow).val("");
-        jQuery("textarea", styleRow).val("");
-
-        styleRow.hide();
-    }
-
     jQuery(document).ready(function() {
-        var dropped = false;
-        var received = false;
-
-        var itemCounter = jQuery("#widget-counter-initial").val();
-
-        cssElementCounter = jQuery("#css-selector-count").val();
-
-        jQuery("#widget-list ul li").draggable( {
-            connectToSortable: "#widget-contents ul",
-            helper: "clone",
-            revert: "invalid"
-        });
-
-        jQuery("#widget-list").droppable( {
-            accept: '#widget-contents ul > li',
-            drop: function(event, ui) {
-                dropped = true;
-                
-                jQuery("#widget-list").removeClass("ready-to-delete");
-                jQuery("#widget-contents ul").sortable("refresh");
-            },
-            over: function(event, ui) {
-                jQuery("#widget-list").addClass("ready-to-delete");
-            },
-            out: function(event, ui) {
-                jQuery("#widget-list").removeClass("ready-to-delete");
-            }
-
-        });
-
-        jQuery("#widget-contents ul").sortable( {
-            forcePlaceholderSize: true,
-            placeholder: 'empty-list-state',
-            connectToDroppable: '#widget-list ul',
-            receive: function(event, ui) {
-                received = true;
-
-                jQuery(".clean-slate").hide();
-            },
-            deactivate: function(event, ui) {
-                if (received) {
-                    // Show options when an event has been dragged to the list
-                    var item = ui.item;
-
-                    var newId = item.attr("id") + "-" + itemCounter;
-                    item.attr("id", newId);
-
-                    var optionsElement = jQuery(".element-options", item);
-                    optionsElement.show();
-
-                    itemCounter++;
-
-                    received = false;
-                }
-            },
-            remove: function(event, ui) {
-                alert("removed");
-            },
-            stop: function(event, ui) {
-                if (dropped) {
-                    dropped = false;
-                    ui.item.remove();
-
-                    // If this was the last item on the list, put back the empty slate
-                    var size = jQuery(this).sortable("toArray").length - 1;
-                    if (size == 0) {
-                        jQuery(".clean-slate").show();
-                    }
-                }
-            }
-        });
-
-        window.send_to_editor = function(html) {
-            imgurl = jQuery('img',html).attr('src');
-            jQuery('input[name=button-image]', uploadToField).val(imgurl);
-            jQuery('img', uploadToField).attr("src", imgurl);
-
-            tb_remove();
-        }
-
-        // CSS editor
-        
-        jQuery("input[name=css-selector]").suggest("<?php bloginfo('url'); ?>?donation_can_style_autocomplete=1");
+        dc_initWidgetStyleEditor();
     });
-
 
     function uploadImage(element) {
         uploadToField = jQuery(element).closest('div.element-options');
@@ -259,6 +98,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <div id="titlediv">
                     <div id="titlewrap">
                         <form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+                            <?php wp_nonce_field('donation_can-update_style'); ?>
+
                             <input type="hidden" name="style_action" value="<?php echo ($edit) ? "update" : "add"; ?>"/>
                             <input type="hidden" name="widget-structure" value=""/>
                             <input type="hidden" name="widget-style" value=""/>

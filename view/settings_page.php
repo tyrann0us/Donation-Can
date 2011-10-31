@@ -18,8 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 ?>
 
-<script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/donation-can/view/scripts.js"></script>
-
 <script type="text/javascript">
     var uploadToField = null;
 
@@ -43,7 +41,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
     <form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
         <input type="hidden" name="edit_settings" value="Y"/>
-        <input type="hidden" name="nonce" value="<?php echo wp_create_nonce('donation-can-general-settings-nonce'); ?>"/>
+        <?php wp_nonce_field('donation_can-general_settings'); ?>
 
         <div id="poststuff" class="metabox-holder">
 

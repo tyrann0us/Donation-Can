@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
     <form method="post" name="delete_donation" action="<?php echo $url; ?>">
         <input type="hidden" name="remove_donation" value=""/>
+        <?php wp_nonce_field('donation_can-remove_donation'); ?>
     </form>
 
     <div class="tablenav">

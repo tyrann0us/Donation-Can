@@ -7,7 +7,7 @@
     ?>
 
     <?php echo $label; ?>:<br/>
-    <select name="cause" onchange="donationCauseSelected('<?php bloginfo('url'); ?>', this);">
+    <select name="cause" onchange="donationCauseSelected(this);">
         <option value="">--<?php echo $label; ?>--</option>
         <?php foreach ($causes as $id => $cause) : ?>
             <option value="<?php echo $id; ?>"><?php echo $cause["name"]; ?></option>

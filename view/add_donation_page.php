@@ -40,6 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	
     <form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
         <input type="hidden" name="add_donation" value="Y"/>
+        <?php wp_nonce_field('donation_can-add_donation'); ?>
 
         <div id="poststuff" class="metabox-holder has-right-sidebar">
             <div id="side-info-column" class="inner-sidebar">

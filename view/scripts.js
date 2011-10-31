@@ -16,6 +16,202 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+//
+// ADMIN SCRIPTS
+//
+
+var cssElementCounter = 0;
+var itemCounter = 0;
+
+function dc_initWidgetStyleEditor() {
+    cssElementCounter = jQuery("#css-selector-count").val();
+    itemCounter = jQuery("#widget-counter-initial").val();
+
+    jQuery("#widget-list ul li").draggable( {
+        connectToSortable: "#widget-contents ul",
+        helper: "clone",
+        revert: "invalid"
+    });
+
+    jQuery("#widget-list").droppable( {
+        accept: '#widget-contents ul > li',
+        drop: function(event, ui) {
+            dropped = true;
+
+            jQuery("#widget-list").removeClass("ready-to-delete");
+            jQuery("#widget-contents ul").sortable("refresh");
+        },
+        over: function(event, ui) {
+            jQuery("#widget-list").addClass("ready-to-delete");
+        },
+        out: function(event, ui) {
+            jQuery("#widget-list").removeClass("ready-to-delete");
+        }
+
+    });
+
+    jQuery("#widget-contents ul").sortable( {
+        forcePlaceholderSize: true,
+        placeholder: 'empty-list-state',
+        connectToDroppable: '#widget-list ul',
+        receive: function(event, ui) {
+            received = true;
+
+            jQuery(".clean-slate").hide();
+        },
+        deactivate: function(event, ui) {
+            if (received) {
+                // Show options when an event has been dragged to the list
+                var item = ui.item;
+
+                var newId = item.attr("id") + "-" + itemCounter;
+                item.attr("id", newId);
+
+                var optionsElement = jQuery(".element-options", item);
+                optionsElement.show();
+
+                itemCounter++;
+
+                received = false;
+            }
+        },
+        remove: function(event, ui) {
+            alert("removed");
+        },
+        stop: function(event, ui) {
+            if (dropped) {
+                dropped = false;
+                ui.item.remove();
+
+                // If this was the last item on the list, put back the empty slate
+                var size = jQuery(this).sortable("toArray").length - 1;
+                if (size == 0) {
+                    jQuery(".clean-slate").show();
+                }
+            }
+        }
+    });
+
+    window.send_to_editor = function(html) {
+        imgurl = jQuery('img',html).attr('src');
+        jQuery('input[name=button-image]', uploadToField).val(imgurl);
+        jQuery('img', uploadToField).attr("src", imgurl);
+
+        tb_remove();
+    }
+
+    // CSS editor
+
+    var ajaxUrl = DonationCanData.ajaxUrl + "?action=donation_can-style_autocomplete";
+    jQuery("input[name=css-selector]").suggest(ajaxUrl);
+}
+
+function addStyleRow() {
+    var styleRow = jQuery("#style-row-template > div.donation-can-css-element").clone();
+    var newId = "css-element-" + cssElementCounter++;
+    styleRow.attr("id", newId);
+
+    jQuery("a.remove-css-row", styleRow).click(function() {
+        removeStyleRow(newId);
+    });
+
+    jQuery("#css-element-container").append(styleRow);
+    //styleRow.effect("highlight", {}, 3000);
+
+    // Enable autocomplete for the new row
+    jQuery("#" + newId + " > input").suggest(DonationCanData.ajaxUrl + "?action=donation_can-style_autocomplete");
+}
+
+function removeStyleRow(id) {
+    var styleRow = jQuery("#" + id);
+    jQuery("input", styleRow).val("");
+    jQuery("textarea", styleRow).val("");
+
+    styleRow.hide();
+}
+
+function getStructureAsJson() {
+    var itemIdArray = jQuery("#widget-contents ul").sortable("toArray");
+
+    var dataArray = new Array();
+
+    // Iterate through the item ids and collect their data
+    for (var i = 0; i < itemIdArray.length; i++) {
+        var itemId = itemIdArray[i];
+
+        if (itemId) {
+            var item = jQuery("#" + itemId);
+            var type = itemId.substring(0, itemId.lastIndexOf('-element'));
+
+            var itemData = new Array();
+            item.find(".element-options").find('select,input,textarea').each(function(index) {
+                var name = jQuery(this).attr('name');
+                var value = jQuery(this).val();
+
+                itemData.push({key: name, value: value});
+            });
+
+            dataArray.push({ type: type, data: itemData });
+        }
+    }
+
+    return JSON.stringify(dataArray);
+}
+
+function getCssAsJson() {
+    var dataArray = [];
+
+    jQuery("#css-element-container > div.donation-can-css-element").each(function(index) {
+        var selector = jQuery(this).find("input[name=css-selector]").val();
+        var definition = jQuery(this).find("textarea[name=css-definition]").val();
+
+        dataArray.push({ selector: selector, css: definition });
+    });
+
+    return JSON.stringify(dataArray);
+}
+
+function storeJSONStructureAndSubmit() {
+    if (jQuery("input[name=name]").val() == "") {
+        jQuery("input[name=name]").val("Untitled");
+    }
+
+    var structureAsJSON = getStructureAsJson();
+    jQuery("input[name=widget-structure]").val(structureAsJSON);
+
+    var cssAsJSON = getCssAsJson();
+    jQuery("input[name=widget-style]").val(cssAsJSON);
+
+    jQuery("#poststuff form").submit();
+}
+
+/** 
+ *  Loads style options for the selected widget style.
+ */
+function loadStyleOptions(styleElement) {
+    styleElement = jQuery(styleElement);
+    var styleId = styleElement.val();
+
+    var parent = styleElement.closest("div.widget-inside");
+    var number = jQuery("input[name=wn]", parent).val();
+    var customizationDiv = jQuery(".donation-can-widget-customization", parent);
+
+    // Do an AJAX call to get all members for a given team
+    jQuery.ajax({
+        url: DonationCanData.ajaxUrl,
+        data: { 
+            action: "donation_can-get_style_options",
+            nonce: DonationCanData.styleOptionsNonce,
+            style: styleId,
+            wn: number
+        },
+        success: function(data) {
+            customizationDiv.html(jQuery(data));
+        }
+    });
+}
+
+
 
 function clearDonationGoal(checkBoxElement) {
     var checkBox = jQuery(checkBoxElement);
@@ -197,7 +393,7 @@ function addFormTextField(countElementId, parentId, elementNameBody, cssClass) {
     element.setAttribute("onblur", "checkMoneyFormatting(this, true);");
 
 	var removeElement = document.createElement('a');
-	removeElement.appendChild(document.createTextNode("Remove"));
+	removeElement.appendChild(document.createTextNode(DonationCanData.text_remove));
 	removeElement.setAttribute("onclick", "return removeFormTextField('" + parentId + "', '" + elementNameBody + count + "');");
 	removeElement.setAttribute("href", "#");
 	
@@ -222,7 +418,7 @@ function removeFormTextField(parentId, elementId) {
 	return false;
 }
 
-function donationCauseSelected(url, select) {
+function donationCauseSelected(select) {
     var causeId = jQuery(select).val();
     if (causeId) {
         var parent = jQuery(select).closest("form");
@@ -232,7 +428,11 @@ function donationCauseSelected(url, select) {
         var submitDonationElement = jQuery(".submit-donation", parent);
 
         jQuery.ajax({
-            url: url + "?donation_can_get_cause_data=" + causeId,
+            url: DonationCanData.ajaxUrl,
+            data: {
+                action: "donation_can-get_cause_data",
+                cause: causeId
+            },
             success: function(dataAsJSON) {
                 var data = jQuery.parseJSON(dataAsJSON);
 
