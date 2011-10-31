@@ -23,7 +23,7 @@ function donation_can_get_table_name($wpdb) {
 }
 
 function donation_can_get_current_db_version() {
-    return "6.0";
+    return "7.0";
 }
 
 function donation_can_get_current_create_table_row() {
@@ -40,6 +40,7 @@ function donation_can_get_current_create_table_row() {
         "time timestamp" => "NOT NULL",
         "payer_email" => "VARCHAR(128) NOT NULL",
         "payer_name" => "VARCHAR(255) NOT NULL",
+        "payer_lastname" => "VARCHAR(128) NOT NULL",
         "anonymous" => "TINYINT(1) DEFAULT '0' NOT NULL",
         "cause_code" => "VARCHAR(64) NOT NULL",
         "amount" => "DECIMAL(10,2) DEFAULT '0.00' NOT NULL",
@@ -708,7 +709,7 @@ function w2log($msg) {
 }
 
 function donation_can_insert_donation($item_number, $cause_code, $status, $amount, $anonymous,
-        $time = "", $fee = 0, $payer_email = "", $payer_name = "", $transaction_id = "", $offline = 0) {
+        $time = "", $fee = 0, $payer_email = "", $payer_name = "", $payer_lastname = "", $transaction_id = "", $offline = 0) {
     global $wpdb;
 
     if ($time == "") {
@@ -724,6 +725,7 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
         "transaction_id" => $transaction_id,
         "payer_email" => $payer_email,
         "payer_name" => stripslashes($payer_name),
+        "payer_lastname" => stripslashes($payer_lastname),
         "fee" => $fee,
         "anonymous" => $anonymous,
         "time" => $time,
@@ -737,7 +739,7 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
     // Let sub plugins add their own fields if necessary
     $data = apply_filters("donation_can_transaction_data", $data);
 
-    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%f", "%s");
+    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s");
     $types = apply_filters("donation_can_transaction_types", $types);
 
     $table_name = donation_can_get_table_name($wpdb);
@@ -883,7 +885,6 @@ function donation_can_process_paypal_ipn($wp) {
     // Send a request back to PayPal to confirm the notification
     $req = 'cmd=_notify-validate';
 
-    // TODO: if this doesn't work as is, let's add these parameters to wp_parameters or whatever)
     foreach ($_POST as $key => $value) {
         $value = urlencode(stripslashes($value));
         $req .= "&$key=$value";
@@ -902,8 +903,8 @@ function donation_can_process_paypal_ipn($wp) {
     $fp = fsockopen ($url, 443, $errno, $errstr, 30);
 
     // Assign posted variables to data array for saving to database
-    $payer_name = $_POST['first_name'] . " " . $_POST['last_name'];
-    $payer_name = stripslashes($payer_name);
+    $payer_name = stripslashes($_POST['first_name']);
+    $payer_lastname =  stripslashes($_POST['last_name']);
 
     $data = array(
         "item_number" => $_POST["item_number"],
@@ -913,6 +914,7 @@ function donation_can_process_paypal_ipn($wp) {
         "transaction_id" => $_POST['txn_id'],
         "payer_email" => $_POST['payer_email'],
         "payer_name" => $payer_name,
+        "payer_lastname" => $payer_lastname,
         "fee" => $_POST['mc_fee'],
         "time" => current_time('mysql')
     );
@@ -1039,6 +1041,7 @@ function donation_can_send_receipt($donation_data, $cause) {
 function donation_can_replace_attributes($text, $data, $goal) {
     $text = str_replace('#CAUSE_NAME#', $goal["name"], $text);
     $text = str_replace('#USER_NAME#', $data["payer_name"], $text);
+    $text = str_replace('#USER_LAST_NAME#', $data["payer_lastname"], $text);
     $text = str_replace('#USER_EMAIL#', $data["payer_email"], $text);
     $text = str_replace('#CURRENCY#', donation_can_get_currency_for_goal($goal, false), $text);
     $text = str_replace('#AMOUNT#', $data["amount"], $text);

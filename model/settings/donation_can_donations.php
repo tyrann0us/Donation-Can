@@ -19,8 +19,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 function donation_can_donations_menu() {
     $page = intval(esc_attr($_GET["paged"]));
-    //echo "page: " . $page;
-
     if (!$page) {
         $page = 1;
     }

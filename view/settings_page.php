@@ -264,7 +264,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <?php _e("In the email templates below, you can use the following tags to represent data about the donation:", "donation_can"); ?>
                                 </p>
                                 <ul>
-                                    <li><code>#USER_NAME#</code> <?php _e("The name of the person making the donation.", "donation_can");?></li>
+                                    <li><code>#USER_NAME#</code> <?php _e("The first name of the person making the donation.", "donation_can");?></li>
+                                    <li><code>#USER_LAST_NAME#</code> <?php _e("The last name of the person making the donation.", "donation_can");?></li>
                                     <li><code>#USER_EMAIL#</code> <?php _e("The email address of the person making the donation.", "donation_can");?></li>
                                     <li><code>#CURRENCY#</code> <?php _e("Currency used in the donation.", "donation_can");?></li>
                                     <li><code>#AMOUNT#</code> <?php _e("Amount donated.", "donation_can");?></li>

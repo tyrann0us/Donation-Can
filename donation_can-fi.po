@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Donation Can\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-31 23:25+0200\n"
-"PO-Revision-Date: 2011-10-31 23:25+0200\n"
+"POT-Creation-Date: 2011-10-31 23:48+0200\n"
+"PO-Revision-Date: 2011-10-31 23:49+0200\n"
 "Last-Translator: Jarkko Laine <jarkko@jarkkolaine.com>\n"
 "Language-Team: Treehouse Apps <jarkko@jarkkolaine.com>\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,7 @@ msgstr "Haluatko varmasti nollata keräyksen '%CAUSE_NAME%' lahjoituslaskurin?"
 msgid "Add Donation Form"
 msgstr "Lisää lahjoituslomake"
 
-#: model/data.php:97
+#: model/data.php:98
 msgid ""
 "A new donation was made to your cause, \"#CAUSE_NAME#\":\n"
 "\n"
@@ -80,55 +80,55 @@ msgstr ""
 "Terveisin,\n"
 "Donation Can"
 
-#: model/data.php:127
+#: model/data.php:128
 msgid "Default"
 msgstr "Oletus"
 
-#: model/data.php:136
-#: model/data.php:176
+#: model/data.php:137
+#: model/data.php:177
 msgid "Anonymous donation"
 msgstr "Nimetön lahjoitus"
 
-#: model/data.php:168
+#: model/data.php:169
 msgid "Default Vertical"
 msgstr "Oletustyyli (vaaka)"
 
-#: model/data.php:230
+#: model/data.php:231
 msgid "Cannot update style %STYLE_ID%"
 msgstr "Tyyliä %STYLE_ID% ei voi muokata"
 
-#: model/data.php:246
+#: model/data.php:247
 msgid "No style found with id %ID%"
 msgstr "Tunnuksella %ID% ei löytynyt vimpaintyyliä."
 
-#: model/data.php:563
+#: model/data.php:564
 msgid "No name specified for cause"
 msgstr "Keräykselle ei ole määritetty nimeä"
 
-#: model/data.php:603
+#: model/data.php:604
 #, php-format
 msgid "Malformed email address %s"
 msgstr "Virheellinen sähköpostiosoite: %s"
 
-#: model/data.php:1086
+#: model/data.php:1087
 msgid "Y/m/d g:i A"
 msgstr "d.m.Y H:i"
 
-#: model/data.php:1087
+#: model/data.php:1088
 msgid "g:i A"
 msgstr "H:i"
 
-#: model/data.php:1097
+#: model/data.php:1098
 #, php-format
 msgid "Today at %s"
 msgstr "Tänään kello %s"
 
-#: model/data.php:1099
+#: model/data.php:1100
 #, php-format
 msgid "Yesterday at %s"
 msgstr "Eilen kello %s"
 
-#: model/data.php:1101
+#: model/data.php:1102
 #, php-format
 msgid "%d days ago at %s"
 msgstr "%d päivää sitten kello %s"
@@ -458,14 +458,18 @@ msgid "From"
 msgstr "Lahjoittaja"
 
 #: view/add_donation_page.php:120
-msgid "Name:"
-msgstr "Nimi:"
+msgid "First name:"
+msgstr "Etunimi:"
 
 #: view/add_donation_page.php:124
+msgid "Last name:"
+msgstr "Sukunimi:"
+
+#: view/add_donation_page.php:128
 msgid "Email:"
 msgstr "Sähköposti:"
 
-#: view/add_donation_page.php:131
+#: view/add_donation_page.php:135
 msgid "Notes (optional)"
 msgstr "Merkintöjä (vapaaehtoinen):"
 
@@ -1313,6 +1317,9 @@ msgstr "Teksti"
 #: view/widget_blocks/text_options.php:6
 msgid "Text:"
 msgstr "Teksti:"
+
+#~ msgid "Name:"
+#~ msgstr "Nimi:"
 
 #~ msgid "Are you sure you want to delete cause '"
 #~ msgstr "Oletko varma, että haluat poistaa keräyksen '"

@@ -117,8 +117,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <h3><?php _e("From", "donation_can");?></h3>
                         <div class="inside" id="payer_name-div">
                             <p>
-                                <label for="payer_name"><?php _e("Name:", "donation_can"); ?></label>
+                                <label for="payer_name"><?php _e("First name:", "donation_can"); ?></label>
                                 <input type="text" name="payer_name" value="<?php echo $payer_name; ?>" size="30"/>
+                            </p>
+                            <p>
+                                <label for="payer_name"><?php _e("Last name:", "donation_can"); ?></label>
+                                <input type="text" name="payer_lastname" value="<?php echo $payer_lastname; ?>" size="30"/>
                             </p>
                             <p>
                                 <label for="payer_email"><?php _e("Email:", "donation_can");?></label>
