@@ -14,5 +14,4 @@ class DonationCanDataAccess {
 
 
 }
-
 ?>

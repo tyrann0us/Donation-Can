@@ -1117,5 +1117,11 @@ function donation_can_is_valid_date($date_string) {
     return true;
 }
 
-
+function donation_can_get_options_handler() {
+    global $donation_can_options_handler;
+    if ($donation_can_options_handler == null) {
+        $donation_can_options_handler = new DonationCanOptions();
+    }
+    return $donation_can_options_handler;
+}
 ?>

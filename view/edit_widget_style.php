@@ -61,7 +61,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                             <?php _e("You are viewing a default widget style that cannot be changed.", "donation_can"); ?>
                                         </div>
                                     <?php else : ?>
-                                        <input type="button" onclick="storeJSONStructureAndSubmit();" class="button-primary" id="publish"
+                                        <input type="button" onclick="storeJSONStructureAndSubmit();" class="button-primary"
                                                value="<?php echo $save_button_text; ?>"/>
                                     <?php endif; ?>
                                 </div>

@@ -489,3 +489,30 @@ function showOtherFormat(element) {
         otherFormatP.hide();
     }
 }
+
+function dc_downloadDataDump() {
+    alert("submitting...");
+    // TODO: collect data from form...
+    var form = jQuery("#dc-dump-data");
+
+    //var data = form.serialize();
+    var data = {
+        action: "donation_can-export",
+        nonce: DonationCanData.exportDataNonce
+    };
+
+    // Do an ajax call to get the path to file
+    jQuery.post(
+        DonationCanData.ajaxUrl,
+        data,
+        function(data) {
+            alert("url received: " + data);
+
+            // Then start download
+        }
+
+    );
+
+
+    return false;
+}

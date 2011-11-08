@@ -94,7 +94,6 @@ function donation_can_ajax_style_autocomplete() {
 }
 
 function donation_can_ajax_get_cause_data() {
-
     // Donation cause data
     $cause_code = esc_attr(esc_attr($_REQUEST['cause']));    
     $cause = donation_can_get_goal($cause_code);
@@ -110,10 +109,47 @@ function donation_can_ajax_get_cause_data() {
     exit;
 }
 
+function donation_can_ajax_export() {
+    $nonce = $_REQUEST['_wpnonce'];
+    $type = esc_attr($_REQUEST['type']);
+
+    if ($type != "causes" && $type != "donations" && $type != "settings" && $type != "styles") {
+        die("Invalid export type: " . $type);
+    }
+
+    if (!wp_verify_nonce($nonce, 'donation_can_ajax-export')) {
+        die('Nonce verification failed.');
+    }
+
+    if (current_user_can('dc_general_settings')) {
+        $exporter = new DonationCanDataExport(donation_can_get_options_handler());
+
+        if ($type == "causes") {
+            $output = $exporter->exportCauses();
+            $filename = 'donation_can-causes.' . date( 'Y-m-d' ) . '.csv';
+        } else if ($type == "settings") {
+            $output = $exporter->exportSettings();
+            $filename = 'donation_can-settings.' . date( 'Y-m-d' ) . '.csv';
+        }
+
+        // TODO: rest of the export formats
+
+        header('Content-Description: File Transfer');
+        header('Content-Disposition: attachment; filename=' . $filename);
+        header('Content-Type: text/csv; charset=' . get_option( 'blog_charset' ), true);
+
+        echo $output;
+    }
+    
+    exit;
+}
+
 add_action('wp_ajax_donation_can-get_style_options', 'donation_can_ajax_get_style_options');
 
 add_action('wp_ajax_nopriv_donation_can-get_cause_data', 'donation_can_ajax_get_cause_data');
 add_action('wp_ajax_donation_can-get_cause_data', 'donation_can_ajax_get_cause_data');
 
 add_action('wp_ajax_donation_can-style_autocomplete', 'donation_can_ajax_style_autocomplete');
+
+add_action('wp_ajax_donation_can-export', 'donation_can_ajax_export');
 ?>

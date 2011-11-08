@@ -26,19 +26,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-require("mvc.php");
+require_once("mvc.php");
 
-require("model/data.php");
+require_once("model/DonationCanOptions.php");
+require_once("model/DonationCanDataExport.php");
+require_once("model/data.php");
 
-require("model/widgets/widgets.php");
-require("model/dashboard/dashboard.php");
-require("model/settings/settings.php");
-require("model/widget_style_elements/widget_style_elements.php");
+require_once("model/widgets/widgets.php");
+require_once("model/dashboard/dashboard.php");
+require_once("model/settings/settings.php");
+require_once("model/widget_style_elements/widget_style_elements.php");
 
 // Helper methods for theme developers
-require("theme_methods.php");
+require_once("theme_methods.php");
 
-require("ajax.php");
+require_once("ajax.php");
 
 // Adds the style sheet definition to head
 function donation_can_head_filter() {   
@@ -211,6 +213,7 @@ function donation_can_init(){
 
             // Nonces
             'styleOptionsNonce' => wp_create_nonce('donation_can_ajax-style_options'),
+            'exportDataNonce' => wp_create_nonce('donation_can_ajax-export'),
 
             // Localization
             'text_remove' => __("Remove", "donation_can"),

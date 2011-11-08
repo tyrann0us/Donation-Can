@@ -17,6 +17,179 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+class DonationCanGeneralSettings {
+
+    // Data structure for holding settings
+    var $general_settings;
+    var $options;
+
+    function  __construct($optionsStore) {
+        $this->options = $optionsStore;
+    }
+
+    function load() {
+        if ($this->options != null) {
+            $this->general_settings = $this->options->get_option("donation_can_general");
+        } else {
+            die("Options store not set");
+        }
+    }
+
+    function save() {
+        if ($this->options != null) {
+            $this->options->update_option("donation_can_general", $this->general_settings);
+        } else {
+            die("Options store not set");
+        }
+    }
+
+    // SETTERS
+
+    function setPayPalEmail($email) {
+        $this->general_settings["paypal_email"] = $email;
+    }
+
+    function setPayPalSandboxEmail($email) {
+        $this->general_settings["paypal_sandbox_email"] = $email;
+    }
+
+    function setRequireShipping($requireShipping) {
+        $this->general_settings["require_shipping"] = $requireShipping;
+    }
+
+    function setAskForNote($askForNote) {
+        $this->general_settings["ask_for_note"] = $askForNote;
+    }
+
+    function setNoteFieldLabel($label) {
+        $this->general_settings["note_field_label"] = $label;
+    }
+
+    function setContinueButtonText($text) {
+        $this->general_settings["continue_button_text"] = $text;
+    }
+
+    function setReturnPage($pageId) {
+        $this->general_settings["return_page"] = $pageId;
+    }
+
+    function setCancelledPage($pageId) {
+        $this->general_settings["cancel_return_page"] = $pageId;
+    }
+
+    function setLogoOnPayPalPage($logoUrl) {
+        $this->general_settings["logo_on_paypal_page"] = $logoUrl;
+    }
+
+    function setHeaderOnPayPalPage($headerUrl) {
+        $this->general_settings["header_on_paypal_page"] = $headerUrl;
+    }
+
+    function setBackgroundOnPayPalPage($bg) {
+        $this->general_settings["bg_on_paypal_page"] = $bg;
+    }
+
+    function setHeaderBackgroundOnPayPalPage($bg) {
+        $this->general_settings["header_bg_on_paypal_page"] = $bg;
+    }
+
+    function setHeaderBorderOnPayPalPage($border) {
+        $this->general_settings["header_border_on_paypal_page"] = $border;
+    }
+
+    // TODO: refactor to add?
+    function setNotifyEmail($emailList) {
+        $this->general_settings["notify_email"] = $emailList;
+    }
+
+    function setDefaultCurrency($currency) {
+        $this->general_settings["currency"] = $currency;
+    }
+
+    function addDonationOption($sum) {
+        if (!isset($this->general_settings["donation_sums"]) || $this->general_settings["donation_sums"] == null) {
+            $this->general_settings["donation_sums"] = array();
+        }
+        $this->general_settings["donation_sums"][] = $sum;
+    }
+
+    // TODO is this deprecated?
+    function setStyle($style) {
+        $this->general_settings["style"] = $style;
+    }
+
+    // TODO is this deprecated?
+    function setCustom($custom) {
+        $this->general_settings["custom"] = $custom;
+    }
+
+    function setDebugMode($debug) {
+        $this->general_settings["debug_mode"] = $debug;
+    }
+
+    function setLoggingMode($logging) {
+        $this->general_settings["enable_logging"] = $logging;
+    }
+
+    // TODO is this deprecated?
+    function setSortCausesField($field) {
+        $this->general_settings["sort_causes_field"] = $field;
+    }
+
+    // TODO is this deprecated?
+    function setSortDonationsField($field) {
+        $this->general_settings["sort_donations_field"] = $field;
+    }
+
+    // TODO is this deprecated?
+    function setSortCausesOrder($order) {
+        $this->general_settings["sort_causes_order"] = $order;
+    }
+
+    // TODO is this deprecated?
+    function setSortDonationsOrder($order) {
+        $this->general_settings["sort_donations_order"] = $order;
+    }
+
+    function setShowBackLink($value) {
+        $this->general_settings["link_back"] = $value;
+    }
+
+    function setSubtractPayPalFees($subtractFees) {
+        $this->general_settings["subtract_paypal_fees"] = $subtractFees;
+    }
+
+    function setUseHTMLEmails($useHtml) {
+        $this->general_settings["use_html_emails"] = $useHtml;
+    }
+
+    function setEmailTemplate($template) {
+        $this->general_settings["email_template"] = $template;
+    }
+
+    function setReceiptTemplate($template) {
+        $this->general_settings["receipt_template"] = $template;
+    }
+
+    // TODO: should we merge some setters?
+    function setSendReceipt($sendReceipt) {
+        $this->general_settings["send_receipt"] = $sendReceipt;
+    }
+
+    function setReceiptSubject($subject) {
+        $this->general_settings["receipt_subject"] = $subject;
+    }
+
+    function setReceiptThreshold($threshold) {
+        $this->general_settings["receipt_threshold"] = $threshold;
+    }
+
+    function setEmailFrom($email, $name) {
+        $this->general_settings["email_from"] = $email;
+        $this->general_settings["email_from_name"] = $name;
+    }
+}
+
 function render_user_notification($message) {
   echo "<div class='updated fade'><p>".$message."</p></div>";
 }
@@ -47,113 +220,65 @@ function donation_can_settings_page() {
 
     // Save general settings
     if ($_POST["edit_settings"] == "Y" && check_admin_referer('donation_can-general_settings')) {
-        $paypal_email = esc_attr($_POST["paypal_email"]);
-        $paypal_sandbox_email = esc_attr($_POST["paypal_sandbox_email"]);
+        $settings = new DonationCanGeneralSettings();
+        $settings->setPayPalEmail(esc_attr($_POST["paypal_email"]));
+        $settings->setPayPalSandboxEmail(esc_attr($_POST["paypal_sandbox_email"]));
 
-        $require_shipping = esc_attr($_POST["require_shipping"]);
-        $ask_for_note = esc_attr($_POST["ask_for_note"]);
-        $note_field_label = esc_attr($_POST["note_field_label"]);
+        $settings->setAskForNote(esc_attr($_POST["ask_for_note"]));
+        $settings->setNoteFieldLabel(stripslashes(esc_attr($_POST["note_field_label"])));
+        $settings->setRequireShipping(esc_attr($_POST["require_shipping"]));
+
+        $settings->setReturnPage(esc_attr($_POST["return_page"]));
+        $settings->setCancelledPage(esc_attr($_POST["cancel_return_page"]));
+        $settings->setContinueButtonText(esc_attr($_POST["continue_button_text"]));
+
+        $settings->setLogoOnPayPalPage(esc_attr($_POST["logo_on_paypal_page"]));
+        $settings->setHeaderOnPayPalPage(esc_attr($_POST["header_on_paypal_page"]));
+        $settings->setBackgroundOnPayPalPage(esc_attr($_POST["bg_on_paypal_page"]));
+        $settings->setHeaderBackgroundOnPayPalPage(esc_attr($_POST["header_bg_on_paypal_page"]));
+        $settings->setHeaderBorderOnPayPalPage(esc_attr($_POST["header_border_on_paypal_page"]));
+
+        // TODO parse better as list
+        $settings->setNotifyEmail(esc_attr($_POST["notify_email"]));
+
+        // TODO are style and custom used anymore?
+        $settings->setStyle(esc_attr($_POST["style"]));
+        $settings->setCustom(esc_attr($_POST["custom"]));
+
+        // TODO validate currency
+        $settings->setDefaultCurrency(esc_attr($_POST["currency"]));
+
+        $settings->setDebugMode(esc_attr($_POST["debug_mode"]) == "1");
+        $settings->setLoggingMode(esc_attr($_POST["enable_logging"]) == "1");
+
+        $settings->setShowBackLink(esc_attr($_POST["link_back"]) == "1");
+        $settings->setSubtractPayPalFees(esc_attr($_POST["subtract_fees"]) == "1");
+
+        $settings->setEmailFrom(esc_attr($_POST["email_from"]), stripslashes($_POST["email_from_name"]));
+        $settings->setEmailTemplate(stripslashes($_POST["email_template"]));
+        $settings->setReceiptSubject(esc_attr(stripslashes($_POST["receipt_subject"])));
+        $settings->setReceiptTemplate(stripslashes($_POST["receipt_template"]));
+        $settings->setSendReceipt(esc_attr($_POST["send_receipt"]) == "1");
+        $settings->setReceiptThreshold(intval(esc_attr($_POST["receipt_threshold"])));
+        $settings->setUseHTMLEmails(esc_attr($_POST["use_html_emails"]) == "1");
         
-        $return_page = esc_attr($_POST["return_page"]);
-        $continue_button_text = esc_attr($_POST["continue_button_text"]);
-        $cancel_return_page = esc_attr($_POST["cancel_return_page"]);
-
-        $logo_on_paypal_page = esc_attr($_POST["logo_on_paypal_page"]);
-        $header_on_paypal_page = esc_attr($_POST["header_on_paypal_page"]);
-        $bg_on_paypal_page = esc_attr($_POST["bg_on_paypal_page"]);
-        $header_bg_on_paypal_page = esc_attr($_POST["header_bg_on_paypal_page"]);
-        $header_border_on_paypal_page = esc_attr($_POST["header_border_on_paypal_page"]);
-
-        $notify_email = esc_attr($_POST["notify_email"]);
-        $style = esc_attr($_POST["style"]);
-        $custom = esc_attr($_POST["custom"]);
-        $currency = esc_attr($_POST["currency"]);
-
-        $debug_mode = esc_attr($_POST["debug_mode"]) == "1";
-        $enable_logging = esc_attr($_POST["enable_logging"]) == "1";
-
-        $sort_causes_field = esc_attr($_POST["sort_causes_field"]);
-        $sort_causes_order = esc_attr($_POST["sort_causes_order"]);
-        $sort_donations_field = esc_attr($_POST["sort_donations_field"]);
-        $sort_donations_order = esc_attr($_POST["sort_donations_order"]);
-
-        $show_back_link = esc_attr($_POST["link_back"]) == "1";
-
-        $subtract_fees = esc_attr($_POST["subtract_fees"]) == "1";
+        $settings->setSortCausesField(esc_attr($_POST["sort_causes_field"]));
+        $settings->setSortCausesOrder(esc_attr($_POST["sort_causes_order"]));
+        $settings->setSortDonationsField(esc_attr($_POST["sort_donations_field"]));
+        $settings->setSortDonationsOrder(esc_attr($_POST["sort_donations_order"]));
 
         $donation_sum_num = esc_attr($_POST["donation_sum_num"]);
-        $donation_sums = array();
         for ($i = 0; $i < $donation_sum_num; $i++) {
             $sum_value = esc_attr($_POST["donation_sum_" . $i]);
+
             if ($sum_value != null && $sum_value != "") {
-                $donation_sums[] = $sum_value;
+                $settings->addDonationOption($sum);
             }
         }
 
-        $use_html_emails = esc_attr($_POST["use_html_emails"]) == "1";
-        $email_template = stripslashes($_POST["email_template"]);
-        $receipt_template = stripslashes($_POST["receipt_template"]);
-        $receipt_subject = esc_attr(stripslashes($_POST["receipt_subject"]));
-        
-        $send_receipt = esc_attr($_POST["send_receipt"]) == "1";
-        $receipt_threshold = intval(esc_attr($_POST["receipt_threshold"]));
-
-        $email_from = esc_attr($_POST["email_from"]);
-        $email_from_name = stripslashes($_POST["email_from_name"]);
-
-        $general_settings["paypal_email"] = $paypal_email;
-        $general_settings["paypal_sandbox_email"] = $paypal_sandbox_email;
-
-        $general_settings["require_shipping"] = $require_shipping;
-        $general_settings["ask_for_note"] = $ask_for_note;
-        $general_settings["note_field_label"] = $note_field_label;
-        $general_settings["continue_button_text"] = $continue_button_text;
-
-        $general_settings["return_page"] = $return_page;
-        $general_settings["cancel_return_page"] = $cancel_return_page;
-
-        $general_settings["logo_on_paypal_page"] = $logo_on_paypal_page;
-        $general_settings["header_on_paypal_page"] = $header_on_paypal_page;
-        $general_settings["bg_on_paypal_page"] = $bg_on_paypal_page;
-        $general_settings["header_bg_on_paypal_page"] = $header_bg_on_paypal_page;
-        $general_settings["header_border_on_paypal_page"] = $header_border_on_paypal_page;
-
-        $general_settings["notify_email"] = $notify_email;
-
-        $general_settings["currency"] = $currency;
-
-        $general_settings["donation_sums"] = array();
-        foreach ($donation_sums as $sum) {
-            $general_settings["donation_sums"][] = $sum;
+        if ($settings->save()) {
+            render_user_notification(__("Donation Can settings updated", "donation_can"));
         }
-
-        $general_settings["style"] = $style;
-        $general_settings["custom"] = $custom;
-
-        $general_settings["debug_mode"] = $debug_mode;
-        $general_settings["enable_logging"] = $enable_logging;
-
-        $general_settings["sort_causes_field"] = $sort_causes_field;
-        $general_settings["sort_donations_field"] = $sort_donations_field;
-        $general_settings["sort_causes_order"] = $sort_causes_order;
-        $general_settings["sort_donations_order"] = $sort_donations_order;
-
-        $general_settings["link_back"] = $show_back_link;
-
-        $general_settings["subtract_paypal_fees"] = $subtract_fees;
-
-        $general_settings["use_html_emails"] = $use_html_emails;
-        $general_settings["email_template"] = $email_template;
-        $general_settings["receipt_template"] = $receipt_template;
-        $general_settings["send_receipt"] = $send_receipt;
-        $general_settings["receipt_subject"] = $receipt_subject;
-        $general_settings["receipt_threshold"] = $receipt_threshold;
-
-        $general_settings["email_from"] = $email_from;
-        $general_settings["email_from_name"] = $email_from_name;
-
-        update_option("donation_can_general", $general_settings);
-        render_user_notification(__("Donation Can settings updated", "donation_can"));
     }
 
     // Default values for email

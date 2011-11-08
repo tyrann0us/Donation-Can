@@ -86,6 +86,9 @@ Coming soon...
 
 == Upgrade Notice ==
 
+= 1.5.7 =
+Donation Can is now ready for localization.
+
 = 1.5.6 =
 Bug fixes.
 
@@ -108,6 +111,13 @@ This is a bug fix release. If you see all your donations and are collecting them
 This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
+
+= 1.5.7 =
+* Full localization support.
+* Finnish translation. More languages coming in the upcoming versions. Get in touch if you want to provide a translation for your language.
+* Plugin security improvements on settings pages and AJAX calls.
+* Split the name of the donor into first name and last name to allow more options for e-mail message formatting.
+* Fixed compatibility problems with the "After the deadline" plugin.
 
 = 1.5.6 =
 * Donation widget settings now show only the settings that are applicable to the selected style.

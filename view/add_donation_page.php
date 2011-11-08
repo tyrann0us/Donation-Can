@@ -59,7 +59,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <div id="major-publishing-actions">
                                     <div id="delete-action"></div>
                                     <div id="publishing-action">
-                                        <input type="submit" class="button-primary" id="publish" value="<?php _e("Add Donation", "donation_can");?>"/>
+                                        <input type="submit" class="button-primary" value="<?php _e("Add Donation", "donation_can");?>"/>
                                     </div>
                                     <div class="clear"></div>
                                 </div>

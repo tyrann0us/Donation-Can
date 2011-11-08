@@ -61,7 +61,7 @@ jQuery(document).ready(
                                 <div id="major-publishing-actions">
                                     <div id="delete-action"></div>
                                     <div id="publishing-action">
-                                        <input type="submit" onclick="return verifyAddCauseFormFields();" class="button-primary" id="publish"
+                                        <input type="submit" onclick="return verifyAddCauseFormFields();" class="button-primary"
                                                value="<?php echo $save_button_text; ?>"/>
                                     </div>
                                     <div class="clear"></div>
