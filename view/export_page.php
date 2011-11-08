@@ -23,9 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <p><?php _e("Include in dump:", "donation_can");?></p>
 
 <ul>
-    <li><a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=causes"><?php _e("Causes", "donation_can");?></a></li>
-    <li><a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=donations"><?php _e("Donations", "donation_can");?></a></li>
-    <li><a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=settings"><?php _e("Settings", "donation_can");?></a></li>
-    <li><a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=styles"><?php _e("Styles", "donation_can");?></a></li>
+    <li><?php _e("Causes:", "donation_can");?> 
+        [<a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=causes&format=csv"><?php _e("CSV", "donation_can");?></a>
+        | <a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=causes&format=xml"><?php _e("XML", "donation_can");?></a>]
+    </li>
+    <li><?php _e("Donations:", "donation_can");?> [<a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=donations&format=csv"><?php _e("CSV", "donation_can");?></a>
+        | <a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=donations&format=xml"><?php _e("XML", "donation_can");?></a>]</li>
+    <li><?php _e("Settings:", "donation_can");?> [<a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=settings&format=xml"><?php _e("XML", "donation_can");?></a>]</li>
+    <li><?php _e("Styles:", "donation_can");?> [<a href="<?php echo wp_nonce_url(admin_url('admin-ajax.php'), "donation_can_ajax-export");?>&action=donation_can-export&type=styles&format=xml"><?php _e("XML", "donation_can");?></a>]</li>
 </ul>
 

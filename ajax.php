@@ -113,6 +113,11 @@ function donation_can_ajax_export() {
     $nonce = $_REQUEST['_wpnonce'];
     $type = esc_attr($_REQUEST['type']);
 
+    $requested_format = esc_attr($_REQUEST['format']);
+    if (!strcasecmp($requested_format, "csv") && !strcasecmp($requested_format, "xml")) {
+        $requested_format = "csv";
+    }
+
     if ($type != "causes" && $type != "donations" && $type != "settings" && $type != "styles") {
         die("Invalid export type: " . $type);
     }
@@ -124,19 +129,29 @@ function donation_can_ajax_export() {
     if (current_user_can('dc_general_settings')) {
         $exporter = new DonationCanDataExport(donation_can_get_options_handler());
 
+        $format = 'csv';
+
         if ($type == "causes") {
-            $output = $exporter->exportCauses();
-            $filename = 'donation_can-causes.' . date( 'Y-m-d' ) . '.csv';
+            $output = $exporter->exportCauses(strtoupper($requested_format));
+            $format = strtolower($requested_format);
+            $filename = 'donation_can-causes.' . date('Y-m-d') . '.' . $format;
         } else if ($type == "settings") {
             $output = $exporter->exportSettings();
-            $filename = 'donation_can-settings.' . date( 'Y-m-d' ) . '.csv';
+            $filename = 'donation_can-settings.' . date('Y-m-d') . '.xml';
+            $format = 'xml';
+        } else if ($type == "styles") {
+            $output = $exporter->exportStyles();
+            $filename = 'donation_can-styles.' . date('Y-m-d') . '.xml';
+            $format = 'xml';
+        } else if ($type == "donations") {
+            $output = $exporter->exportDonations(strtoupper($requested_format));
+            $format = strtolower($requested_format);
+            $filename = 'donation_can-donations.' . date('Y-m-d') . '.' . $format;
         }
-
-        // TODO: rest of the export formats
 
         header('Content-Description: File Transfer');
         header('Content-Disposition: attachment; filename=' . $filename);
-        header('Content-Type: text/csv; charset=' . get_option( 'blog_charset' ), true);
+        header('Content-Type: text/' . $format . '; charset=' . get_option( 'blog_charset' ), true);
 
         echo $output;
     }

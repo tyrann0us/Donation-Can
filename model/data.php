@@ -394,15 +394,21 @@ function donation_can_delete_donation($id) {
 
 function donation_can_get_donations($offset = 0, $limit = 0,
         $goal_id = null, $include_donations_before_reset = false,
-        $start_time = 0, $end_time = 0) {
+        $start_time = 0, $end_time = 0, $include_deleted = false) {
     global $wpdb;
 
-    $query = "SELECT * FROM " . donation_can_get_table_name($wpdb) . " WHERE deleted = 0";
+    $query = "SELECT * FROM " . donation_can_get_table_name($wpdb);
+    
+    if (!$include_deleted) {
+        $query .= " WHERE deleted = 0 AND";
+    } else {
+        $query .= " WHERE";
+    }
 
     // For now, we simply exclude the started donations from every request.
     // In future versions, there will be a nice way to view started donations
     // as well in the UI...
-    $query .= " AND payment_status <> \"dc_started\" ";
+    $query .= " payment_status <> \"dc_started\" ";
 
     if ($goal_id != null) {
         $query .= " AND cause_code = \"" . $goal_id . "\"";
