@@ -270,6 +270,8 @@ function donation_can_update_roles() {
 // I develop the plugin outside wp-content using a symlink so I can't use __FILE__ here.
 register_activation_hook(WP_PLUGIN_DIR . "/donation-can/donation_can.php", 'donation_can_install');
 
+register_uninstall_hook(WP_PLUGIN_DIR . "/donation-can/donation_can.php", 'donation_can_uninstall');
+
 add_shortcode("donation-can", "donation_can_shortcode_handler");
 
 add_filter("wp_head", "donation_can_head_filter");

@@ -90,6 +90,25 @@ function donation_can_db_upgrade() {
     }
 }
 
+function donation_can_uninstall() {
+    // TODO: important: check if the file is the one that was registered with the uninstall hook (function)
+    /*if ( __FILE__ != WP_UNINSTALL_PLUGIN )
+            return;
+     */
+
+    // Clear donation can settings
+    delete_option("donation_can_general");
+    delete_option("donation_can_db_version");
+    delete_option("donation_can_widget_styles");
+    delete_option("donation_can_widget_styles_version");
+    delete_option("donation_can_causes");
+
+    // Delete donations
+    global $wpdb;
+    $table = donation_can_get_table_name($wpdb);
+    $wpdb->query("DROP TABLE IF EXISTS $table");
+}
+
 function donation_can_get_general_settings() {
     return get_option("donation_can_general");
 }

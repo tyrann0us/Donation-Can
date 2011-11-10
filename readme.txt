@@ -113,6 +113,8 @@ This version contains many of improvements that make Donation Can easier to use.
 == Changelog ==
 
 = 1.5.7 =
+* Added a settings page for exporting Donation Can data as CSV or XML. Some data is only available in XML format.
+* Added uninstall functionality that deletes the database tables and settings added by Donation Can.
 * Full localization support.
 * Finnish translation. More languages coming in the upcoming versions. Get in touch if you want to provide a translation for your language.
 * Plugin security improvements on settings pages and AJAX calls.
