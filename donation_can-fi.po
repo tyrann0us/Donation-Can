@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Donation Can\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-31 23:58+0200\n"
-"PO-Revision-Date: 2011-10-31 23:58+0200\n"
+"POT-Creation-Date: 2011-11-10 13:54+0200\n"
+"PO-Revision-Date: 2011-11-10 13:56+0200\n"
 "Last-Translator: Jarkko Laine <jarkko@jarkkolaine.com>\n"
 "Language-Team: Treehouse Apps <jarkko@jarkkolaine.com>\n"
 "MIME-Version: 1.0\n"
@@ -20,41 +20,41 @@ msgstr ""
 "X-Poedit-SearchPath-4: model/settings\n"
 "X-Poedit-SearchPath-5: model/dashboard\n"
 
-#: donation_can.php:170
+#: donation_can.php:172
 #, php-format
 msgid "Donation Can is in sandbox mode. Remember to <a href=\"%s\">switch back to normal mode</a> when done testing."
 msgstr "Donation Can on hiekkalaatikkotilassa. Muista <a href=\"%s\">siirtyä takaisin normaalitilaan</a>, kun olet lopettanut testaamisen."
 
-#: donation_can.php:191
+#: donation_can.php:193
 msgid "%CURRENCY% %SUM%"
 msgstr "%SUM% %CURRENCY%"
 
-#: donation_can.php:216
+#: donation_can.php:219
 msgid "Remove"
 msgstr "Poista"
 
-#: donation_can.php:217
+#: donation_can.php:220
 msgid "Are you sure you want to delete style '%STYLE_NAME%'?"
 msgstr "Haluatko varmasti poistaa tyylin '%STYLE_NAME%'?"
 
-#: donation_can.php:218
+#: donation_can.php:221
 msgid "Name for new style:"
 msgstr "Nimeä uusi tyyli:"
 
-#: donation_can.php:219
+#: donation_can.php:222
 msgid "Are you sure you want to delete donation %DONATION_ID%?"
 msgstr "Haluatko varmasti poistaa lahjoituksen %DONATION_ID%?"
 
-#: donation_can.php:220
+#: donation_can.php:223
 msgid "Are you sure you want to delete cause '%CAUSE_NAME%'?"
 msgstr "Haluatko varmasti poistaa keräyksen '%CAUSE_NAME%'?"
 
-#: donation_can.php:221
+#: donation_can.php:224
 msgid "Are you sure you want to reset the donation counter for cause '%CAUSE_NAME%'?"
 msgstr "Haluatko varmasti nollata keräyksen '%CAUSE_NAME%' lahjoituslaskurin?"
 
-#: donation_can.php:242
-#: donation_can.php:244
+#: donation_can.php:245
+#: donation_can.php:247
 msgid "Add Donation Form"
 msgstr "Lisää lahjoituslomake"
 
@@ -101,34 +101,34 @@ msgstr "Tyyliä %STYLE_ID% ei voi muokata"
 msgid "No style found with id %ID%"
 msgstr "Tunnuksella %ID% ei löytynyt vimpaintyyliä."
 
-#: model/data.php:564
+#: model/data.php:570
 msgid "No name specified for cause"
 msgstr "Keräykselle ei ole määritetty nimeä"
 
-#: model/data.php:604
+#: model/data.php:610
 #, php-format
 msgid "Malformed email address %s"
 msgstr "Virheellinen sähköpostiosoite: %s"
 
-#: model/data.php:1089
+#: model/data.php:1095
 msgid "Y/m/d g:i A"
 msgstr "d.m.Y H:i"
 
-#: model/data.php:1090
+#: model/data.php:1096
 msgid "g:i A"
 msgstr "H:i"
 
-#: model/data.php:1100
+#: model/data.php:1106
 #, php-format
 msgid "Today at %s"
 msgstr "Tänään kello %s"
 
-#: model/data.php:1102
+#: model/data.php:1108
 #, php-format
 msgid "Yesterday at %s"
 msgstr "Eilen kello %s"
 
-#: model/data.php:1104
+#: model/data.php:1110
 #, php-format
 msgid "%d days ago at %s"
 msgstr "%d päivää sitten kello %s"
@@ -177,7 +177,7 @@ msgstr "Vimpaimen tyyli tallennettu"
 msgid "Widget style added"
 msgstr "Vimpaimen tyyli lisätty"
 
-#: model/settings/donation_can_general_settings.php:156
+#: model/settings/donation_can_general_settings.php:280
 msgid "Donation Can settings updated"
 msgstr "Donation Can -asetukset päivitetty"
 
@@ -201,65 +201,73 @@ msgstr "Poistettiin tyyli:"
 msgid "Cloned style:"
 msgstr "Kloonattiin tyyli:"
 
-#: model/settings/settings.php:29
+#: model/settings/settings.php:30
 msgid "Donation Can"
 msgstr "Donation Can"
 
-#: model/settings/settings.php:30
+#: model/settings/settings.php:31
 msgid "Donation Can Settings - General"
 msgstr "Donation Can -asetukset: Yleiset"
 
-#: model/settings/settings.php:30
+#: model/settings/settings.php:31
 msgid "General Settings"
 msgstr "Yleisasetukset"
 
-#: model/settings/settings.php:31
+#: model/settings/settings.php:32
 msgid "Donation Can Settings - Causes"
 msgstr "Donation Can -asetukset: Keräykset"
 
-#: model/settings/settings.php:31
+#: model/settings/settings.php:32
 msgid "Causes"
 msgstr "Keräykset"
 
-#: model/settings/settings.php:32
+#: model/settings/settings.php:33
 msgid "Donation Can Settings - Add New Cause"
 msgstr "Donation Can -asetukset: Uusi keräys"
 
-#: model/settings/settings.php:32
+#: model/settings/settings.php:33
 msgid "Add New Cause"
 msgstr "Uusi keräys"
 
-#: model/settings/settings.php:33
+#: model/settings/settings.php:34
 msgid "Donation Can Settings - Browse Donations"
 msgstr "Donation Can -asetukset: Selaa lahjoituksia"
 
-#: model/settings/settings.php:33
+#: model/settings/settings.php:34
 msgid "Donations"
 msgstr "Lahjoitukset"
 
-#: model/settings/settings.php:34
+#: model/settings/settings.php:35
 msgid "Donation Can Settings - Add New Donation"
 msgstr "Donation Can -asetukset: Uusi lahjoitus"
 
-#: model/settings/settings.php:34
+#: model/settings/settings.php:35
 msgid "Add New Donation"
 msgstr "Lisää lahjoitus"
 
-#: model/settings/settings.php:35
+#: model/settings/settings.php:36
 msgid "Donation Can Settings - Widget Styles"
 msgstr "Donation Can -asetukset: Vimpaintyylit"
 
-#: model/settings/settings.php:35
+#: model/settings/settings.php:36
 msgid "Widget Styles"
 msgstr "Vimpaintyylit"
 
-#: model/settings/settings.php:36
+#: model/settings/settings.php:37
 msgid "Donation Can Settings - Add New Widget Style"
 msgstr "Donation Can -asetukset: Lisää uusi vimpaintyyli"
 
-#: model/settings/settings.php:36
+#: model/settings/settings.php:37
 msgid "Add New Widget Style"
 msgstr "Lisää uusi vimpaintyyli"
+
+#: model/settings/settings.php:38
+msgid "Donation Can Settings - Export"
+msgstr "Donation Can - Vie"
+
+#: model/settings/settings.php:38
+msgid "Export Data"
+msgstr "Vie tiedot"
 
 #: model/widget_style_elements/donation_can_widget_anonymous_element.php:43
 msgid "Allow anonymous donations"
@@ -418,6 +426,9 @@ msgid "Customize widget:"
 msgstr "Muokkaa vimpainta:"
 
 #: view/add_donation_page.php:52
+#: view/edit_goal_page.php:58
+#: view/edit_goal_page.php:105
+#: view/edit_widget_style.php:53
 msgid "Save"
 msgstr "Tallenna"
 
@@ -430,6 +441,8 @@ msgid "Add Donation"
 msgstr "Lisää lahjoitus"
 
 #: view/add_donation_page.php:76
+#: view/goals_page.php:47
+#: view/goals_page.php:57
 msgid "Cause"
 msgstr "Keräys"
 
@@ -442,6 +455,8 @@ msgid "Select the cause you want to add the donation to."
 msgstr "Valitse keräys, johon haluat lisätä lahjoituksen."
 
 #: view/add_donation_page.php:98
+#: view/donations_page.php:113
+#: view/donations_page.php:123
 msgid "Amount"
 msgstr "Summa"
 
@@ -454,6 +469,8 @@ msgid "Enter the date of the donation as YYYY-MM-DD and time in 24 hour format (
 msgstr "Syötä lahjoituksen päivämäärä muodossa YYYY-MM-DD ja kellonaika 24 tunnin mukaan. (esim. \"2011-10-03 20:50:20\")."
 
 #: view/add_donation_page.php:117
+#: view/donations_page.php:112
+#: view/donations_page.php:122
 msgid "From"
 msgstr "Lahjoittaja"
 
@@ -754,7 +771,6 @@ msgstr "d.m.Y H:i:s"
 
 #: view/donations_page.php:134
 #: view/goals_page.php:77
-#: view/widget_styles_page.php:72
 msgid "Delete"
 msgstr "Poista"
 
@@ -776,7 +792,6 @@ msgstr "Keräyksen ID:"
 
 #: view/edit_goal_page.php:89
 #: view/goals_page.php:76
-#: view/widget_styles_page.php:67
 msgid "Edit"
 msgstr "Muokkaa"
 
@@ -879,6 +894,42 @@ msgstr "Vimpain"
 #: view/edit_widget_style.php:165
 msgid "Drop elements from right side palette to this canvas."
 msgstr "Vedä elementtejä oikean reunan paletista tähän."
+
+#: view/export_page.php:25
+msgid "On this page, you can download all Donation Can data from your blog to your own computer."
+msgstr "Tällä sivulla voit ladata Donation Can -tiedot omalle tietokoneellesi."
+
+#: view/export_page.php:27
+msgid "Right-click on the file format you like, and use \"Save as...\" to choose the location for your file. Settings and styles are only available as XML."
+msgstr "Klikkaa haluamaasi tiedostomuotoa ja valitse \"Tallenna nimellä...\" tallentaaksesi tiedoston omalle tietokoneellesi. Asetukset ja tyylit voi ladata vain XML-muodossa."
+
+#: view/export_page.php:31
+msgid "Causes:"
+msgstr "Keräykset:"
+
+#: view/export_page.php:33
+#: view/export_page.php:40
+msgid "CSV"
+msgstr "Pilkulla erotettu (CSV)"
+
+#: view/export_page.php:34
+#: view/export_page.php:41
+#: view/export_page.php:47
+#: view/export_page.php:52
+msgid "XML"
+msgstr "XML"
+
+#: view/export_page.php:38
+msgid "Donations:"
+msgstr "Lahjoitukset:"
+
+#: view/export_page.php:45
+msgid "Settings:"
+msgstr "Asetukset:"
+
+#: view/export_page.php:51
+msgid "Styles:"
+msgstr "Tyylit:"
 
 #: view/goals_page.php:22
 msgid "Donation Causes"
