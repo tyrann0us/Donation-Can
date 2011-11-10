@@ -103,6 +103,9 @@ function donation_can_uninstall() {
     delete_option("donation_can_widget_styles_version");
     delete_option("donation_can_causes");
 
+    delete_option("donation_can_rewrite_rule_version");
+    delete_option("donation_can_roles_version");
+
     // Delete donations
     global $wpdb;
     $table = donation_can_get_table_name($wpdb);

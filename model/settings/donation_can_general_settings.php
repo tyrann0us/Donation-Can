@@ -220,7 +220,7 @@ function donation_can_settings_page() {
 
     // Save general settings
     if ($_POST["edit_settings"] == "Y" && check_admin_referer('donation_can-general_settings')) {
-        $settings = new DonationCanGeneralSettings();
+        $settings = new DonationCanGeneralSettings(donation_can_get_options_handler());
         $settings->setPayPalEmail(esc_attr($_POST["paypal_email"]));
         $settings->setPayPalSandboxEmail(esc_attr($_POST["paypal_sandbox_email"]));
 
