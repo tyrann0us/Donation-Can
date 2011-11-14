@@ -38,9 +38,15 @@ class DonationCanGeneralSettings {
     function save() {
         if ($this->options != null) {
             $this->options->update_option("donation_can_general", $this->general_settings);
+
+            return true;
         } else {
-            die("Options store not set");
+            return false;
         }
+    }
+
+    function asArray() {
+        return $this->general_settings;
     }
 
     // SETTERS
@@ -191,11 +197,11 @@ class DonationCanGeneralSettings {
 }
 
 function render_user_notification($message) {
-  echo "<div class='updated fade'><p>".$message."</p></div>";
+    echo "<div class='updated fade'><p>".$message."</p></div>";
 }
 
 function donation_can_render_error($message) {
-  echo "<div class='error fade'><p>".$message."</p></div>";
+    echo "<div class='error fade'><p>".$message."</p></div>";
 }
 
 /** 
@@ -272,12 +278,13 @@ function donation_can_settings_page() {
             $sum_value = esc_attr($_POST["donation_sum_" . $i]);
 
             if ($sum_value != null && $sum_value != "") {
-                $settings->addDonationOption($sum);
+                $settings->addDonationOption(number_format(floatval($sum_value), 2));
             }
         }
 
         if ($settings->save()) {
             render_user_notification(__("Donation Can settings updated", "donation_can"));
+            $general_settings = $settings->asArray();
         }
     }
 
