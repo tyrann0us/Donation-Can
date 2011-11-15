@@ -30,8 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<!-- Empty Slate: Shown if no goals have been set up -->
 	<div class="donation_can_notice">
-		<?php _e("You haven't set up any goals yet.", "donation_can");?> 
-		<a href="<?php admin_url("admin.php?page=donation_can_add_goal.php");?>"><?php _e("Start by creating your first one.", "donation_can");?></a>
+            <?php _e("You haven't set up any causes yet.", "donation_can");?>
+            <a href="<?php echo admin_url("admin.php?page=donation_can_add_goal.php");?>"><?php _e("Start by creating your first one.", "donation_can");?></a>
 	</div>
 
 <?php else : ?>
