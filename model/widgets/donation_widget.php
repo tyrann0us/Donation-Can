@@ -146,15 +146,15 @@ class DonationWidget extends WP_Widget {
 
                 if (($show_donor_name && !$donation->anonymous) && $show_donation_sum) {
                     if ($goal_id == "__all__") {
-                        $donation_string = __("%NAME gave %CURRENCY %SUM to \"%CAUSE\"", "donation_can");
+                        $donation_string = __("%FIRSTNAME %LASTNAME gave %CURRENCY %SUM to \"%CAUSE\"", "donation_can");
                     } else {
-                        $donation_string = __("%NAME donated %CURRENCY %SUM", "donation_can");
+                        $donation_string = __("%FIRSTNAME %LASTNAME donated %CURRENCY %SUM", "donation_can");
                     }
                 } else if ($show_donor_name && !$donation->anonymous) {
                     if ($goal_id == "__all__") {
-                        $donation_string = __("%NAME donated to \"%CAUSE\"", "donation_can");
+                        $donation_string = __("%FIRSTNAME %LASTNAME donated to \"%CAUSE\"", "donation_can");
                     } else {
-                        $donation_string = __("%NAME made a donation", "donation_can");
+                        $donation_string = __("%FIRSTNAME %LASTNAME made a donation", "donation_can");
                     }
                 } else if ($show_donation_sum) {
                     if ($goal_id == "__all__") {
@@ -176,7 +176,8 @@ class DonationWidget extends WP_Widget {
                         $amount -= $donation->fee;
                     }
 
-                    $donation_string = str_replace("%NAME", stripslashes($donation->payer_name), $donation_string);
+                    $donation_string = str_replace("%FIRSTNAME", stripslashes($donation->payer_name), $donation_string);
+                    $donation_string = str_replace("%LASTNAME", stripslashes($donation->payer_lastname), $donation_string);
                     $donation_string = str_replace("%SUM", $amount, $donation_string);
                     $donation_string = str_replace("%CURRENCY", $donation_currency, $donation_string);
                     $donation_string = str_replace("%CAUSE", $goals[$donation->cause_code]["name"], $donation_string);

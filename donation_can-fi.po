@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Donation Can\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-10 13:54+0200\n"
-"PO-Revision-Date: 2011-11-12 16:02+0200\n"
+"POT-Creation-Date: 2011-11-16 00:14+0200\n"
+"PO-Revision-Date: 2011-11-16 00:15+0200\n"
 "Last-Translator: Jarkko Laine <jarkko@jarkkolaine.com>\n"
 "Language-Team: Treehouse Apps <jarkko@jarkkolaine.com>\n"
 "MIME-Version: 1.0\n"
@@ -23,9 +23,10 @@ msgstr ""
 #: donation_can.php:172
 #, php-format
 msgid "Donation Can is in sandbox mode. Remember to <a href=\"%s\">switch back to normal mode</a> when done testing."
-msgstr "Donation Can on hiekkalaatikkotilassa. Muista <a href=\"%s\">siirtyä takaisin normaalitilaan</a>, kun olet lopettanut testaamisen."
+msgstr "Donation Can on hiekkalaatikkotilassa. Muista <a href=\"%s\">siirtyä takaisin normaalitilaan</a>, kun lopetat testaamisen."
 
 #: donation_can.php:193
+#: model/data.php:1157
 msgid "%CURRENCY% %SUM%"
 msgstr "%SUM% %CURRENCY%"
 
@@ -39,7 +40,7 @@ msgstr "Haluatko varmasti poistaa tyylin '%STYLE_NAME%'?"
 
 #: donation_can.php:221
 msgid "Name for new style:"
-msgstr "Nimeä uusi tyyli:"
+msgstr "Nimi uudelle tyylille:"
 
 #: donation_can.php:222
 msgid "Are you sure you want to delete donation %DONATION_ID%?"
@@ -56,9 +57,9 @@ msgstr "Haluatko varmasti nollata keräyksen '%CAUSE_NAME%' lahjoituslaskurin?"
 #: donation_can.php:245
 #: donation_can.php:247
 msgid "Add Donation Form"
-msgstr "Lisää lahjoituslomake"
+msgstr "Lisää uusi lahjoituslomake"
 
-#: model/data.php:98
+#: model/data.php:120
 msgid ""
 "A new donation was made to your cause, \"#CAUSE_NAME#\":\n"
 "\n"
@@ -80,80 +81,92 @@ msgstr ""
 "Terveisin,\n"
 "Donation Can"
 
-#: model/data.php:128
+#: model/data.php:150
 msgid "Default"
 msgstr "Oletus"
 
-#: model/data.php:137
-#: model/data.php:177
+#: model/data.php:159
+#: model/data.php:199
 msgid "Anonymous donation"
 msgstr "Nimetön lahjoitus"
 
-#: model/data.php:169
+#: model/data.php:191
 msgid "Default Vertical"
 msgstr "Oletustyyli (vaaka)"
 
-#: model/data.php:231
+#: model/data.php:253
 msgid "Cannot update style %STYLE_ID%"
 msgstr "Tyyliä %STYLE_ID% ei voi muokata"
 
-#: model/data.php:247
+#: model/data.php:269
 msgid "No style found with id %ID%"
 msgstr "Tunnuksella %ID% ei löytynyt vimpaintyyliä."
 
-#: model/data.php:570
+#: model/data.php:592
 msgid "No name specified for cause"
 msgstr "Keräykselle ei ole määritetty nimeä"
 
-#: model/data.php:610
+#: model/data.php:632
 #, php-format
 msgid "Malformed email address %s"
 msgstr "Virheellinen sähköpostiosoite: %s"
 
-#: model/data.php:1095
+#: model/data.php:1117
 msgid "Y/m/d g:i A"
 msgstr "d.m.Y H:i"
 
-#: model/data.php:1096
+#: model/data.php:1118
 msgid "g:i A"
 msgstr "H:i"
 
-#: model/data.php:1106
+#: model/data.php:1128
 #, php-format
 msgid "Today at %s"
 msgstr "Tänään kello %s"
 
-#: model/data.php:1108
+#: model/data.php:1130
 #, php-format
 msgid "Yesterday at %s"
 msgstr "Eilen kello %s"
 
-#: model/data.php:1110
+#: model/data.php:1132
 #, php-format
 msgid "%d days ago at %s"
 msgstr "%d päivää sitten kello %s"
+
+#: model/data.php:1161
+msgid "%SUM%"
+msgstr "%SUM%"
+
+#: model/data.php:1180
+msgid "TRANSLATOR: insert decimal point format here"
+msgstr "."
+
+#: model/data.php:1181
+msgid "TRANSLATOR: insert thousands separator here"
+msgstr " "
 
 #: model/dashboard/dashboard.php:23
 msgid "Fundraising Status"
 msgstr "Keräystilanne"
 
-#: model/settings/donation_can_add_donation.php:61
+#: model/settings/donation_can_add_donation.php:63
 msgid "Select a goal to add the donation to."
 msgstr "Valitse keräys, johon haluat lisätä lahjoituksen."
 
-#: model/settings/donation_can_add_donation.php:65
+#: model/settings/donation_can_add_donation.php:67
 msgid "Enter a donation sum greater than 0."
 msgstr "Lahjoitussumman pitää olla suurempi kuin 0."
 
-#: model/settings/donation_can_add_donation.php:69
+#: model/settings/donation_can_add_donation.php:71
 msgid "Time of donation is not a valid date."
 msgstr "Syöttämäsi lahjoitusaika ei ole oikea kellonaika."
 
-#: model/settings/donation_can_add_donation.php:82
+#: model/settings/donation_can_add_donation.php:84
 msgid "Added offline donation"
 msgstr "Lahjoitus lisätty"
 
-#: model/settings/donation_can_add_donation.php:83
+#: model/settings/donation_can_add_donation.php:85
 msgid "Browse donations"
 msgstr "Selaa lahjoituksia"
 
@@ -171,13 +184,13 @@ msgstr "Lahjoitus poistettu:"
 
 #: model/settings/donation_can_edit_widget_style.php:83
 msgid "Widget style updated"
-msgstr "Vimpaimen tyyli tallennettu"
+msgstr "Vimpaintyyli tallennettu"
 
 #: model/settings/donation_can_edit_widget_style.php:104
 msgid "Widget style added"
-msgstr "Vimpaimen tyyli lisätty"
+msgstr "Vimpaintyyli lisätty"
 
-#: model/settings/donation_can_general_settings.php:280
+#: model/settings/donation_can_general_settings.php:292
 msgid "Donation Can settings updated"
 msgstr "Donation Can -asetukset päivitetty"
 
@@ -223,11 +236,11 @@ msgstr "Keräykset"
 
 #: model/settings/settings.php:33
 msgid "Donation Can Settings - Add New Cause"
-msgstr "Donation Can -asetukset: Uusi keräys"
+msgstr "Donation Can -asetukset: Lisää uusi keräys"
 
 #: model/settings/settings.php:33
 msgid "Add New Cause"
-msgstr "Uusi keräys"
+msgstr "Lisää keräys"
 
 #: model/settings/settings.php:34
 msgid "Donation Can Settings - Browse Donations"
@@ -259,7 +272,7 @@ msgstr "Donation Can -asetukset: Lisää uusi vimpaintyyli"
 
 #: model/settings/settings.php:37
 msgid "Add New Widget Style"
-msgstr "Lisää uusi vimpaintyyli"
+msgstr "Lisää vimpaintyyli"
 
 #: model/settings/settings.php:38
 msgid "Donation Can Settings - Export"
@@ -302,7 +315,7 @@ msgid "Display latest donations"
 msgstr "Näytä viimeisimmät lahjoitukset"
 
 #: model/widget_style_elements/donation_can_widget_donation_list_element.php:47
-#: model/widgets/donation_list_widget.php:206
+#: model/widgets/donation_list_widget.php:210
 msgid "Number of donations to display:"
 msgstr "Näytettävien lahjoitusten määrä:"
 
@@ -319,71 +332,71 @@ msgid "Title"
 msgstr "Otsikko"
 
 #: model/widget_style_elements/donation_can_widget_title_element.php:44
-#: model/widgets/donation_list_widget.php:183
+#: model/widgets/donation_list_widget.php:187
 #: model/widgets/donation_progress_widget.php:107
 msgid "Display title"
 msgstr "Näytä otsikko"
 
 #: model/widget_style_elements/donation_can_widget_title_element.php:49
-#: model/widgets/donation_list_widget.php:187
+#: model/widgets/donation_list_widget.php:191
 #: model/widgets/donation_progress_widget.php:111
 msgid "Title (leave empty for default):"
 msgstr "Otsikko (jätä tyhjäksi, jos haluat näyttää oletusotsikon)"
 
 #: model/widgets/donation_list_widget.php:22
-#: model/widgets/donation_list_widget.php:61
+#: model/widgets/donation_list_widget.php:64
 msgid "Latest Donations"
 msgstr "Viimeisimmät lahjoitukset"
 
-#: model/widgets/donation_list_widget.php:99
-#: model/widgets/donation_widget.php:135
-msgid "%NAME gave %CURRENCY %SUM to \"%CAUSE\""
-msgstr "%NAME lahjoitti %SUM %CURRENCY keräykseen \"%CAUSE\""
+#: model/widgets/donation_list_widget.php:102
+#: model/widgets/donation_widget.php:149
+msgid "%FIRSTNAME %LASTNAME gave %CURRENCY %SUM to \"%CAUSE\""
+msgstr "%FIRSTNAME %LASTNAME lahjoitti %SUM %CURRENCY keräykseen \"%CAUSE\""
 
-#: model/widgets/donation_list_widget.php:101
-#: model/widgets/donation_widget.php:137
-msgid "%NAME donated %CURRENCY %SUM"
-msgstr "%NAME lahjoitti %SUM %CURRENCY"
+#: model/widgets/donation_list_widget.php:104
+#: model/widgets/donation_widget.php:151
+msgid "%FIRSTNAME %LASTNAME donated %CURRENCY %SUM"
+msgstr "%FIRSRTNAME %LASTNAME lahjoitti %SUM %CURRENCY"
 
-#: model/widgets/donation_list_widget.php:105
-#: model/widgets/donation_widget.php:141
-msgid "%NAME donated to \"%CAUSE\""
-msgstr "%NAME teki lahjoituksen keräykseen \"%CAUSE\""
+#: model/widgets/donation_list_widget.php:108
+#: model/widgets/donation_widget.php:155
+msgid "%FIRSTNAME %LASTNAME donated to \"%CAUSE\""
+msgstr "%FIRSTNAME %LASTNAME teki lahjoituksen keräykseen \"%CAUSE\""
 
-#: model/widgets/donation_list_widget.php:107
-#: model/widgets/donation_widget.php:143
-msgid "%NAME made a donation"
-msgstr "%NAME teki lahjoituksen"
+#: model/widgets/donation_list_widget.php:110
+#: model/widgets/donation_widget.php:157
+msgid "%FIRSTNAME %LASTNAME made a donation"
+msgstr "%FIRSTNAME %LASTNAME teki lahjoituksen"
 
-#: model/widgets/donation_list_widget.php:111
-#: model/widgets/donation_widget.php:147
+#: model/widgets/donation_list_widget.php:114
+#: model/widgets/donation_widget.php:161
 msgid "%CURRENCY %SUM was donated to \"%CAUSE\""
 msgstr "Nimetön lahjoitti %SUM %CURRENCY keräykseen \"%CAUSE\""
 
-#: model/widgets/donation_list_widget.php:113
-#: model/widgets/donation_widget.php:149
+#: model/widgets/donation_list_widget.php:116
+#: model/widgets/donation_widget.php:163
 msgid "%CURRENCY %SUM donated"
 msgstr "Nimetön lahjoitti %SUM %CURRENCY"
 
-#: model/widgets/donation_list_widget.php:117
-#: model/widgets/donation_widget.php:153
+#: model/widgets/donation_list_widget.php:120
+#: model/widgets/donation_widget.php:167
 msgid "An anonymous donation was made to \"%CAUSE\""
 msgstr "Keräykseen \"%CAUSE\" tehtiin nimetön lahjoitus"
 
-#: model/widgets/donation_list_widget.php:167
+#: model/widgets/donation_list_widget.php:171
 msgid "Cause:"
 msgstr "Keräys:"
 
-#: model/widgets/donation_list_widget.php:172
+#: model/widgets/donation_list_widget.php:176
 #: model/widgets/donation_progress_widget.php:95
 msgid "All goals (summary)"
 msgstr "Kaikki keräykset (yhteenveto)"
 
-#: model/widgets/donation_list_widget.php:195
+#: model/widgets/donation_list_widget.php:199
 msgid "Display names of donors"
 msgstr "Näytä lahjoittajien nimet"
 
-#: model/widgets/donation_list_widget.php:202
+#: model/widgets/donation_list_widget.php:206
 msgid "Display donation sums"
 msgstr "Näytä saatujen lahjoitusten suuruus"
 
@@ -400,7 +413,7 @@ msgid "All Donations"
 msgstr "Kaikki lahjoitukset"
 
 #: model/widgets/donation_progress_widget.php:90
-#: model/widgets/donation_widget.php:253
+#: model/widgets/donation_widget.php:268
 msgid "Goal:"
 msgstr "Tavoite:"
 
@@ -409,19 +422,19 @@ msgid "Donation Form"
 msgstr "Lahjoituslomake"
 
 #: model/widgets/donation_widget.php:51
-#: model/widgets/donation_widget.php:257
+#: model/widgets/donation_widget.php:272
 msgid "Summary (All goals)"
 msgstr "Yhteenveto (kaikki keräykset)"
 
-#: model/widgets/donation_widget.php:264
+#: model/widgets/donation_widget.php:279
 msgid "Widget style:"
 msgstr "Vimpaintyyli:"
 
-#: model/widgets/donation_widget.php:272
+#: model/widgets/donation_widget.php:287
 msgid "Edit widget styles"
 msgstr "Muokkaa vimpaintyylejä"
 
-#: model/widgets/donation_widget.php:275
+#: model/widgets/donation_widget.php:290
 msgid "Customize widget:"
 msgstr "Muokkaa vimpainta:"
 
@@ -486,7 +499,7 @@ msgstr "Sukunimi:"
 msgid "Email:"
 msgstr "Sähköposti:"
 
-#: view/add_donation_page.php:135
+#: view/add_donation_page.php:138
 msgid "Notes (optional)"
 msgstr "Merkintöjä (vapaaehtoinen):"
 
@@ -631,8 +644,8 @@ msgid "Fix permalink settings now."
 msgstr "Korjaa permalink-asetukset nyt."
 
 #: view/dashboard_widget.php:33
-msgid "You haven't set up any goals yet."
-msgstr "Et ole luonut yhtään keräystä."
+msgid "You haven't set up any causes yet."
+msgstr "Et ole luonut vielä yhtään keräystä."
 
 #: view/dashboard_widget.php:34
 msgid "Start by creating your first one."
@@ -773,6 +786,10 @@ msgstr "d.m.Y H:i:s"
 #: view/goals_page.php:77
 msgid "Delete"
 msgstr "Poista"
+
+#: view/donations_page.php:140
+msgid "(anonymous)"
+msgstr "(nimetön)"
 
 #: view/edit_goal_page.php:35
 msgid "Edit Cause"
@@ -941,7 +958,7 @@ msgstr "Luo uusi keräys ja aloita lahjoitusten kerääminen."
 
 #: view/goals_page.php:48
 #: view/goals_page.php:58
-#: view/settings_page.php:355
+#: view/settings_page.php:362
 msgid "Added by"
 msgstr "Lisääjä"
 
@@ -964,7 +981,7 @@ msgstr "Ei tavoitetta"
 
 #: view/goals_page.php:110
 msgid "Add cause"
-msgstr "Luo keräys"
+msgstr "Lisää keräys"
 
 #: view/settings_page.php:40
 msgid "Donation Can Settings"
@@ -1042,202 +1059,206 @@ msgstr "Vähennä PayPal:in maksut kävijöille näytetyistä lahjoituksista."
 msgid "Hide Donation Can back link."
 msgstr "Piilota linkki Donation Can -sivustolle."
 
-#: view/settings_page.php:180
+#: view/settings_page.php:178
+msgid "Always show two decimals for money amounts."
+msgstr "Näytä rahasummat aina kahden desimaalin tarkkuudella."
+
+#: view/settings_page.php:187
 msgid "PayPal checkout page settings"
 msgstr "PayPal:in maksusivun asetukset"
 
-#: view/settings_page.php:187
+#: view/settings_page.php:194
 msgid "Customizations made to the PayPal checkout page are not visible in PayPal sandbox. To test the changes, turn off sandbox mode."
 msgstr "PayPalin maksusivun ulkoasuun tehdyt muutokset eivät näy PayPalin hiekkalaatikossa. Testataksesi muutoksia, siirry pois hiekkalaatikkotilassa."
 
-#: view/settings_page.php:192
+#: view/settings_page.php:199
 msgid "Business logo (optional):"
 msgstr "Yrityksen logo (vapaaehtoinen)"
 
-#: view/settings_page.php:195
-#: view/settings_page.php:204
+#: view/settings_page.php:202
+#: view/settings_page.php:211
 msgid "Upload image"
 msgstr "Lähetä kuva"
 
-#: view/settings_page.php:197
+#: view/settings_page.php:204
 msgid "max size: 150 x 150 px"
 msgstr "max. koko: 150 x 150 pikseliä"
 
-#: view/settings_page.php:201
+#: view/settings_page.php:208
 msgid "Header image (optional):"
 msgstr "Otsikkokuva (vapaaehtoinen)"
 
-#: view/settings_page.php:205
+#: view/settings_page.php:212
 msgid "max size: 750 x 90 px"
 msgstr "max. koko: 750 x 90 pikseliä"
 
-#: view/settings_page.php:209
+#: view/settings_page.php:216
 msgid "Background color:"
 msgstr "Taustaväri:"
 
-#: view/settings_page.php:212
 #: view/settings_page.php:219
 #: view/settings_page.php:226
+#: view/settings_page.php:233
 msgid "A six digit HTML hex value (e.g. FF0000 for red)"
 msgstr "Kuusinumeroinen HTML-heksa-arvo (esim. FF0000 = punainen)"
 
-#: view/settings_page.php:216
+#: view/settings_page.php:223
 msgid "Header background color:"
 msgstr "Otsikon taustaväri:"
 
-#: view/settings_page.php:223
+#: view/settings_page.php:230
 msgid "Header border color:"
 msgstr "Otsikon reunaväri:"
 
-#: view/settings_page.php:234
+#: view/settings_page.php:241
 msgid "Ask the visitor leave a note with her donation."
 msgstr "Pyydä lahjoittajaa lisäämään lahjoitukseensa viesti."
 
-#: view/settings_page.php:239
+#: view/settings_page.php:246
 msgid "Label for the note field:"
 msgstr "Viestikentän otsikko:"
 
-#: view/settings_page.php:245
+#: view/settings_page.php:252
 msgid "Ask for shipping address:"
 msgstr "Kysy postitusosoitetta:"
 
-#: view/settings_page.php:248
+#: view/settings_page.php:255
 msgid "Prompt for an address, but do not require one."
 msgstr "Kysy osoite, osoitteen voi jättää tyhjäksi."
 
-#: view/settings_page.php:249
+#: view/settings_page.php:256
 msgid "Do not prompt for an address."
 msgstr "Älä kysy osoitetta."
 
-#: view/settings_page.php:250
+#: view/settings_page.php:257
 msgid "Prompt for an address, and require one."
 msgstr "Kysy osoite, osoite on pakollinen."
 
-#: view/settings_page.php:260
+#: view/settings_page.php:267
 msgid "Email notification settings"
 msgstr "Sähköposti-ilmoitusasetukset"
 
-#: view/settings_page.php:264
+#: view/settings_page.php:271
 msgid "In the email templates below, you can use the following tags to represent data about the donation:"
 msgstr "Seuraavissa sähköpostipohjissa voit käyttää näitä koodeja lahjoituskohtaisten tietojen lisäämiseen:"
 
-#: view/settings_page.php:267
+#: view/settings_page.php:274
 msgid "The first name of the person making the donation."
 msgstr "Lahjoittajan etunimi."
 
-#: view/settings_page.php:268
+#: view/settings_page.php:275
 msgid "The last name of the person making the donation."
 msgstr "Lahjoittajan sukunimi."
 
-#: view/settings_page.php:269
+#: view/settings_page.php:276
 msgid "The email address of the person making the donation."
 msgstr "Lahjoittajan sähköpostiosoite."
 
-#: view/settings_page.php:270
+#: view/settings_page.php:277
 msgid "Currency used in the donation."
 msgstr "Lahjoituksen valuutta."
 
-#: view/settings_page.php:271
+#: view/settings_page.php:278
 msgid "Amount donated."
 msgstr "Lahjoitussumma."
 
-#: view/settings_page.php:272
+#: view/settings_page.php:279
 msgid "PayPal fee."
 msgstr "PayPalin ottama maksu."
 
-#: view/settings_page.php:273
+#: view/settings_page.php:280
 msgid "Name of the cause."
 msgstr "Keräyksen nimi."
 
-#: view/settings_page.php:274
+#: view/settings_page.php:281
 msgid "ID of the cause."
 msgstr "Keräyksen tunnus."
 
-#: view/settings_page.php:275
+#: view/settings_page.php:282
 msgid "Unique ID for the donation, generated by <strong>PayPal</strong>."
 msgstr "Lahjoituksen yksilöivä tunnus. <strong>PayPalin</strong> luoma."
 
-#: view/settings_page.php:276
+#: view/settings_page.php:283
 msgid "Unique ID for the donation, generated by Donation Can."
 msgstr "Lahjoituksen yksilöivä tunnus. <strong>Donation Canin</strong> luoma."
 
-#: view/settings_page.php:277
+#: view/settings_page.php:284
 msgid "Date and time of donation."
 msgstr "Lahjoituksen päivämäärä ja aika."
 
-#: view/settings_page.php:282
+#: view/settings_page.php:289
 msgid "Send email messages from:"
 msgstr "Sähköpostin lähettäjätiedot:"
 
-#: view/settings_page.php:285
+#: view/settings_page.php:292
 msgid "The email address to use as sender in email messages."
 msgstr "Lähettäjän sähköpostiosoite."
 
-#: view/settings_page.php:288
+#: view/settings_page.php:295
 msgid "The name to use as sender in email messages."
 msgstr "Lähettäjän nimi."
 
-#: view/settings_page.php:293
+#: view/settings_page.php:300
 msgid "Use HTML in email messages."
 msgstr "Käytä HTML-muotoilua sähköpostiviesteissä."
 
-#: view/settings_page.php:297
+#: view/settings_page.php:304
 msgid "Email notification template:"
 msgstr "Sähköposti-ilmoituksen pohja:"
 
-#: view/settings_page.php:305
+#: view/settings_page.php:312
 msgid "Send a receipt to donors after receiving donation."
 msgstr "Lähetä kuitti lahjoittajalle."
 
-#: view/settings_page.php:309
+#: view/settings_page.php:316
 msgid "Minimum donation for sending receipt:"
 msgstr "Vähimmäislahjoitusmäärä kuitin lähettämiseksi:"
 
-#: view/settings_page.php:312
+#: view/settings_page.php:319
 msgid "Receipts are not sent for donations lower than the value specified here."
 msgstr "Kuitteja ei lähetetä lahjoituksista, joiden suuruus on alle tässä määritellyn arvon."
 
-#: view/settings_page.php:316
+#: view/settings_page.php:323
 msgid "Email receipt subject:"
 msgstr "Kuitin otsikko:"
 
-#: view/settings_page.php:322
+#: view/settings_page.php:329
 msgid "Email receipt template:"
 msgstr "Kuitin pohja:"
 
-#: view/settings_page.php:343
+#: view/settings_page.php:350
 msgid "Write a log file to the plugin's home directory. (Make sure the directory is writeable.)"
 msgstr "Kirjoita lokitiedosto Donation Can:in kotihakemistoon. (Varmista, että hakemistoon voi kirjoittaa.)"
 
-#: view/settings_page.php:351
+#: view/settings_page.php:358
 msgid "Sort donation causes by:"
 msgstr "Keräysten järjestysperuste:"
 
-#: view/settings_page.php:354
+#: view/settings_page.php:361
 msgid "Name"
 msgstr "Nimi"
 
-#: view/settings_page.php:356
+#: view/settings_page.php:363
 msgid "Fundraising goal"
 msgstr "Keräystavoite"
 
-#: view/settings_page.php:357
+#: view/settings_page.php:364
 msgid "Raised so far"
 msgstr "Kerätty"
 
-#: view/settings_page.php:358
+#: view/settings_page.php:365
 msgid "Date added"
 msgstr "Lisätty"
 
-#: view/settings_page.php:362
+#: view/settings_page.php:369
 msgid "Ascending"
 msgstr "Nouseva"
 
-#: view/settings_page.php:363
+#: view/settings_page.php:370
 msgid "Descending"
 msgstr "Laskeva"
 
-#: view/settings_page.php:371
+#: view/settings_page.php:378
 msgid "Save Changes"
 msgstr "Tallenna muutokset"
 
@@ -1290,9 +1311,9 @@ msgstr "Lahjoita %SUM %CURRENCY"
 msgid "Donate other amount"
 msgstr "Muu"
 
-#: view/widget_blocks/donation_options.php:41
-#: view/widget_blocks/donation_options.php:43
-#: view/widget_blocks/donation_options.php:57
+#: view/widget_blocks/donation_options.php:46
+#: view/widget_blocks/donation_options.php:48
+#: view/widget_blocks/donation_options.php:62
 msgid "Other"
 msgstr "Muu"
 
@@ -1324,9 +1345,9 @@ msgstr "Näytä tekstikenttä vapaavalintaisen summan syöttämiseen."
 msgid "Your donation goals use different currencies, so we cannot show an aggregated donation meter."
 msgstr "Keräyksesi käyttävät eri valuuttoja, joten emme voi näyttää yhteistä lahjoitusmittaria."
 
-#: view/widget_blocks/progress_bar.php:26
-msgid "raised"
-msgstr "kerätty"
+#: view/widget_blocks/progress_bar.php:27
+msgid "%CURRENCY %SUM raised."
+msgstr "Nimetön lahjoitus: %SUM %CURRENCY."
 
 #: view/widget_blocks/progress_bar_options.php:9
 msgid "Progress"
@@ -1372,6 +1393,21 @@ msgstr "Teksti"
 #: view/widget_blocks/text_options.php:6
 msgid "Text:"
 msgstr "Teksti:"
+
+#~ msgid "%NAME gave %CURRENCY %SUM to \"%CAUSE\""
+#~ msgstr "%NAME lahjoitti %SUM %CURRENCY keräykseen \"%CAUSE\""
+
+#~ msgid "%NAME donated %CURRENCY %SUM"
+#~ msgstr "%NAME lahjoitti %SUM %CURRENCY"
+
+#~ msgid "%NAME donated to \"%CAUSE\""
+#~ msgstr "%NAME teki lahjoituksen keräykseen \"%CAUSE\""
+
+#~ msgid "%NAME made a donation"
+#~ msgstr "%NAME teki lahjoituksen"
+
+#~ msgid "raised"
+#~ msgstr "kerätty"
 
 #~ msgid "Name:"
 #~ msgstr "Nimi:"

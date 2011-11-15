@@ -172,6 +172,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <td>
                                 </tr>
 
+                                <tr valign="top">
+                                    <td scope="row" valign="center" colspan="2">
+                                        <input type="checkbox" name="show_decimals_for_even" value="1" <?php if ($general_settings["show_decimals_for_even"]) { echo "checked"; }?>/>
+                                        <label for="show_decimals_for_even"><?php _e("Always show two decimals for money amounts.", "donation_can");?></label>
+                                    <td>
+                                </tr>
+
                             </table>
                         </div>
                     </div>
@@ -192,7 +199,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Business logo (optional):", "donation_can");?></th>
                                     <td>
                                         <input type="text" class="regular-text" name="logo_on_paypal_page" value="<?php echo $general_settings["logo_on_paypal_page"];?>" size="40"/>
-                                        <a href="#" class="button" title="Upload image" onclick="uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
+                                        <a href="#" class="button" title="Upload image" onclick="return uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
 
                                         <br/><span class="description">(<?php _e("max size: 150 x 150 px", "donation_can");?>)</span>
                                     </td>
@@ -201,7 +208,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Header image (optional):", "donation_can");?></th>
                                     <td>
                                         <input type="text" class="regular-text" name="header_on_paypal_page" value="<?php echo $general_settings["header_on_paypal_page"];?>" size="40"/>
-                                        <a href="#" class="button" title="Upload image" onclick="uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
+                                        <a href="#" class="button" title="Upload image" onclick="return uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
                                         <br/><span class="description">(<?php _e("max size: 750 x 90 px", "donation_can");?>)</span>
                                     </td>
                                 </tr>

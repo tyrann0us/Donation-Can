@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <?php
                 $template = __("%CURRENCY %SUM raised.", "donation_can");
                 $string = str_replace("%CURRENCY", $currency, $template);
-                $string = str_replace("%SUM", number_format($current, 2), $string);
+                $string = str_replace("%SUM", donation_can_number_format($current), $string);
 
                 echo $string;
             ?>

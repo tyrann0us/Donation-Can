@@ -1160,9 +1160,27 @@ function donation_can_format_money($currency, $amount) {
     } else {
         $string = __("%SUM%", "donation_can");
     }
-    $string = str_replace("%SUM%", number_format($amount, 2), $string);
+    $string = str_replace("%SUM%", donation_can_number_format($amount), $string);
 
     return $string;
+}
+
+function donation_can_number_format($number) {
+    $general_settings = donation_can_get_general_settings();
+
+    $decimals = 2;
+
+    // Should we show decimals for even numbers?
+    if (intval($number) == $number) {
+        if (!$general_settings["show_decimals_for_even"]) {
+            $decimals = 0;
+        }
+    }
+
+    $decimal_point = __("TRANSLATOR: insert decimal point format here", "donation_can");
+    $thousands_separator = __("TRANSLATOR: insert thousands separator here", "donation_can");
+
+    return number_format($number, $decimals, $decimal_point, $thousands_separator);
 }
 
 ?>

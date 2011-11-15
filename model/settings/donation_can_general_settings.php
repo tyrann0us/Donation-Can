@@ -194,6 +194,10 @@ class DonationCanGeneralSettings {
         $this->general_settings["email_from"] = $email;
         $this->general_settings["email_from_name"] = $name;
     }
+
+    function setShowDecimalsForEvenSums($value) {
+        $this->general_settings["show_decimals_for_even"] = $value;
+    }
 }
 
 function render_user_notification($message) {
@@ -273,12 +277,14 @@ function donation_can_settings_page() {
         $settings->setSortDonationsField(esc_attr($_POST["sort_donations_field"]));
         $settings->setSortDonationsOrder(esc_attr($_POST["sort_donations_order"]));
 
+        $settings->setShowDecimalsForEvenSums(esc_attr($_POST["show_decimals_for_even"]) == "1");
+
         $donation_sum_num = esc_attr($_POST["donation_sum_num"]);
         for ($i = 0; $i < $donation_sum_num; $i++) {
             $sum_value = esc_attr($_POST["donation_sum_" . $i]);
 
             if ($sum_value != null && $sum_value != "") {
-                $settings->addDonationOption(number_format(floatval($sum_value), 2));
+                $settings->addDonationOption(donation_can_number_format(floatval($sum_value)));
             }
         }
 
