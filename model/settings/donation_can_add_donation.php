@@ -39,6 +39,8 @@ function donation_can_add_donation_menu() {
         $payer_lastname = stripslashes(esc_attr($_POST['payer_lastname']));
         $note = $_POST["note"];
 
+        $anonymous = esc_attr($_POST["anonymous"]) == "1";
+
         $created_at = $_POST["created_at"];
 
         $send_receipt = esc_attr($_POST["send_receipt"]) == "1";
@@ -72,7 +74,7 @@ function donation_can_add_donation_menu() {
         if ($cause_code_valid && $amount_valid && $date_valid) {
             $item_number = donation_can_create_item_number($cause_code);
 
-            $donation_data = donation_can_insert_donation($item_number, $cause_code, 'Completed', $amount, false,
+            $donation_data = donation_can_insert_donation($item_number, $cause_code, 'Completed', $amount, $anonymous,
                 $created_at, 0, $payer_email, $payer_name, $payer_lastname, "offline", 1);
 
             if ($send_receipt) {

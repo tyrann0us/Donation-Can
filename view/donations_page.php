@@ -137,13 +137,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <td><?php echo $goals[$donation->cause_code]["name"]; ?></td>
                     <td><?php echo ($donation->offline ? "Offline" : "PayPal"); ?></td>
                     <td>                        
-                        <strong><?php echo $donation->payer_name; ?> <?php echo $donation->payer_lastname; ?></strong> <?php if ($donation->anonymous) { ?><span class="anonymous">(anonymous)</span><?php } ?><br/>
+                        <strong><?php echo $donation->payer_name; ?> <?php echo $donation->payer_lastname; ?></strong> <?php if ($donation->anonymous) { ?><span class="anonymous"><?php _e("(anonymous)", "donation_can");?></span><?php } ?><br/>
                         <?php echo $donation->payer_email; ?>
-
                     </td>
                     <td>
-                        <?php echo $currency; ?> <?php echo $donation->amount ;?><br/>
-                        <span class="donation_can-fee">(-<?php echo $donation->fee; ?>)</span>
+                        <?php echo donation_can_format_money($currency, $donation->amount); ?><br/>
+                        <span class="donation_can-fee">(-<?php echo donation_can_format_money(null, $donation->fee); ?>)</span>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -106,7 +106,21 @@ class DonationWidget extends WP_Widget {
                 $num_donations = 5;
             }
             if ($goal_id == "__all__") {
-                $donations = donation_can_get_donations(0, $num_donations);
+
+                // The donations are retrieved one by one to make sure we can filter out the reset donations
+                $goals = donation_can_get_goals(false);
+                
+                $donations = array();
+
+                foreach ($goals as $cause_id => $goal) {
+                    $donation_tmp = donation_can_get_donations(0, $num_donations, $cause_id);
+                    $donations = array_merge($donations, $donation_tmp);
+                }
+
+                // Sort the donations and drop the extra
+                usort($donations, array("DonationListWidget", "donation_list_sort_function"));
+                $donations = array_slice($donations, 0, $num_donations);                
+                
             } else {
                 $donations = donation_can_get_donations(0, $num_donations, $goal_id);
                 $donation_currency = donation_can_get_currency_for_goal($goals[$goal_id]);

@@ -182,7 +182,7 @@ padding-top: 6px;
 }
 
 #goal-id-div input, #goal-name-div input, #goal-div input, #page-id-div input, #goal-description-div textarea, #continue-button-text-div input, #notify-email-div input,
-#payer_name-div input, #payer_email-div input, #note-div textarea
+#payer_name-div input.text, #payer_email-div input, #note-div textarea
 {
 	width: 100%;
 }

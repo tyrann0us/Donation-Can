@@ -755,9 +755,9 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
         "payer_name" => stripslashes($payer_name),
         "payer_lastname" => stripslashes($payer_lastname),
         "fee" => $fee,
-        "anonymous" => $anonymous,
+        "anonymous" => $anonymous ? 1 : 0,
         "time" => $time,
-        "offline" => $offline
+        "offline" => $offline ? 1 : 0
     );
 
     if ($general_settings["debug_mode"]) {
@@ -767,7 +767,7 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
     // Let sub plugins add their own fields if necessary
     $data = apply_filters("donation_can_transaction_data", $data);
 
-    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s");
+    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s", "%s", "%d");
     $types = apply_filters("donation_can_transaction_types", $types);
 
     $table_name = donation_can_get_table_name($wpdb);
@@ -1152,4 +1152,17 @@ function donation_can_get_options_handler() {
     }
     return $donation_can_options_handler;
 }
+
+function donation_can_format_money($currency, $amount) {
+    $template = __("%CURRENCY% %SUM%", "donation_can");
+    if ($currency) {
+        $string = str_replace("%CURRENCY%", $currency, $template);
+    } else {
+        $string = __("%SUM%", "donation_can");
+    }
+    $string = str_replace("%SUM%", number_format($amount, 2), $string);
+
+    return $string;
+}
+
 ?>

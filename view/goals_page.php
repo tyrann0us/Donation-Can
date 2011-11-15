@@ -84,15 +84,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         </td>
                         <td>
                             <?php if ($cause["donation_goal"]) : ?>
-                                <?php echo $currency . " " . $cause["donation_goal"];?>
+                                <?php echo donation_can_format_money($currency, $cause["donation_goal"]); ?>
                             <?php else : ?>
                                 <?php _e("No goal", "donation-can"); ?>
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?php echo $currency . " ". donation_can_get_total_raised_for_cause($id); ?>
+                            <?php echo donation_can_format_money($currency, donation_can_get_total_raised_for_cause($id)); ?>
                             <?php if (donation_can_goal_has_been_reset($id)) : ?>
-                            <br/><span class="total-including-resets">(<?php echo $currency . " " . donation_can_get_total_raised_for_cause($id, true); ?>)</span>
+                            <br/><span class="total-including-resets">(<?php echo donation_can_format_money($currency, donation_can_get_total_raised_for_cause($id, true)); ?>)</span>
                             <?php endif; ?>
                         </td>
                         <td>

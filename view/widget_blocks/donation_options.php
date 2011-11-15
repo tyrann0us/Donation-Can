@@ -32,26 +32,31 @@
         <?php elseif ($element["list-format"] == "radio") : $first = true; ?>
 
             <div class="donation-radio-button-list">
+                <!-- KSS Add divs for left/right columns for radio buttons -->
+                <?php $even = true; ?>
 
                 <?php foreach ($donation_sums as $sum) : ?>
-                    <div class="radio-button"><input type="radio" name="amount" onclick="showOtherTextField(this, false);" value="<?php echo $sum;?>" <?php if ($first) { echo "checked"; $first = false; } ?>> <label for="amount"><?php echo $currency; ?> <?php echo $sum; ?></label></div>
+                    <div class="radio-button-column-<?php if ( $even ) { echo "A"; } else { echo "B"; }; $even = !$even; ?>">
+                        <div class="radio-button"><input type="radio" name="amount" onclick="showOtherTextField(this, false);" value="<?php echo $sum;?>" <?php if ($first) { echo "checked"; $first = false; } ?>> <label for="amount"><?php echo $currency; ?> <?php echo $sum; ?></label></div>
+                    </div>
                 <?php endforeach; ?>
                 <?php if ($goal["allow_freeform_donation_sum"]) : ?>
-                    <?php if ($element["other-format"] == "text-field") : ?>
-                        <div class="radio-button"><input type="radio" name="amount" value="" onclick="showOtherTextField(this, true);"> <?php _e("Other", "donation_can");?><span class="amount-span" style="display:none;">: <?php echo $currency; ?> <input type="text" class="amount-text-field"/></span></div>
-                    <?php else : ?>
-                        <div class="radio-button"><input type="radio" name="amount" value=""> <?php _e("Other", "donation_can");?></div>
-                    <?php endif; ?>
+                    <div class="radio-button-column-other" >
+                        <?php if ($element["other-format"] == "text-field") : ?>
+                            <div class="radio-button"><input type="radio" name="amount" value="" onclick="showOtherTextField(this, true);"> <?php _e("Other", "donation_can");?><span class="amount-span" style="display:none;">: <?php echo $currency; ?> <input type="text" class="amount-text-field"/></span></div>
+                        <?php else : ?>
+                            <div class="radio-button"><input type="radio" name="amount" value=""> <?php _e("Other", "donation_can");?></div>
+                        <?php endif; ?>
+                    </div>
                 <?php endif; ?>
 
             </div>
-
 
         <?php else : ?>
 
             <select name="amount">
                 <?php foreach ($donation_sums as $sum) : ?>
-                    <option value="<?php echo $sum;?>"><?php echo $currency; ?> <?php echo $sum; ?></option>
+                    <option value="<?php echo $sum;?>"><?php echo donation_can_format_money($currency, $sum); ?></option>
                 <?php endforeach; ?>
                 <?php if ($goal["allow_freeform_donation_sum"]) : ?>
                     <option value=""><?php _e("Other", "donation_can");?></option>

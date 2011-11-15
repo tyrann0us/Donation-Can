@@ -23,7 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <?php _e("Your donation goals use different currencies, so we cannot show an aggregated donation meter.", "donation-can"); ?>
     <?php else : ?>
 	<?php if ($target == "") : ?>
-            <?php echo $currency; ?> <?php echo $current; ?> <?php _e("raised", "donation_can");?>
+            <?php
+                $template = __("%CURRENCY %SUM raised.", "donation_can");
+                $string = str_replace("%CURRENCY", $currency, $template);
+                $string = str_replace("%SUM", number_format($current, 2), $string);
+
+                echo $string;
+            ?>
 	<?php else : ?> 
             <div class="donation_progress progress-meter">
                 <div class="donation_progress_container progress-container <?php if ($past_goal) echo "past-goal"; ?>">

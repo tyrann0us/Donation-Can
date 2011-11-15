@@ -53,7 +53,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <tr <?php if ($first) : $first = false; ?>class="first"<?php endif;?>>
                         <td class="first date"><?php echo donation_can_nicedate($donation->time); ?></td>
                         <td class="goal"><?php echo sprintf(__("To '%s'", "donation_can"), $goals[$donation->cause_code]["name"]); ?></td>
-                        <td class="b"><?php echo $currency . " " . $donation->amount; ?><br/><small style="color:red;">(-<?php echo $donation->fee; ?>)</small></td>
+                        <td class="b"><?php echo donation_can_format_money($currency, $donation->amount); ?><br/><small style="color:red;">(-<?php echo donation_can_format_money(null, $donation->fee); ?>)</small></td>
 
                         <?php
                         $payment_status = $donation->payment_status;
@@ -97,9 +97,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     <td style="width: 45%;">
                         <div style="width: <?php echo $percent; ?>%; background-color: #559955;">&nbsp;</div>
                     </td>
-                    <td class="b last" style="width: 25%;"><?php echo $currency;?> <?php echo $goal["collected"]; ?>
+                    <td class="b last" style="width: 25%;"><?php echo donation_can_format_money($currency, $goal["collected"]); ?>
                         <?php if ($goal["donation_goal"]) : ?>
-                            / <?php echo $goal["donation_goal"]; ?>
+                            / <?php echo donation_can_format_money(null, $goal["donation_goal"]); ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -118,7 +118,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         }
                     ?>
                     <td><div style="width: <?php echo $percent; ?>%; background-color: #779955;">&nbsp;</div></td>
-                    <td class="b last" style="font-size: 16pt;"><?php echo $currency; ?> <?php echo $total_collected; ?> / <?php echo $total_goal; ?></td>
+                    <td class="b last" style="font-size: 16pt;"><?php echo donation_can_format_money($currency, $total_collected); ?> / <?php echo donation_can_format_money(null, $total_goal); ?></td>
                 <?php endif; ?>
             </tr>
         </table>

@@ -118,15 +118,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                         <div class="inside" id="payer_name-div">
                             <p>
                                 <label for="payer_name"><?php _e("First name:", "donation_can"); ?></label>
-                                <input type="text" name="payer_name" value="<?php echo $payer_name; ?>" size="30"/>
+                                <input type="text" class="text" name="payer_name" value="<?php echo $payer_name; ?>" size="30"/>
                             </p>
                             <p>
                                 <label for="payer_name"><?php _e("Last name:", "donation_can"); ?></label>
-                                <input type="text" name="payer_lastname" value="<?php echo $payer_lastname; ?>" size="30"/>
+                                <input type="text" class="text" name="payer_lastname" value="<?php echo $payer_lastname; ?>" size="30"/>
                             </p>
                             <p>
                                 <label for="payer_email"><?php _e("Email:", "donation_can");?></label>
-                                <input type="text" name="payer_email" value="<?php echo $payer_email; ?>" size="30"/>
+                                <input type="text" class="text" name="payer_email" value="<?php echo $payer_email; ?>" size="30"/>
+                            </p>
+                            <p>
+                                <input type="checkbox" name="anonymous" value="1"/> <label for="anonymous"><?php _e("Anonymous donation", "donation_can"); ?></label>
                             </p>
                         </div>
                     </div>

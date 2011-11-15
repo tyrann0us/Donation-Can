@@ -23,11 +23,14 @@ class DonationListWidget extends WP_Widget {
     }
 
     static function donation_list_sort_function($a, $b) {
-        if ($a->id == $b->id) {
+        $time_a = strtotime($a->time);
+        $time_b = strtotime($b->time);
+        
+        if ($time_a == $time_b) {
             return 0;
         }
 
-        if ($a->id < $b->id) {
+        if ($time_a < $time_b) {
             return 1;
         }
 

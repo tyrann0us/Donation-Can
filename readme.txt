@@ -120,6 +120,9 @@ This version contains many of improvements that make Donation Can easier to use.
 * Plugin security improvements on settings pages and AJAX calls.
 * Split the name of the donor into first name and last name to allow more options for e-mail message formatting.
 * Fixed compatibility problems with the "After the deadline" plugin.
+* All money strings in Donation Can are now consistently formatted to always show two digits.
+* Fixed sorting of latest donations to be by time instead of id.
+* Offline donations added through the "Add new donation" page can now be marked anonymous.
 
 = 1.5.6 =
 * Donation widget settings now show only the settings that are applicable to the selected style.
