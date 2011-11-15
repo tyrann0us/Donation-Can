@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <!-- Error: Permalink structure not compatible with PayPal -->
     <div class="donation_can_notice">
         <?php _e("You haven't set up your WordPress permalink structure. Donation Can will not be able to receive payment notifications from PayPal.", "donation_can");?><br/>
-        <a href="<?php admin_url("options-permalink.php"); ?>"><?php _e("Fix permalink settings now.", "donation_can");?></a>
+        <a href="<?php echo admin_url("options-permalink.php"); ?>"><?php _e("Fix permalink settings now.", "donation_can");?></a>
     </div>
 <?php endif; ?>
 <?php if (empty($goals)) : ?>
