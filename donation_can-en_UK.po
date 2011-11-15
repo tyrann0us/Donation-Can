@@ -1,0 +1,1443 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Donation Can\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-16 00:14+0200\n"
+"PO-Revision-Date: 2011-11-16 00:22+0200\n"
+"Last-Translator: Jarkko Laine <jarkko@jarkkolaine.com>\n"
+"Language-Team: Treehouse Apps <jarkko@jarkkolaine.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: view\n"
+"X-Poedit-SearchPath-2: model\n"
+"X-Poedit-SearchPath-3: model/widgets\n"
+"X-Poedit-SearchPath-4: model/settings\n"
+"X-Poedit-SearchPath-5: model/dashboard\n"
+
+#: donation_can.php:172
+#, php-format
+msgid "Donation Can is in sandbox mode. Remember to <a href=\"%s\">switch back to normal mode</a> when done testing."
+msgstr "Donation Can is in sandbox mode. Remember to <a href=\"%s\">switch back to normal mode</a> when done testing."
+
+#: donation_can.php:193
+#: model/data.php:1157
+msgid "%CURRENCY% %SUM%"
+msgstr "%CURRENCY% %SUM%"
+
+#: donation_can.php:219
+msgid "Remove"
+msgstr "Remove"
+
+#: donation_can.php:220
+msgid "Are you sure you want to delete style '%STYLE_NAME%'?"
+msgstr "Are you sure you want to delete style '%STYLE_NAME%'?"
+
+#: donation_can.php:221
+msgid "Name for new style:"
+msgstr "Name for new style:"
+
+#: donation_can.php:222
+msgid "Are you sure you want to delete donation %DONATION_ID%?"
+msgstr "Are you sure you want to delete donation %DONATION_ID%?"
+
+#: donation_can.php:223
+msgid "Are you sure you want to delete cause '%CAUSE_NAME%'?"
+msgstr "Are you sure you want to delete cause '%CAUSE_NAME%'?"
+
+#: donation_can.php:224
+msgid "Are you sure you want to reset the donation counter for cause '%CAUSE_NAME%'?"
+msgstr "Are you sure you want to reset the donation counter for cause '%CAUSE_NAME%'?"
+
+#: donation_can.php:245
+#: donation_can.php:247
+msgid "Add Donation Form"
+msgstr "Add Donation Form"
+
+#: model/data.php:120
+msgid ""
+"A new donation was made to your cause, \"#CAUSE_NAME#\":\n"
+"\n"
+"#USER_NAME# (#USER_EMAIL#) donated #CURRENCY# #AMOUNT# (PayPal fee: #FEE#) to #CAUSE_NAME# #CAUSE_CODE#.\n"
+"\n"
+"Visit the WordPress dashboard to see all donations to this goal:\n"
+"#DONATIONS_URL#\n"
+"\n"
+"Thanks,\n"
+"Donation Can"
+msgstr ""
+"A new donation was made to your cause, \"#CAUSE_NAME#\":\n"
+"\n"
+"#USER_NAME# (#USER_EMAIL#) donated #CURRENCY# #AMOUNT# (PayPal fee: #FEE#) to #CAUSE_NAME# #CAUSE_CODE#.\n"
+"\n"
+"Visit the WordPress dashboard to see all donations to this goal:\n"
+"#DONATIONS_URL#\n"
+"\n"
+"Thanks,\n"
+"Donation Can"
+
+#: model/data.php:150
+msgid "Default"
+msgstr "Default"
+
+#: model/data.php:159
+#: model/data.php:199
+msgid "Anonymous donation"
+msgstr "Anonymous donation"
+
+#: model/data.php:191
+msgid "Default Vertical"
+msgstr "Default Vertical"
+
+#: model/data.php:253
+msgid "Cannot update style %STYLE_ID%"
+msgstr "Cannot update style %STYLE_ID%"
+
+#: model/data.php:269
+msgid "No style found with id %ID%"
+msgstr "No style found with id %ID%"
+
+#: model/data.php:592
+msgid "No name specified for cause"
+msgstr "No name specified for cause"
+
+#: model/data.php:632
+#, php-format
+msgid "Malformed email address %s"
+msgstr "Malformed email address %s"
+
+#: model/data.php:1117
+msgid "Y/m/d g:i A"
+msgstr "Y/m/d g:i A"
+
+#: model/data.php:1118
+msgid "g:i A"
+msgstr "g:i A"
+
+#: model/data.php:1128
+#, php-format
+msgid "Today at %s"
+msgstr "Today at %s"
+
+#: model/data.php:1130
+#, php-format
+msgid "Yesterday at %s"
+msgstr "Yesterday at %s"
+
+#: model/data.php:1132
+#, php-format
+msgid "%d days ago at %s"
+msgstr "%d days ago at %s"
+
+#: model/data.php:1161
+msgid "%SUM%"
+msgstr "%SUM%"
+
+#: model/data.php:1180
+msgid "TRANSLATOR: insert decimal point format here"
+msgstr "."
+
+#: model/data.php:1181
+msgid "TRANSLATOR: insert thousands separator here"
+msgstr ","
+
+#: model/dashboard/dashboard.php:23
+msgid "Fundraising Status"
+msgstr "Fundraising Status"
+
+#: model/settings/donation_can_add_donation.php:63
+msgid "Select a goal to add the donation to."
+msgstr "Select a goal to add the donation to."
+
+#: model/settings/donation_can_add_donation.php:67
+msgid "Enter a donation sum greater than 0."
+msgstr "Enter a donation sum greater than 0."
+
+#: model/settings/donation_can_add_donation.php:71
+msgid "Time of donation is not a valid date."
+msgstr "Time of donation is not a valid date."
+
+#: model/settings/donation_can_add_donation.php:84
+msgid "Added offline donation"
+msgstr "Added offline donation"
+
+#: model/settings/donation_can_add_donation.php:85
+msgid "Browse donations"
+msgstr "Browse donations"
+
+#: model/settings/donation_can_add_goal.php:45
+msgid "Please fix the following errors to continue:"
+msgstr "Please fix the following errors to continue:"
+
+#: model/settings/donation_can_add_goal.php:77
+msgid "Added goal:"
+msgstr "Added goal:"
+
+#: model/settings/donation_can_donations.php:39
+msgid "Deleted donation:"
+msgstr "Deleted donation:"
+
+#: model/settings/donation_can_edit_widget_style.php:83
+msgid "Widget style updated"
+msgstr "Widget style updated"
+
+#: model/settings/donation_can_edit_widget_style.php:104
+msgid "Widget style added"
+msgstr "Widget style added"
+
+#: model/settings/donation_can_general_settings.php:292
+msgid "Donation Can settings updated"
+msgstr "Donation Can settings updated"
+
+#: model/settings/donation_can_goals.php:92
+msgid "Updated goal:"
+msgstr "Updated goal:"
+
+#: model/settings/donation_can_goals.php:103
+msgid "Deleted goal:"
+msgstr "Deleted goal:"
+
+#: model/settings/donation_can_goals.php:111
+msgid "Donations reset for goal: "
+msgstr "Donations reset for goal: "
+
+#: model/settings/donation_can_widget_styles.php:26
+msgid "Deleted style:"
+msgstr "Deleted style:"
+
+#: model/settings/donation_can_widget_styles.php:32
+msgid "Cloned style:"
+msgstr "Cloned style:"
+
+#: model/settings/settings.php:30
+msgid "Donation Can"
+msgstr "Donation Can"
+
+#: model/settings/settings.php:31
+msgid "Donation Can Settings - General"
+msgstr "Donation Can Settings - General"
+
+#: model/settings/settings.php:31
+msgid "General Settings"
+msgstr "General Settings"
+
+#: model/settings/settings.php:32
+msgid "Donation Can Settings - Causes"
+msgstr "Donation Can Settings - Causes"
+
+#: model/settings/settings.php:32
+msgid "Causes"
+msgstr "Causes"
+
+#: model/settings/settings.php:33
+msgid "Donation Can Settings - Add New Cause"
+msgstr "Donation Can Settings - Add New Cause"
+
+#: model/settings/settings.php:33
+msgid "Add New Cause"
+msgstr "Add New Cause"
+
+#: model/settings/settings.php:34
+msgid "Donation Can Settings - Browse Donations"
+msgstr "Donation Can Settings - Browse Donations"
+
+#: model/settings/settings.php:34
+msgid "Donations"
+msgstr "Donations"
+
+#: model/settings/settings.php:35
+msgid "Donation Can Settings - Add New Donation"
+msgstr "Donation Can Settings - Add New Donation"
+
+#: model/settings/settings.php:35
+msgid "Add New Donation"
+msgstr "Add New Donation"
+
+#: model/settings/settings.php:36
+msgid "Donation Can Settings - Widget Styles"
+msgstr "Donation Can Settings - Widget Styles"
+
+#: model/settings/settings.php:36
+msgid "Widget Styles"
+msgstr "Widget Styles"
+
+#: model/settings/settings.php:37
+msgid "Donation Can Settings - Add New Widget Style"
+msgstr "Donation Can Settings - Add New Widget Style"
+
+#: model/settings/settings.php:37
+msgid "Add New Widget Style"
+msgstr "Add New Widget Style"
+
+#: model/settings/settings.php:38
+msgid "Donation Can Settings - Export"
+msgstr "Donation Can Settings - Export"
+
+#: model/settings/settings.php:38
+msgid "Export Data"
+msgstr "Export Data"
+
+#: model/widget_style_elements/donation_can_widget_anonymous_element.php:43
+msgid "Allow anonymous donations"
+msgstr "Allow anonymous donations"
+
+#: model/widget_style_elements/donation_can_widget_cause_selection_element.php:40
+msgid "Cause Selection"
+msgstr "Cause Selection"
+
+#: model/widget_style_elements/donation_can_widget_cause_selection_element.php:46
+msgid "Caption for cause selection:"
+msgstr "Caption for cause selection:"
+
+#: model/widget_style_elements/donation_can_widget_cause_selection_element.php:47
+msgid "Select cause"
+msgstr "Select cause"
+
+#: model/widget_style_elements/donation_can_widget_description_element.php:38
+msgid "Description"
+msgstr "Description"
+
+#: model/widget_style_elements/donation_can_widget_description_element.php:44
+msgid "Display description"
+msgstr "Display description"
+
+#: model/widget_style_elements/donation_can_widget_donation_list_element.php:35
+msgid "Recent Donations"
+msgstr "Recent Donations"
+
+#: model/widget_style_elements/donation_can_widget_donation_list_element.php:43
+msgid "Display latest donations"
+msgstr "Display latest donations"
+
+#: model/widget_style_elements/donation_can_widget_donation_list_element.php:47
+#: model/widgets/donation_list_widget.php:210
+msgid "Number of donations to display:"
+msgstr "Number of donations to display:"
+
+#: model/widget_style_elements/donation_can_widget_progress_element.php:77
+msgid "Display progress"
+msgstr "Display progress"
+
+#: model/widget_style_elements/donation_can_widget_progress_element.php:82
+msgid "Display donations exceeding goal"
+msgstr "Display donations exceeding goal"
+
+#: model/widget_style_elements/donation_can_widget_title_element.php:38
+msgid "Title"
+msgstr "Title"
+
+#: model/widget_style_elements/donation_can_widget_title_element.php:44
+#: model/widgets/donation_list_widget.php:187
+#: model/widgets/donation_progress_widget.php:107
+msgid "Display title"
+msgstr "Display title"
+
+#: model/widget_style_elements/donation_can_widget_title_element.php:49
+#: model/widgets/donation_list_widget.php:191
+#: model/widgets/donation_progress_widget.php:111
+msgid "Title (leave empty for default):"
+msgstr "Title (leave empty for default):"
+
+#: model/widgets/donation_list_widget.php:22
+#: model/widgets/donation_list_widget.php:64
+msgid "Latest Donations"
+msgstr "Latest Donations"
+
+#: model/widgets/donation_list_widget.php:102
+#: model/widgets/donation_widget.php:149
+msgid "%FIRSTNAME %LASTNAME gave %CURRENCY %SUM to \"%CAUSE\""
+msgstr "%FIRSTNAME %LASTNAME gave %CURRENCY %SUM to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:104
+#: model/widgets/donation_widget.php:151
+msgid "%FIRSTNAME %LASTNAME donated %CURRENCY %SUM"
+msgstr "%FIRSTNAME %LASTNAME donated %CURRENCY %SUM"
+
+#: model/widgets/donation_list_widget.php:108
+#: model/widgets/donation_widget.php:155
+msgid "%FIRSTNAME %LASTNAME donated to \"%CAUSE\""
+msgstr "%FIRSTNAME %LASTNAME donated to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:110
+#: model/widgets/donation_widget.php:157
+msgid "%FIRSTNAME %LASTNAME made a donation"
+msgstr "%FIRSTNAME %LASTNAME made a donation"
+
+#: model/widgets/donation_list_widget.php:114
+#: model/widgets/donation_widget.php:161
+msgid "%CURRENCY %SUM was donated to \"%CAUSE\""
+msgstr "%CURRENCY %SUM was donated to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:116
+#: model/widgets/donation_widget.php:163
+msgid "%CURRENCY %SUM donated"
+msgstr "%CURRENCY %SUM donated"
+
+#: model/widgets/donation_list_widget.php:120
+#: model/widgets/donation_widget.php:167
+msgid "An anonymous donation was made to \"%CAUSE\""
+msgstr "An anonymous donation was made to \"%CAUSE\""
+
+#: model/widgets/donation_list_widget.php:171
+msgid "Cause:"
+msgstr "Cause:"
+
+#: model/widgets/donation_list_widget.php:176
+#: model/widgets/donation_progress_widget.php:95
+msgid "All goals (summary)"
+msgstr "All goals (summary)"
+
+#: model/widgets/donation_list_widget.php:199
+msgid "Display names of donors"
+msgstr "Display names of donors"
+
+#: model/widgets/donation_list_widget.php:206
+msgid "Display donation sums"
+msgstr "Display donation sums"
+
+#: model/widgets/donation_progress_widget.php:22
+msgid "Fundraising Progress"
+msgstr "Fundraising Progress"
+
+#: model/widgets/donation_progress_widget.php:43
+msgid "You have causes in multiple currencies. In this version, Donation Can can't yet display their totals."
+msgstr "You have causes in multiple currencies. In this version, Donation Can can't yet display their totals."
+
+#: model/widgets/donation_progress_widget.php:47
+msgid "All Donations"
+msgstr "All Donations"
+
+#: model/widgets/donation_progress_widget.php:90
+#: model/widgets/donation_widget.php:268
+msgid "Goal:"
+msgstr "Goal:"
+
+#: model/widgets/donation_widget.php:25
+msgid "Donation Form"
+msgstr "Donation Form"
+
+#: model/widgets/donation_widget.php:51
+#: model/widgets/donation_widget.php:272
+msgid "Summary (All goals)"
+msgstr "Summary (All goals)"
+
+#: model/widgets/donation_widget.php:279
+msgid "Widget style:"
+msgstr "Widget style:"
+
+#: model/widgets/donation_widget.php:287
+msgid "Edit widget styles"
+msgstr "Edit widget styles"
+
+#: model/widgets/donation_widget.php:290
+msgid "Customize widget:"
+msgstr "Customize widget:"
+
+#: view/add_donation_page.php:52
+#: view/edit_goal_page.php:58
+#: view/edit_goal_page.php:105
+#: view/edit_widget_style.php:53
+msgid "Save"
+msgstr "Save"
+
+#: view/add_donation_page.php:56
+msgid "Send an email receipt to donor."
+msgstr "Send an email receipt to donor."
+
+#: view/add_donation_page.php:62
+msgid "Add Donation"
+msgstr "Add Donation"
+
+#: view/add_donation_page.php:76
+#: view/goals_page.php:47
+#: view/goals_page.php:57
+msgid "Cause"
+msgstr "Cause"
+
+#: view/add_donation_page.php:79
+msgid "--Select cause--"
+msgstr "--Select cause--"
+
+#: view/add_donation_page.php:92
+msgid "Select the cause you want to add the donation to."
+msgstr "Select the cause you want to add the donation to."
+
+#: view/add_donation_page.php:98
+#: view/donations_page.php:113
+#: view/donations_page.php:123
+msgid "Amount"
+msgstr "Amount"
+
+#: view/add_donation_page.php:105
+msgid "Donation received at"
+msgstr "Donation received at"
+
+#: view/add_donation_page.php:111
+msgid "Enter the date of the donation as YYYY-MM-DD and time in 24 hour format (e.g. \"2011-10-03 20:50:20\")."
+msgstr "Enter the date of the donation as YYYY-MM-DD and time in 24 hour format (e.g. \"2011-10-03 20:50:20\")."
+
+#: view/add_donation_page.php:117
+#: view/donations_page.php:112
+#: view/donations_page.php:122
+msgid "From"
+msgstr "From"
+
+#: view/add_donation_page.php:120
+msgid "First name:"
+msgstr "First name:"
+
+#: view/add_donation_page.php:124
+msgid "Last name:"
+msgstr "Last name:"
+
+#: view/add_donation_page.php:128
+msgid "Email:"
+msgstr "Email:"
+
+#: view/add_donation_page.php:138
+msgid "Notes (optional)"
+msgstr "Notes (optional)"
+
+#: view/add_shortcode.php:20
+msgid "Choose Cause"
+msgstr "Choose Cause"
+
+#: view/add_shortcode.php:24
+msgid "Add donation form"
+msgstr "Add donation form"
+
+#: view/add_shortcode.php:30
+msgid "You haven't created any fundraising causes yet."
+msgstr "You haven't created any fundraising causes yet."
+
+#: view/add_shortcode.php:33
+msgid "Click here to create one."
+msgstr "Click here to create one."
+
+#: view/add_shortcode.php:34
+msgid "Note that clicking on the link will move you out of this post editor."
+msgstr "Note that clicking on the link will move you out of this post editor."
+
+#: view/add_shortcode.php:58
+msgid "Widget style"
+msgstr "Widget style"
+
+#: view/add_shortcode.php:85
+msgid "Customize title"
+msgstr "Customize title"
+
+#: view/add_shortcode.php:106
+msgid "Insert into Post"
+msgstr "Insert into Post"
+
+#: view/add_shortcode.php:107
+msgid "Customize form"
+msgstr "Customize form"
+
+#: view/currencies.php:2
+msgid "U.S. Dollars (USD)"
+msgstr "U.S. Dollars (USD)"
+
+#: view/currencies.php:3
+msgid "Euros (EUR)"
+msgstr "Euros (EUR)"
+
+#: view/currencies.php:4
+msgid "Pounds Sterling (GBP)"
+msgstr "Pounds Sterling (GBP)"
+
+#: view/currencies.php:6
+msgid "Australian Dollars (AUD)"
+msgstr "Australian Dollars (AUD)"
+
+#: view/currencies.php:7
+msgid "New Zealand Dollars (NZD)"
+msgstr "New Zealand Dollars (NZD)"
+
+#: view/currencies.php:8
+msgid "Canadian Dollars (CAD)"
+msgstr "Canadian Dollars (CAD)"
+
+#: view/currencies.php:9
+msgid "Yen (JPY)"
+msgstr "Yen (JPY)"
+
+#: view/currencies.php:10
+msgid "Swiss Franc (CHF)"
+msgstr "Swiss Franc (CHF)"
+
+#: view/currencies.php:11
+msgid "Hong Kong Dollar (HKD)"
+msgstr "Hong Kong Dollar (HKD)"
+
+#: view/currencies.php:12
+msgid "Singapore Dollar (SGD)"
+msgstr "Singapore Dollar (SGD)"
+
+#: view/currencies.php:13
+msgid "Swedish Krona (SEK)"
+msgstr "Swedish Krona (SEK)"
+
+#: view/currencies.php:14
+msgid "Danish Krone (DKK)"
+msgstr "Danish Krone (DKK)"
+
+#: view/currencies.php:15
+msgid "Norwegian Krone (NOK)"
+msgstr "Norwegian Krone (NOK)"
+
+#: view/currencies.php:16
+msgid "Polish Zloty (PLN)"
+msgstr "Polish Zloty (PLN)"
+
+#: view/currencies.php:17
+msgid "Hungarian Forint (HUF)"
+msgstr "Hungarian Forint (HUF)"
+
+#: view/currencies.php:18
+msgid "Czech Koruna (CZK)"
+msgstr "Czech Koruna (CZK)"
+
+#: view/currencies.php:19
+msgid "Israeli Shekel (ILS)"
+msgstr "Israeli Shekel (ILS)"
+
+#: view/currencies.php:20
+msgid "Mexican Peso (MXN)"
+msgstr "Mexican Peso (MXN)"
+
+#: view/currencies.php:21
+msgid "Brazilian Real (only for Brazilian users) (BRL)"
+msgstr "Brazilian Real (only for Brazilian users) (BRL)"
+
+#: view/currencies.php:22
+msgid "Malaysian Ringgits (only for Malaysian users) (MYR)"
+msgstr "Malaysian Ringgits (only for Malaysian users) (MYR)"
+
+#: view/currencies.php:23
+msgid "Philippine Pesos (PHP)"
+msgstr "Philippine Pesos (PHP)"
+
+#: view/currencies.php:24
+msgid "Taiwan New Dollars (TWD)"
+msgstr "Taiwan New Dollars (TWD)"
+
+#: view/currencies.php:25
+msgid "Thai Baht (THB)"
+msgstr "Thai Baht (THB)"
+
+#: view/currencies.php:26
+msgid "Turkish Lira (TRY)"
+msgstr "Turkish Lira (TRY)"
+
+#: view/dashboard_widget.php:25
+msgid "You haven't set up your WordPress permalink structure. Donation Can will not be able to receive payment notifications from PayPal."
+msgstr "You haven't set up your WordPress permalink structure. Donation Can will not be able to receive payment notifications from PayPal."
+
+#: view/dashboard_widget.php:26
+msgid "Fix permalink settings now."
+msgstr "Fix permalink settings now."
+
+#: view/dashboard_widget.php:33
+msgid "You haven't set up any causes yet."
+msgstr "You haven't set up any causes yet."
+
+#: view/dashboard_widget.php:34
+msgid "Start by creating your first one."
+msgstr "Start by creating your first one."
+
+#: view/dashboard_widget.php:47
+msgid "No donations yet."
+msgstr "No donations yet."
+
+#: view/dashboard_widget.php:55
+#, php-format
+msgid "To '%s'"
+msgstr "To '%s'"
+
+#: view/dashboard_widget.php:61
+msgid "Completed"
+msgstr "Completed"
+
+#: view/dashboard_widget.php:63
+msgid "Pending"
+msgstr "Pending"
+
+#: view/dashboard_widget.php:74
+msgid "Goal Progress"
+msgstr "Goal Progress"
+
+#: view/dashboard_widget.php:109
+msgid "TOTAL"
+msgstr "TOTAL"
+
+#: view/dashboard_widget.php:132
+msgid "You haven't set up your PayPal account information yet."
+msgstr "You haven't set up your PayPal account information yet."
+
+#: view/dashboard_widget.php:133
+msgid "Click here to do it now."
+msgstr "Click here to do it now."
+
+#: view/dashboard_widget.php:136
+msgid "PayPal account:"
+msgstr "PayPal account:"
+
+#: view/dashboard_widget.php:141
+msgid "You are using <strong><a href=\"%URL\">Donation Can</a> %VERSION.</strong>"
+msgstr "You are using <strong><a href=\"%URL\">Donation Can</a> %VERSION.</strong>"
+
+#: view/dashboard_widget.php:150
+msgid "Change Settings"
+msgstr "Change Settings"
+
+#: view/dashboard_widget.php:151
+msgid "Update Goals"
+msgstr "Update Goals"
+
+#: view/donation_form_no_cause.php:1
+msgid "Error: "
+msgstr "Error: "
+
+#: view/donation_form_no_cause.php:1
+msgid "No donation cause selected for this widget. Check widget settings."
+msgstr "No donation cause selected for this widget. Check widget settings."
+
+#: view/donation_form_single.php:40
+#, php-format
+msgid "Powered by %s."
+msgstr "Powered by %s."
+
+#: view/donations_page.php:24
+#, php-format
+msgid "Donations to \"%s\""
+msgstr "Donations to \"%s\""
+
+#: view/donations_page.php:43
+msgid "View all goals"
+msgstr "View all goals"
+
+#: view/donations_page.php:48
+msgid "Filter"
+msgstr "Filter"
+
+#: view/donations_page.php:52
+#, php-format
+msgid "Displaying %d-%d of %d"
+msgstr "Displaying %d-%d of %d"
+
+#: view/donations_page.php:57
+msgid "Go to the first page"
+msgstr "Go to the first page"
+
+#: view/donations_page.php:58
+msgid "Go to the previous page"
+msgstr "Go to the previous page"
+
+#: view/donations_page.php:60
+msgid "Current page"
+msgstr "Current page"
+
+#: view/donations_page.php:62
+msgid "Go to the next page"
+msgstr "Go to the next page"
+
+#: view/donations_page.php:63
+msgid "Go to the last page"
+msgstr "Go to the last page"
+
+#: view/donations_page.php:95
+msgid "Daily Progress"
+msgstr "Daily Progress"
+
+#: view/donations_page.php:100
+msgid "Numeric stats?"
+msgstr "Numeric stats?"
+
+#: view/donations_page.php:109
+#: view/donations_page.php:119
+#: view/goals_page.php:51
+#: view/goals_page.php:61
+msgid "Date"
+msgstr "Date"
+
+#: view/donations_page.php:110
+#: view/donations_page.php:120
+#: view/goals_page.php:49
+#: view/goals_page.php:59
+msgid "Goal"
+msgstr "Goal"
+
+#: view/donations_page.php:111
+#: view/donations_page.php:121
+msgid "Donation type"
+msgstr "Donation type"
+
+#: view/donations_page.php:132
+msgid "Y/m/d g:i:s A"
+msgstr "Y/m/d g:i:s A"
+
+#: view/donations_page.php:134
+#: view/goals_page.php:77
+msgid "Delete"
+msgstr "Delete"
+
+#: view/donations_page.php:140
+msgid "(anonymous)"
+msgstr "(anonymous)"
+
+#: view/edit_goal_page.php:35
+msgid "Edit Cause"
+msgstr "Edit Cause"
+
+#: view/edit_goal_page.php:36
+msgid "Update Cause"
+msgstr "Update Cause"
+
+#: view/edit_goal_page.php:39
+msgid "Add Cause"
+msgstr "Add Cause"
+
+#: view/edit_goal_page.php:89
+msgid "Cause ID:"
+msgstr "Cause ID:"
+
+#: view/edit_goal_page.php:89
+#: view/goals_page.php:76
+msgid "Edit"
+msgstr "Edit"
+
+#: view/edit_goal_page.php:97
+msgid "How much money do you need for this cause?"
+msgstr "How much money do you need for this cause?"
+
+#: view/edit_goal_page.php:108
+msgid "Don't set a target for the fundraising. The amount raised so far is shown instead of a progress bar."
+msgstr "Don't set a target for the fundraising. The amount raised so far is shown instead of a progress bar."
+
+#: view/edit_goal_page.php:114
+msgid "Donation options"
+msgstr "Donation options"
+
+#: view/edit_goal_page.php:117
+msgid "Decide the donation sums for your visitors to choose from. You can use the 'Add new' button to create as many options as you need."
+msgstr "Decide the donation sums for your visitors to choose from. You can use the 'Add new' button to create as many options as you need."
+
+#: view/edit_goal_page.php:136
+#: view/settings_page.php:110
+msgid "Add new"
+msgstr "Add new"
+
+#: view/edit_goal_page.php:140
+msgid "Include the option for your visitors to pick their donation sums freely."
+msgstr "Include the option for your visitors to pick their donation sums freely."
+
+#: view/edit_goal_page.php:146
+msgid "Describe the cause in a few words"
+msgstr "Describe the cause in a few words"
+
+#: view/edit_goal_page.php:153
+msgid "Where should the visitor go after donating to this cause?"
+msgstr "Where should the visitor go after donating to this cause?"
+
+#: view/edit_goal_page.php:156
+msgid "Thank you page"
+msgstr "Thank you page"
+
+#: view/edit_goal_page.php:158
+#: view/edit_goal_page.php:168
+#: view/settings_page.php:118
+#: view/settings_page.php:129
+msgid "Use PayPal Default (no return link)"
+msgstr "Use PayPal Default (no return link)"
+
+#: view/edit_goal_page.php:166
+msgid "Cancelled page"
+msgstr "Cancelled page"
+
+#: view/edit_goal_page.php:179
+msgid "Who should be notified of donations?"
+msgstr "Who should be notified of donations?"
+
+#: view/edit_goal_page.php:183
+msgid "A comma separated list of email addresses that should be notified when a donation is made to this cause. In addition to these, the general email addresses defined in general settings are notified."
+msgstr "A comma separated list of email addresses that should be notified when a donation is made to this cause. In addition to these, the general email addresses defined in general settings are notified."
+
+#: view/edit_widget_style.php:35
+msgid "View Widget Style"
+msgstr "View Widget Style"
+
+#: view/edit_widget_style.php:38
+msgid "Edit Widget Style"
+msgstr "Edit Widget Style"
+
+#: view/edit_widget_style.php:39
+msgid "Update Style"
+msgstr "Update Style"
+
+#: view/edit_widget_style.php:41
+msgid "Create Widget Style"
+msgstr "Create Widget Style"
+
+#: view/edit_widget_style.php:42
+msgid "Add Style"
+msgstr "Add Style"
+
+#: view/edit_widget_style.php:61
+msgid "You are viewing a default widget style that cannot be changed."
+msgstr "You are viewing a default widget style that cannot be changed."
+
+#: view/edit_widget_style.php:102
+msgid "Structure"
+msgstr "Structure"
+
+#: view/edit_widget_style.php:103
+msgid "Stylesheet"
+msgstr "Stylesheet"
+
+#: view/edit_widget_style.php:131
+msgid "Add new CSS definition"
+msgstr "Add new CSS definition"
+
+#: view/edit_widget_style.php:154
+msgid "Widget"
+msgstr "Widget"
+
+#: view/edit_widget_style.php:165
+msgid "Drop elements from right side palette to this canvas."
+msgstr "Drop elements from right side palette to this canvas."
+
+#: view/export_page.php:25
+msgid "On this page, you can download all Donation Can data from your blog to your own computer."
+msgstr "On this page, you can download all Donation Can data from your blog to your own computer."
+
+#: view/export_page.php:27
+msgid "Right-click on the file format you like, and use \"Save as...\" to choose the location for your file. Settings and styles are only available as XML."
+msgstr "Right-click on the file format you like, and use \"Save as...\" to choose the location for your file. Settings and styles are only available as XML."
+
+#: view/export_page.php:31
+msgid "Causes:"
+msgstr "Causes:"
+
+#: view/export_page.php:33
+#: view/export_page.php:40
+msgid "CSV"
+msgstr "CSV"
+
+#: view/export_page.php:34
+#: view/export_page.php:41
+#: view/export_page.php:47
+#: view/export_page.php:52
+msgid "XML"
+msgstr "XML"
+
+#: view/export_page.php:38
+msgid "Donations:"
+msgstr "Donations:"
+
+#: view/export_page.php:45
+msgid "Settings:"
+msgstr "Settings:"
+
+#: view/export_page.php:51
+msgid "Styles:"
+msgstr "Styles:"
+
+#: view/goals_page.php:22
+msgid "Donation Causes"
+msgstr "Donation Causes"
+
+#: view/goals_page.php:28
+msgid "Add a new cause to get started with collecting donations."
+msgstr "Add a new cause to get started with collecting donations."
+
+#: view/goals_page.php:48
+#: view/goals_page.php:58
+#: view/settings_page.php:362
+msgid "Added by"
+msgstr "Added by"
+
+#: view/goals_page.php:50
+#: view/goals_page.php:60
+msgid "Collected"
+msgstr "Collected"
+
+#: view/goals_page.php:78
+msgid "View donations"
+msgstr "View donations"
+
+#: view/goals_page.php:79
+msgid "Reset"
+msgstr "Reset"
+
+#: view/goals_page.php:89
+msgid "No goal"
+msgstr "No goal"
+
+#: view/goals_page.php:110
+msgid "Add cause"
+msgstr "Add cause"
+
+#: view/settings_page.php:40
+msgid "Donation Can Settings"
+msgstr "Donation Can Settings"
+
+#: view/settings_page.php:52
+msgid "Payment information"
+msgstr "Payment information"
+
+#: view/settings_page.php:56
+msgid "PayPal account email:"
+msgstr "PayPal account email:"
+
+#: view/settings_page.php:65
+msgid "Enable PayPal sandbox mode for testing donations."
+msgstr "Enable PayPal sandbox mode for testing donations."
+
+#: view/settings_page.php:69
+msgid "Sandbox test account email:"
+msgstr "Sandbox test account email:"
+
+#: view/settings_page.php:72
+msgid "Sign in to PayPal Sandbox to create a test account"
+msgstr "Sign in to PayPal Sandbox to create a test account"
+
+#: view/settings_page.php:80
+msgid "Donation settings"
+msgstr "Donation settings"
+
+#: view/settings_page.php:84
+msgid "Default currency:"
+msgstr "Default currency:"
+
+#: view/settings_page.php:90
+msgid "Default donation options:"
+msgstr "Default donation options:"
+
+#: view/settings_page.php:104
+msgid "None yet. Click on \"add new\" below a few times to create some donation options (for example 5.00)."
+msgstr "None yet. Click on \"add new\" below a few times to create some donation options (for example 5.00)."
+
+#: view/settings_page.php:115
+msgid "Thank you page:"
+msgstr "Thank you page:"
+
+#: view/settings_page.php:126
+msgid "Payment cancelled page:"
+msgstr "Payment cancelled page:"
+
+#: view/settings_page.php:137
+msgid "Text for continue button:"
+msgstr "Text for continue button:"
+
+#: view/settings_page.php:140
+msgid "Applies when thank you page URL is set to something else than 'Use Paypal Default'."
+msgstr "Applies when thank you page URL is set to something else than 'Use Paypal Default'."
+
+#: view/settings_page.php:145
+msgid "Email addresses to notify of new donations:"
+msgstr "Email addresses to notify of new donations:"
+
+#: view/settings_page.php:148
+msgid "A comma separated list of email addresses that should be notified whenever someone makes a donation to any of the goals."
+msgstr "A comma separated list of email addresses that should be notified whenever someone makes a donation to any of the goals."
+
+#: view/settings_page.php:158
+msgid "Display options"
+msgstr "Display options"
+
+#: view/settings_page.php:164
+msgid "Subtract PayPal fees from donation amounts shown to site visitors."
+msgstr "Subtract PayPal fees from donation amounts shown to site visitors."
+
+#: view/settings_page.php:171
+msgid "Hide Donation Can back link."
+msgstr "Hide Donation Can back link."
+
+#: view/settings_page.php:178
+msgid "Always show two decimals for money amounts."
+msgstr "Always show two decimals for money amounts."
+
+#: view/settings_page.php:187
+msgid "PayPal checkout page settings"
+msgstr "PayPal checkout page settings"
+
+#: view/settings_page.php:194
+msgid "Customizations made to the PayPal checkout page are not visible in PayPal sandbox. To test the changes, turn off sandbox mode."
+msgstr "Customizations made to the PayPal checkout page are not visible in PayPal sandbox. To test the changes, turn off sandbox mode."
+
+#: view/settings_page.php:199
+msgid "Business logo (optional):"
+msgstr "Business logo (optional):"
+
+#: view/settings_page.php:202
+#: view/settings_page.php:211
+msgid "Upload image"
+msgstr "Upload image"
+
+#: view/settings_page.php:204
+msgid "max size: 150 x 150 px"
+msgstr "max size: 150 x 150 px"
+
+#: view/settings_page.php:208
+msgid "Header image (optional):"
+msgstr "Header image (optional):"
+
+#: view/settings_page.php:212
+msgid "max size: 750 x 90 px"
+msgstr "max size: 750 x 90 px"
+
+#: view/settings_page.php:216
+msgid "Background color:"
+msgstr "Background color:"
+
+#: view/settings_page.php:219
+#: view/settings_page.php:226
+#: view/settings_page.php:233
+msgid "A six digit HTML hex value (e.g. FF0000 for red)"
+msgstr "A six digit HTML hex value (e.g. FF0000 for red)"
+
+#: view/settings_page.php:223
+msgid "Header background color:"
+msgstr "Header background color:"
+
+#: view/settings_page.php:230
+msgid "Header border color:"
+msgstr "Header border color:"
+
+#: view/settings_page.php:241
+msgid "Ask the visitor leave a note with her donation."
+msgstr "Ask the visitor leave a note with her donation."
+
+#: view/settings_page.php:246
+msgid "Label for the note field:"
+msgstr "Label for the note field:"
+
+#: view/settings_page.php:252
+msgid "Ask for shipping address:"
+msgstr "Ask for shipping address:"
+
+#: view/settings_page.php:255
+msgid "Prompt for an address, but do not require one."
+msgstr "Prompt for an address, but do not require one."
+
+#: view/settings_page.php:256
+msgid "Do not prompt for an address."
+msgstr "Do not prompt for an address."
+
+#: view/settings_page.php:257
+msgid "Prompt for an address, and require one."
+msgstr "Prompt for an address, and require one."
+
+#: view/settings_page.php:267
+msgid "Email notification settings"
+msgstr "Email notification settings"
+
+#: view/settings_page.php:271
+msgid "In the email templates below, you can use the following tags to represent data about the donation:"
+msgstr "In the email templates below, you can use the following tags to represent data about the donation:"
+
+#: view/settings_page.php:274
+msgid "The first name of the person making the donation."
+msgstr "The first name of the person making the donation."
+
+#: view/settings_page.php:275
+msgid "The last name of the person making the donation."
+msgstr "The last name of the person making the donation."
+
+#: view/settings_page.php:276
+msgid "The email address of the person making the donation."
+msgstr "The email address of the person making the donation."
+
+#: view/settings_page.php:277
+msgid "Currency used in the donation."
+msgstr "Currency used in the donation."
+
+#: view/settings_page.php:278
+msgid "Amount donated."
+msgstr "Amount donated."
+
+#: view/settings_page.php:279
+msgid "PayPal fee."
+msgstr "PayPal fee."
+
+#: view/settings_page.php:280
+msgid "Name of the cause."
+msgstr "Name of the cause."
+
+#: view/settings_page.php:281
+msgid "ID of the cause."
+msgstr "ID of the cause."
+
+#: view/settings_page.php:282
+msgid "Unique ID for the donation, generated by <strong>PayPal</strong>."
+msgstr "Unique ID for the donation, generated by <strong>PayPal</strong>."
+
+#: view/settings_page.php:283
+msgid "Unique ID for the donation, generated by Donation Can."
+msgstr "Unique ID for the donation, generated by Donation Can."
+
+#: view/settings_page.php:284
+msgid "Date and time of donation."
+msgstr "Date and time of donation."
+
+#: view/settings_page.php:289
+msgid "Send email messages from:"
+msgstr "Send email messages from:"
+
+#: view/settings_page.php:292
+msgid "The email address to use as sender in email messages."
+msgstr "The email address to use as sender in email messages."
+
+#: view/settings_page.php:295
+msgid "The name to use as sender in email messages."
+msgstr "The name to use as sender in email messages."
+
+#: view/settings_page.php:300
+msgid "Use HTML in email messages."
+msgstr "Use HTML in email messages."
+
+#: view/settings_page.php:304
+msgid "Email notification template:"
+msgstr "Email notification template:"
+
+#: view/settings_page.php:312
+msgid "Send a receipt to donors after receiving donation."
+msgstr "Send a receipt to donors after receiving donation."
+
+#: view/settings_page.php:316
+msgid "Minimum donation for sending receipt:"
+msgstr "Minimum donation for sending receipt:"
+
+#: view/settings_page.php:319
+msgid "Receipts are not sent for donations lower than the value specified here."
+msgstr "Receipts are not sent for donations lower than the value specified here."
+
+#: view/settings_page.php:323
+msgid "Email receipt subject:"
+msgstr "Email receipt subject:"
+
+#: view/settings_page.php:329
+msgid "Email receipt template:"
+msgstr "Email receipt template:"
+
+#: view/settings_page.php:350
+msgid "Write a log file to the plugin's home directory. (Make sure the directory is writeable.)"
+msgstr "Write a log file to the plugin's home directory. (Make sure the directory is writeable.)"
+
+#: view/settings_page.php:358
+msgid "Sort donation causes by:"
+msgstr "Sort donation causes by:"
+
+#: view/settings_page.php:361
+msgid "Name"
+msgstr "Name"
+
+#: view/settings_page.php:363
+msgid "Fundraising goal"
+msgstr "Fundraising goal"
+
+#: view/settings_page.php:364
+msgid "Raised so far"
+msgstr "Raised so far"
+
+#: view/settings_page.php:365
+msgid "Date added"
+msgstr "Date added"
+
+#: view/settings_page.php:369
+msgid "Ascending"
+msgstr "Ascending"
+
+#: view/settings_page.php:370
+msgid "Descending"
+msgstr "Descending"
+
+#: view/settings_page.php:378
+msgid "Save Changes"
+msgstr "Save Changes"
+
+#: view/widget_styles_page.php:22
+msgid "Donation Widget Styles"
+msgstr "Donation Widget Styles"
+
+#: view/widget_styles_page.php:28
+msgid "Add a new style to get started with collecting donations."
+msgstr "Add a new style to get started with collecting donations."
+
+#: view/widget_styles_page.php:48
+#: view/widget_styles_page.php:54
+msgid "Style"
+msgstr "Style"
+
+#: view/widget_styles_page.php:67
+msgid "View"
+msgstr "View"
+
+#: view/widget_styles_page.php:69
+msgid "Clone"
+msgstr "Clone"
+
+#: view/widget_styles_page.php:85
+msgid "Add style"
+msgstr "Add style"
+
+#: view/widget_blocks/anonymous_options.php:3
+msgid "Anonymous Donation Checkbox"
+msgstr "Anonymous Donation Checkbox"
+
+#: view/widget_blocks/anonymous_options.php:8
+msgid "Prompt:"
+msgstr "Prompt:"
+
+#: view/widget_blocks/donation_list.php:5
+msgid "Latest donations:"
+msgstr "Latest donations:"
+
+#: view/widget_blocks/donation_options.php:4
+msgid "Choose donation amount:"
+msgstr "Choose donation amount:"
+
+#: view/widget_blocks/donation_options.php:21
+msgid "Donate %CURRENCY %SUM"
+msgstr "Donate %CURRENCY %SUM"
+
+#: view/widget_blocks/donation_options.php:28
+msgid "Donate other amount"
+msgstr "Donate other amount"
+
+#: view/widget_blocks/donation_options.php:46
+#: view/widget_blocks/donation_options.php:48
+#: view/widget_blocks/donation_options.php:62
+msgid "Other"
+msgstr "Other"
+
+#: view/widget_blocks/donation_options_options.php:11
+msgid "Donation Options"
+msgstr "Donation Options"
+
+#: view/widget_blocks/donation_options_options.php:16
+msgid "List format:"
+msgstr "List format:"
+
+#: view/widget_blocks/donation_options_options.php:18
+msgid "Drop down list"
+msgstr "Drop down list"
+
+#: view/widget_blocks/donation_options_options.php:19
+msgid "Options as links"
+msgstr "Options as links"
+
+#: view/widget_blocks/donation_options_options.php:20
+msgid "Options as radio buttons"
+msgstr "Options as radio buttons"
+
+#: view/widget_blocks/donation_options_options.php:30
+msgid "Show text field for entering a custom donation sum."
+msgstr "Show text field for entering a custom donation sum."
+
+#: view/widget_blocks/progress_bar.php:23
+msgid "Your donation goals use different currencies, so we cannot show an aggregated donation meter."
+msgstr "Keräyksesi käyttävät eri valuuttoja, joten emme voi näyttää yhteistä lahjoitusmittaria."
+
+#: view/widget_blocks/progress_bar.php:27
+msgid "%CURRENCY %SUM raised."
+msgstr "%CURRENCY %SUM raised."
+
+#: view/widget_blocks/progress_bar_options.php:9
+msgid "Progress"
+msgstr "Progress"
+
+#: view/widget_blocks/progress_bar_options.php:13
+msgid "Progress bar orientation:"
+msgstr "Progress bar orientation:"
+
+#: view/widget_blocks/progress_bar_options.php:15
+msgid "Vertical"
+msgstr "Vertical"
+
+#: view/widget_blocks/progress_bar_options.php:16
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: view/widget_blocks/progress_bar_options.php:21
+msgid "Text format:"
+msgstr "Text format:"
+
+#: view/widget_blocks/progress_bar_options.php:25
+msgid "Use the following placeholders to mark variable data:<br/>%CURRENCY%, %TARGET%, %CURRENT%, %PERCENTAGE%"
+msgstr "Use the following placeholders to mark variable data:<br/>%CURRENCY%, %TARGET%, %CURRENT%, %PERCENTAGE%"
+
+#: view/widget_blocks/submit_button_options.php:3
+msgid "Submit Button"
+msgstr "Submit Button"
+
+#: view/widget_blocks/submit_button_options.php:8
+msgid "Button image URL (leave empty for default):"
+msgstr "Button image URL (leave empty for default):"
+
+#: view/widget_blocks/submit_button_options.php:19
+#: view/widget_blocks/submit_button_options.php:20
+msgid "Current image:"
+msgstr "Current image:"
+
+#: view/widget_blocks/text_options.php:2
+msgid "Text"
+msgstr "Text"
+
+#: view/widget_blocks/text_options.php:6
+msgid "Text:"
+msgstr "Text:"
+
+#~ msgid "%NAME gave %CURRENCY %SUM to \"%CAUSE\""
+#~ msgstr "%NAME gave %CURRENCY %SUM to \"%CAUSE\""
+
+#~ msgid "%NAME donated %CURRENCY %SUM"
+#~ msgstr "%NAME donated %CURRENCY %SUM"
+
+#~ msgid "%NAME donated to \"%CAUSE\""
+#~ msgstr "%NAME donated to \"%CAUSE\""
+
+#~ msgid "%NAME made a donation"
+#~ msgstr "%NAME made a donation"
+
+#~ msgid "Name:"
+#~ msgstr "Nimi:"
+
+#~ msgid "Use PayPal Default"
+#~ msgstr "Käytä PayPal:in oletusarvoja"
+
+#~ msgid "Select donation cause:"
+#~ msgstr "Valitse keräys:"
+
+#~ msgid "raised"
+#~ msgstr "kerätty"
+
+#~ msgid "-- Select Cause --"
+#~ msgstr "-- Valitse keräys --"
+
+#~ msgid "DONATION_LIST_WITH_NAME_AND_SUM_AND_CAUSE"
+#~ msgstr "%NAME gave %CURRENCY %SUM to \"%CAUSE\""
+
+#~ msgid "DONATION_LIST_WITH_NAME_AND_SUM"
+#~ msgstr "%NAME gave %CURRENCY %SUM"
+
+#~ msgid "DONATION_LIST_WITH_NAME_AND_CAUSE"
+#~ msgstr "%NAME gave to \"%CAUSE\""
+
+#~ msgid "DONATION_LIST_WITH_NAME"
+#~ msgstr "%NAME made a donation"
+
+#~ msgid "DONATION_LIST_WITH_SUM_AND_CAUSE"
+#~ msgstr "A donation of %CURRENCY %SUM was made to \"%CAUSE\""
+
+#~ msgid "DONATION_LIST_WITH_SUM"
+#~ msgstr "A donation of %CURRENCY %SUM was made"
+
+#~ msgid "DONATION_LIST_WITH_CAUSE"
+#~ msgstr "A donation was made to \"%CAUSE\""
