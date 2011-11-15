@@ -951,7 +951,7 @@ function donation_can_process_paypal_ipn($wp) {
         $data["sandbox"] = 1;
     }
 
-    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%f", "%s");
+    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s");
 
     foreach ($data as $k => $v) {
         w2log("$k: $v");
