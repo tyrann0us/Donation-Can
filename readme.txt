@@ -4,7 +4,7 @@ Donate link: http://treehouseapps.com/donation-can
 Tags: donations, paypal, fundraising, money
 Requires at least: 2.8
 Tested up to: 3.2.1
-Stable tag: 1_5_7
+Stable tag: 1_5_7_1
 
 Collect PayPal donations towards multiple goals on your blog and show the progress to your visitors using sidebar widgets.
 
