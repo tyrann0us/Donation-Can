@@ -89,6 +89,9 @@ If your question wasn't answered here, visit the [official plugin page](http://j
 
 == Upgrade Notice ==
 
+= 1.5.7.1 =
+Quick bug fix to 1.5.7.
+
 = 1.5.7 =
 Donation Can is now ready for localization. Bug and plugin compatibility fixes.
 
@@ -114,6 +117,9 @@ This is a bug fix release. If you see all your donations and are collecting them
 This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
+
+= 1.5.7.1 =
+* Fixed a bug in number formatting.
 
 = 1.5.7 =
 * Added a settings page for exporting Donation Can data as CSV or XML. Some data is only available in XML format.
