@@ -1166,6 +1166,9 @@ function donation_can_format_money($currency, $amount) {
 }
 
 function donation_can_number_format($number) {
+    // Convert to double in case the number was somehow passed in in a wrong format
+    $number = doubleval($number);
+
     $general_settings = donation_can_get_general_settings();
 
     $decimals = 2;
