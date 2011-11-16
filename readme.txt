@@ -37,13 +37,13 @@ is also good for Search Engine Optimization.
 
 == Using Donation Can ==
 
-= 1. Creating a donation goal =
+= 1. Creating a donation cause =
 
 Collecting donations through Donation Can starts from creating a donation goal. A goal contains a cause (= a title and
 a description of what you are collecting the money for), and a money goal (or no goal for an openended fundraising campaign)
 stating how much money you need.
 
-To create a donation goal, click on the "Add New Goal" link in the Donation Can menu group.
+To create a donation goal, click on the "Add New Cause" link in the Donation Can menu group.
 
 = 2. Using widgets to show the donation form =
 
@@ -82,12 +82,15 @@ If your question wasn't answered here, visit the [official plugin page](http://j
 
 == Screenshots ==
 
-Coming soon...
+1. The default look of a Donation Can fundraising widget.
+2. Adding a new donation cause
+3. Browsing donations
+4. Manually adding a new donation
 
 == Upgrade Notice ==
 
 = 1.5.7 =
-Donation Can is now ready for localization.
+Donation Can is now ready for localization. Bug and plugin compatibility fixes.
 
 = 1.5.6 =
 Bug fixes.
