@@ -1,0 +1,559 @@
+/*
+Copyright (c) 2009-2011, Jarkko Laine.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+/* DEFAULT WIDGET STYLE */
+
+/*
+
+- .donation-can-widget
+
+        h3.donation-title
+
+        div.description
+            p*
+
+        div.progress-bar
+            div.progress-container
+                div.progress
+
+            div.raised-text (tähän eri vaihtoehtoja)
+
+        div.make-a-donation
+            select
+
+            submit
+
+        div.latest-donations
+            h3
+
+            ul
+                li
+                    a?
+
+
+        div.backlink
+
+
+TITLE
+
+DESCRIPTION
+
+PROGRESS BAR
+
+DONATION OPTIONS
+
+DONATION BUTTON
+
+POWERED BY
+
+
+*/
+
+#donation-can-powered {
+
+}
+
+
+
+
+/* STYLES FOR ADMIN */
+
+.donation-can-permalink-nag {
+	border: 1px solid red;
+	background-color: #FFEEEE;
+	padding: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+
+.donation_can_notice {
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+    border: 1px solid #ccc;
+    background-color: rgb(255, 254, 235);
+    border-radius: 5px;
+    text-align: left;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+.donation-can-admin-notice {
+    border-bottom: 1px solid #ccc;
+    background-color: rgb(255, 254, 235);
+    color: rgb(85, 85, 85);
+    text-align: center;
+    padding: 5px;
+    font-size: 12px;
+}
+
+#donation_can_dashboard .inside  {
+margin-top: 0px !important;
+}
+
+#donation_can_dashboard .inside p.sub {
+    color: rgb(119, 119, 119);
+    font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
+    font-size: 13px;
+    font-style: italic;
+    padding: 5px 0px 0px 0px;
+    margin: 0px;
+}
+
+#donation_can_dashboard .table {
+    background: rgb(249, 249, 249);
+    border-bottom: 1px solid rgb(236, 236, 236);
+    border-top: 1px solid rgb(236, 236, 236);
+    margin: 0px -9px 10px;
+    padding: 0px 10px;
+}
+
+#donation_can_dashboard table {
+    width: 100%;
+}
+
+#donation_can_dashboard table td {
+    border-top: 1px solid rgb(236, 236, 236);
+    padding: 3px 0px;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+#donation_can_dashboard table tr.first td {
+border-top: none;
+}
+
+#donation_can_dashboard td .approved {
+    color: green;
+}
+
+#donation_can_dashboard td .waiting {
+    color: rgb(230, 111, 0);
+}
+
+#donation_can_dashboard td .failed {
+    color: red;
+}
+
+#donation_can_dashboard td.b {
+    font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif;
+    font-size: 14px;
+    padding-right: 6px;
+    text-align: right;
+}
+
+#donation_can_dashboard td.last {
+    width: 70px;
+}
+
+#donation_can_dashboard td.goal {
+    font-style: italic;
+}
+
+#donation_can_dashboard .t {
+color: rgb(119, 119, 119);
+font-size: 12px;
+padding-right: 12px;
+padding-top: 6px;
+}
+
+.goal-id-column {
+	width: 150px;
+}
+
+.goal-sum-column {
+	width: 100px;
+}
+
+#goal-id-div input, #goal-name-div input, #goal-div input, #page-id-div input, #goal-description-div textarea, #continue-button-text-div input, #notify-email-div input,
+#payer_name-div input.text, #payer_email-div input, #note-div textarea
+{
+	width: 100%;
+}
+
+.donation_progress {
+	height: 20px;
+	padding: 4px;
+	border: 1px solid #333;
+	background-color: #fff;
+	margin: 10px 0px 10px 0px;	
+}
+
+.donation_progress_container {
+	padding: 0px;
+	height: 28px;
+}
+
+.donation_progress_bar {
+	background-color: #8a8;
+	height: 20px;
+}
+
+.donation_meter {
+	font-size: 10pt;
+	padding: 5px 0px 10px 0px;
+	margin: auto;
+	overflow: auto;
+}
+
+/* Default donation progress bar settings */
+
+.donation_meter div {
+	margin: 0px;
+	padding: 0px;
+}
+
+.donation_progress {
+	padding: 5px;
+}
+
+#donation-submit-div div.inside {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/** Stats area in admin view */
+
+#donation-stats {
+    margin: auto;
+    overflow: auto;
+}
+
+#donation-stats .stats-box {
+    width: 250px;
+    float: left;
+    margin: 10px 15px 15px 0px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+#donation-stats .donation-progress {
+    border: 1px solid #ddd;
+    padding: 3px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+#donation-stats .donation-progress div {
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+#donation-stats .progress-as-text {
+    text-align: center;
+    font-size: 11pt;
+    font-style: italic;
+    font-family: Georgia;
+    padding: 5px;
+}
+
+#donation-stats .title {
+    font-family: Arial;
+    text-align: center;
+    font-size: 9pt;
+    color: #333;
+    padding: 5px 0px 0px 0px;
+}
+
+#donation-can-add-shortcode-dialog .panel_wrapper, #donation-can-add-shortcode-dialog div.current {
+    height: 150px;
+}
+
+.donation-can_donation-form .donations-list, .widget_donationlistwidget .donations-list {
+    margin: 10px 0px 10px 0px;
+}
+
+.donation-can_donation-form .donation-date, .widget_donationlistwidget .donation-date {
+    font-size: 8pt;
+    color: #888;
+    display: block;
+}
+
+.donation-can_content-widget ul li {
+    list-style: none;
+    padding: 0px;
+}
+
+.donation_can-fee {
+    color: red;
+    font-size: -1;
+}
+
+.donation-can-locked {
+    background-color: #eee;
+}
+
+.donation-can-locked a {
+    color: #666;
+}
+
+.donation-can-default-widget-notice {
+    border: 1px solid #eee;
+    text-align: left;
+    margin: 5px;
+    padding: 10px;
+    background-color: yellow;
+}
+
+.total-including-resets {
+    font-size: 8pt;
+    color: #aaa;
+}
+
+#add-new-donation-option-div {
+    margin: 10px 0px 10px 0px;
+}
+
+  #goal-div input.donation-goal {
+        width: 200px;
+        font-size: 2.0em;
+    }
+
+    #goal-div input.checkbox {
+        width: auto;
+    }
+
+
+    input.donation-option {
+        width: 200px;
+        margin-right: 5px;
+    }
+
+    #goal-currency {
+        font-size: 2.0em;
+        margin-left: 5px;
+    }
+
+    #goal-currency a {
+        text-decoration: none;
+    }
+
+#send-receipt-action {
+    padding: 10px;
+}
+
+    .donation-can-widget-structure-container {
+        margin: 20px 0px 20px 0px;
+    }
+
+    .donation-can-widget-left {
+        float: right;
+        clear: right;
+        width: 270px;
+    }
+
+    .donation-can-widget-right {
+        margin: 20px 290px 0px 0px;
+    }
+
+    .donation-can-widget-right .sidebar-name, .donation-can-widget-left .sidebar-name {
+        background-color: #aaa;
+        background: url(images/ed-bg.gif);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border: 1px solid #DFDFDF;
+        text-shadow: white 0px 1px 0px;
+    }
+
+    .donation-can-widget-right .sidebar-name h3, .donation-can-widget-left .sidebar-name h3 {
+        margin: 0px;
+        font-size: 13px;
+        height: 19px;
+        color: #333;
+        margin: 0px;
+        overflow: hidden;
+        padding: 5px 12px;
+        white-space: nowrap;
+    }
+
+    .donation-can-widget-right #widget-contents {
+        border: 1px solid #DFDFDF;
+        background-color: #F1F1F1;
+        border-top: 0px;
+        padding: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .donation-can-widget-left #widget-list {
+        border: 1px solid #DFDFDF;
+        border-right: 0px;
+        border-top: 0px;
+        padding: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .donation-can-widget-left .widget {
+        width: 250px;
+    }
+
+    .donation-can-widget-left .widget .widget-top {
+        padding: 10px;
+    }
+
+    .donation-can-widget-left .widget .widget-top h4 {
+        margin: 0px;
+    }
+
+
+    .widget-element {
+        border: 1px solid #dfdfdf;
+        border-radius: 8px;
+        background: url("images/gray-grad.png");
+        padding: 0px;
+    }
+
+    .widget-element .element-options {
+        background-color: #fff;
+        margin: 0px;
+        padding: 5px 10px 5px 10px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .widget-element .element-options textarea {
+        width: 100%;
+    }
+
+    .widget-element h4, .widget-element h3 {
+        padding: 5px;
+        margin: 0px;
+    }
+
+    #widget-list ul {
+        width: 250px;
+    }
+
+    .ready-to-delete {
+        background-color: #c3cccc;
+    }
+
+    .donation-can-admin-tabs ul.tab-items {
+        width: 100%;
+        overflow: auto;
+        margin: 0px 0px 0px 5px;
+        padding: 0px;
+    }
+
+    .donation-can-admin-tabs ul.tab-items li {
+        float: left;
+
+        margin: 0px;
+        margin-right: 5px;
+
+        padding: 0px;
+    }
+
+    .donation-can-admin-tabs ul.tab-items li a {
+        padding: 5px 10px 5px 10px;
+        display: block;
+    }
+
+    .donation-can-admin-tabs ul.tab-items li a.selected {
+        border-right: 1px solid #dfdfdf;
+        border-top: 1px solid #dfdfdf;
+        border-left: 1px solid #dfdfdf;
+
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+
+        background-color: #F1F1F1;
+
+        color: #333;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .donation-can-admin-tabs .tab-contents {
+        border: 1px solid #dfdfdf;
+        overflow: auto;
+        border-radius: 5px;
+    }
+
+    .donation-can-admin-tabs #widget-structure {
+        padding: 0px 0px 20px 20px;
+    }
+
+    .clean-slate {
+        text-align: center;
+        border: 1px dashed #d1d1d1;
+        padding: 10px;
+        color: #aaa;
+        height: 20px;
+    }
+
+    #widget-style {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .donation-can-css-element {
+        padding: 10px;
+        margin: 10px 10px 0px 10px;
+    }
+
+    .donation-can-css-element textarea, .donation-can-css-element input {
+        width: 100%;
+    }
+
+    .donation-can-css-element input {
+        font-weight: bold;
+    }
+
+    div#add-style-row-button {
+        margin: 20px 0px 10px 20px;
+    }
+
+    input.css-selector {
+        float: left;
+        clear: left;
+
+        margin-right: 150px;
+        width: 100%;
+    }
+
+    .remove-css-row {
+        float: right;
+        clear: right;
+        display: block;
+
+        margin-left: 10px;
+    }
+
+table#donation-can-export-download, table#donation-can-export-download tr {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    border-collapse: collapse;
+}
+
+table#donation-can-export-download th {
+    text-align: left;
+    padding-right: 20px;
+}
+
+table#donation-can-export-download td, table#donation-can-export-download th {
+    padding-bottom: 5px;
+}

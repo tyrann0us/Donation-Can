@@ -1,0 +1,1 @@
+<div class="donation_can_notice"><strong><?php _e("Error: ", "donation_can");?></strong> <?php _e("No donation cause selected for this widget. Check widget settings.", "donation_can");?></div>
