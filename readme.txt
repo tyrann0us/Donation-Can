@@ -89,6 +89,9 @@ If your question wasn't answered here, visit the [official plugin page](http://j
 
 == Upgrade Notice ==
 
+= 1.5.7.2 =
+Bug fix release. Fixes number formatting issues.
+
 = 1.5.7.1 =
 Quick bug fix to 1.5.7.
 
@@ -117,6 +120,9 @@ This is a bug fix release. If you see all your donations and are collecting them
 This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
+
+= 1.5.7.2 =
+* Another quick fix release to 1.5.7
 
 = 1.5.7.1 =
 * Fixed a bug in number formatting.
