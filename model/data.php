@@ -1181,7 +1181,14 @@ function donation_can_number_format($number) {
     }
 
     $decimal_point = __("TRANSLATOR: insert decimal point format here", "donation_can");
+    if ($decimal_point == "TRANSLATOR: insert decimal point format here") {
+        $decimal_point = ".";
+    }
+
     $thousands_separator = __("TRANSLATOR: insert thousands separator here", "donation_can");
+    if ($thousands_separator == "TRANSLATOR: insert thousands separator here") {
+        $thousands_separator = "";
+    }
 
     return number_format($number, $decimals, $decimal_point, $thousands_separator);
 }
