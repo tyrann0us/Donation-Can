@@ -121,6 +121,10 @@ This version contains many of improvements that make Donation Can easier to use.
 
 == Changelog ==
 
+= 1.5.8 =
+* Bug fix: Writing to log used to fail with errors if the log file was a directory. Now fails graciously telling to change it into a text file.
+* Bug fix: Fixed a bug that prevented using commas in CSS styles in style editor.
+
 = 1.5.7.2 =
 * Another quick fix release to 1.5.7
 

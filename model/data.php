@@ -722,11 +722,14 @@ function donation_can_get_style_element_from_data($element) {
 function w2log($msg) {
     $general_settings = donation_can_get_general_settings();
     if ($general_settings["enable_logging"] == true) {
-        // TODO: add instructions for turning logging on
-        $filename = dirname(__FILE__) . "/../log";
+        $filename = WP_PLUGIN_DIR . "/donation-can/log";
 
         if (!is_writable($filename)) {
             die("Can't write to Donation Can log file. Disable logging from settings or make the log file (plugin directory/log) writable to continue.");
+        }
+
+        if (is_dir($filename)) {
+            die("Can't write to Donation Can log file: log file is a directory. Create a text file instead and try again.");
         }
 
         $fd = fopen($filename, "a");

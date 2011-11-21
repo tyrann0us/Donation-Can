@@ -1,2 +1,0 @@
-test-cause	Test Cause	Description for cause	1000	USD			Go back!	email@email.com,email2@email.com	1,5,10	1
-test-cause-2	Test Cause 2	Description for cause	1000	CAD	1	5	Go back!	email@email.com,email2@email.com		0

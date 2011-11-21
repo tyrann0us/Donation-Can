@@ -64,14 +64,14 @@ function donation_can_edit_widget_style_menu() {
 
             $css = html_entity_decode(esc_attr($_POST["widget-style"]));
             $css = stripslashes(str_replace(array("\n","\r","\0"), "", $css));
-            $css = preg_replace('/([{,])(\s*)([^"]+?)\s*:/','$1"$3":',$css);
 
             $css = json_decode($css);
-
-            $css_array = array();
-            foreach ($css as $css_definition) {
-                if (trim($css_definition->selector) != "" || trim($css_definition->css != "")) {
-                    $css_array[$css_definition->selector] = $css_definition->css;
+            if ($css != NULL) {
+                $css_array = array();
+                foreach ($css as $css_definition) {
+                    if (trim($css_definition->selector) != "" || trim($css_definition->css != "")) {
+                        $css_array[$css_definition->selector] = $css_definition->css;
+                    }
                 }
             }
 
