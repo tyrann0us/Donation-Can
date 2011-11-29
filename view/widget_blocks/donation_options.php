@@ -1,7 +1,14 @@
 <div class="donation-options" <?php if ($cause_id == "__all__") { echo "style=\"display:none;\""; } ?>>
 
     <?php if (($donation_sums != null && count($donation_sums) > 0) || $cause_id == "__all__") : ?>
-        <span class="donation-callout"><?php _e("Choose donation amount:", "donation_can"); ?></span>
+        <?php
+        $label = __("Choose donation amount:", "donation_can");
+        if (isset($options["label"]) && strlen(trim($options["label"])) > 0) {
+            $label = $options["label"];
+        }
+        ?>
+
+        <span class="donation-callout"><?php echo $label; ?></span>
 
         <?php if ($element["list-format"] == "buttons") : ?>
 

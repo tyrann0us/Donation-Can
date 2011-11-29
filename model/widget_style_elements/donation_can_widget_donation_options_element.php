@@ -34,7 +34,8 @@ class DonationCanWidgetDonationOptionsElement extends DonationCanWidgetStyleElem
                     "donation_sums" => $widget_params["donation_sums"],
                     "goal" => $widget_params["goal"],
                     "currency" => $widget_params["currency"],
-                    "cause_id" => $widget_params["goal"]["id"]
+                    "cause_id" => $widget_params["goal"]["id"],
+                    "options" => $widget_params
                 )
             );
     }
@@ -44,7 +45,10 @@ class DonationCanWidgetDonationOptionsElement extends DonationCanWidgetStyleElem
     }
 
     function get_widget_options() {
-        return array();
+        return array("label" => array(
+            "label" => __("Title for donation options (leave empty for default):", "donation_can"),
+            "type" => "text"
+        ));
     }
 
 }

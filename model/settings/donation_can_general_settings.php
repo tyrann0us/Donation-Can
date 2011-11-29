@@ -25,11 +25,21 @@ class DonationCanGeneralSettings {
 
     function  __construct($optionsStore) {
         $this->options = $optionsStore;
+
+        // Get existing data
+        $this->load();
     }
 
     function load() {
         if ($this->options != null) {
             $this->general_settings = $this->options->get_option("donation_can_general");
+
+            // If no payment method settings have been saved before, enable
+            // PayPal IPN as it used to be the only payment method until now.
+            if (!isset($this->general_settings["payment_methods"])
+                    || !is_array($this->general_settings["payment_methods"])) {
+                $this->general_settings["payment_methods"] = array("paypal_ipn");
+            }
         } else {
             die("Options store not set");
         }
@@ -50,6 +60,30 @@ class DonationCanGeneralSettings {
     }
 
     // SETTERS
+
+    function disableAllPaymentMethods() {
+        $this->general_settings["payment_methods"] = array();
+    }
+
+    function enablePaymentMethod($methodId) {
+        $methods = $this->general_settings["payment_methods"];
+        if (!$methods) {
+            $methods = array();
+        }
+
+        $methods[$methodId] = true;
+        
+        $this->general_settings["payment_methods"] = $methods;
+    }
+
+    function isPaymentMethodEnabled($methodId) {
+        $methods = $this->general_settings["payment_methods"];
+        if (is_array($methods) && isset($methods[$methodId])) {
+            return $methods[$methodId];
+        }
+
+        return false;
+    }
 
     function setPayPalEmail($email) {
         $this->general_settings["paypal_email"] = $email;
@@ -112,6 +146,10 @@ class DonationCanGeneralSettings {
         $this->general_settings["currency"] = $currency;
     }
 
+    function removeAllDonationOptions() {
+        $this->general_settings["donation_sums"] = array();
+    }
+
     function addDonationOption($sum) {
         if (!isset($this->general_settings["donation_sums"]) || $this->general_settings["donation_sums"] == null) {
             $this->general_settings["donation_sums"] = array();
@@ -131,6 +169,10 @@ class DonationCanGeneralSettings {
 
     function setDebugMode($debug) {
         $this->general_settings["debug_mode"] = $debug;
+    }
+
+    function isDebugEnabled() {
+        return $this->general_settings["debug_mode"];
     }
 
     function setLoggingMode($logging) {
@@ -222,15 +264,28 @@ function donation_can_settings_page() {
         $general_settings["email_template"] = donation_can_get_default_email_template();
     }
 
+    // New OOP version... TODO: not completed yet, still using the two versions side by side
+    $settings = new DonationCanGeneralSettings(donation_can_get_options_handler());
+    $payment_methods = donation_can_get_payment_methods();
+
     $pages = get_pages();
 
     $style_options = array("default" => "Default", "custom" => "Customize");
+
 
     // TODO: add parameter validation to general settings!
 
     // Save general settings
     if ($_POST["edit_settings"] == "Y" && check_admin_referer('donation_can-general_settings')) {
-        $settings = new DonationCanGeneralSettings(donation_can_get_options_handler());
+        // Update payment methods
+        $settings->disableAllPaymentMethods();
+        foreach ($payment_methods as $payment_method) {
+            $method_id = $payment_method->getId();
+            if (isset($_POST[$method_id]) && $_POST[$method_id] == "1") {
+                $settings->enablePaymentMethod($method_id);
+            }
+        }
+
         $settings->setPayPalEmail(esc_attr($_POST["paypal_email"]));
         $settings->setPayPalSandboxEmail(esc_attr($_POST["paypal_sandbox_email"]));
 
@@ -280,6 +335,7 @@ function donation_can_settings_page() {
         $settings->setShowDecimalsForEvenSums(esc_attr($_POST["show_decimals_for_even"]) == "1");
 
         $donation_sum_num = esc_attr($_POST["donation_sum_num"]);
+        $settings->removeAllDonationOptions();
         for ($i = 0; $i < $donation_sum_num; $i++) {
             $sum_value = esc_attr($_POST["donation_sum_" . $i]);
 
@@ -304,7 +360,7 @@ function donation_can_settings_page() {
 
 
     require_donation_can_view('settings_page', array("general_settings" => $general_settings,
-        "pages" => $pages, "style_options" => $style_options));
+        "settings" => $settings, "pages" => $pages, "style_options" => $style_options, "payment_methods" => $payment_methods));
     
 }
 

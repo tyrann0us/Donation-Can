@@ -557,3 +557,65 @@ table#donation-can-export-download th {
 table#donation-can-export-download td, table#donation-can-export-download th {
     padding-bottom: 5px;
 }
+
+.dcan-payment-method-box {
+    background-color: #FFFEEB;
+}
+
+#poststuff .dcan-payment-method-box .inside {
+    background-color: #fff;
+    margin: 0px;
+}
+
+.dcan-payment-method {
+    padding: 10px;
+    margin: 0px -10px 0px -10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.dcan-payment-method-description {
+    margin: 10px 0px 0px 0px;
+    font-size: 8pt;
+}
+
+.dcan-payment-methods-footer {
+    padding: 10px;
+    margin-top: 0px;
+}
+
+.dcan-payment-method-configuration {
+    margin: 5px 0px 0px 0px;
+    padding-bottom: 10px;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+}
+
+.dcan-payment-method-configuration h4 {
+    padding: 0px 0px 10px 10px;
+    font-size: 11pt;
+    font-family: Georgia;
+    font-weight: normal;
+    margin: 10px 0px 0px 0px;
+    border-bottom: 1px solid #dedede;
+}
+
+.dcan-payment-method-configuration .donation_can_notice {
+    margin: 10px;
+}
+
+#sandbox-mode-checkbox {
+    padding: 10px 0px 20px 10px;
+}
+
+div.dc-configure-payment-methods {
+    margin: 10px 0px 0px 0px;
+    border: 1px solid #ddd;
+    background-color: #eee;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+
+div.dc-configure-payment-methods a {
+    margin-left: 2px;
+}

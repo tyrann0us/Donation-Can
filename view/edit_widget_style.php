@@ -156,7 +156,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
                             <div id="widget-contents">
                                 <ul>
-                                    <?php if ($style != null) : ?>
+                                    <?php if ($style != null && count($style["elements"]) > 0) : ?>
                                         <?php $counter = 0; foreach ($style["elements"] as $id => $element) : ?>
                                             <?php $element_object = donation_can_get_style_element_from_data($element); ?>
                                             <?php if ($element_object != null) { echo $element_object->to_string(true, $counter++); } ?>

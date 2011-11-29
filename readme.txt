@@ -117,13 +117,17 @@ This is yet another quick bug fix release that fixes problems with adding offlin
 This is a bug fix release. If you see all your donations and are collecting them just fine, you can safely skip this update.
 
 = 1.5.0 =
-This version contains many of improvements that make Donation Can easier to use.
+This version contains many improvements that make Donation Can easier to use.
 
 == Changelog ==
 
 = 1.5.8 =
+* Added a widget option for customizing the title for donation options.
 * Bug fix: Writing to log used to fail with errors if the log file was a directory. Now fails graciously telling to change it into a text file.
 * Bug fix: Fixed a bug that prevented using commas in CSS styles in style editor.
+* Bug fix: Fixed selecting a cause in "Summary (all causes)" widgets, which was broken in the 1.5.7 update.
+* Bug fix: Resetting donations for a cause caused some future donations to not show when the blog's time zone was different from the server's time zone.
+* Tested compatibility with the JetPack plugin. Everything seems to be working fine now.
 
 = 1.5.7.2 =
 * Another quick fix release to 1.5.7

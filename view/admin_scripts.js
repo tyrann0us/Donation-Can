@@ -516,3 +516,14 @@ function dc_downloadDataDump() {
 
     return false;
 }
+
+function dc_configurePaymentMethod(id, link) {
+    // TODO: change the text of the button... (Show / Hide) 
+    
+    jQuery("#dcan-payment-method-configuration-" + id).toggle(200);
+
+    var parent = jQuery(link).parent();
+    jQuery("a", parent).toggle();
+
+    return false;
+}

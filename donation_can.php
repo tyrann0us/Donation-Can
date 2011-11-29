@@ -30,6 +30,8 @@ require_once("mvc.php");
 
 require_once("model/DonationCanOptions.php");
 require_once("model/DonationCanDataExport.php");
+require_once("model/DonationCanPaymentMethod.php");
+require_once("model/DonationCanPayPalIPN.php");
 require_once("model/data.php");
 
 require_once("model/widgets/widgets.php");
@@ -223,8 +225,14 @@ function donation_can_init(){
             'text_deleteCauseConfirm' => __("Are you sure you want to delete cause '%CAUSE_NAME%'?", "donation_can"),
             'text_resetCauseConfirm' => __("Are you sure you want to reset the donation counter for cause '%CAUSE_NAME%'?", "donation_can")
         ));
+
     }
-    
+
+    // Add payment methods
+    donation_can_add_payment_method("DonationCanPayPalIPN");
+
+    // Let sub plugins do their own initialization
+    do_action("donation_can_extras_init");
 }
 
 function donation_can_add_tinymce_button($buttons) {

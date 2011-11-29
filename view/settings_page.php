@@ -48,31 +48,46 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             <div id="post-body">
                 <div id="post-body-content">
 
-                    <div class="stuffbox">
-                        <h3><?php _e("Payment information", "donation_can");?></h3>
-                        <div class="inside" id="payment-info-div">
-                            <table class="form-table">
-                                <tr>
-                                    <th scope="row" valign="center"><label for="paypal_email"><?php _e("PayPal account email:", "donation_can"); ?></label></th>
-                                    <td valign="center"><input type="text" class="regular-text"  name="paypal_email" value="<?php echo $general_settings["paypal_email"];?>" size="40"/></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" style="padding-top: 10px;">
-                                        <input type="checkbox" name="debug_mode" value="1"
-                                            <?php if ($general_settings["debug_mode"]) { echo "checked"; }?>
-                                            onclick="toggleSandboxEmailField(this);"
-                                        />
-                                        <?php _e("Enable PayPal sandbox mode for testing donations.", "donation_can"); ?>
-                                    </td>
-                                </tr>
-                                <tr id="paypal-sandbox-email-row" <?php if ($general_settings["debug_mode"] != 1) { echo "style=\"display:none;\""; }?>>
-                                    <th scope="row" valign="center"><label for="paypal_sandbox_email"><?php _e("Sandbox test account email:", "donation_can"); ?></label></th>
-                                    <td>
-                                        <input type="text" class="regular-text" name="paypal_sandbox_email" value="<?php echo $general_settings["paypal_sandbox_email"]; ?>" size="40"/><br/>
-                                        <a href="https://developer.paypal.com/" target="_blank"><?php _e("Sign in to PayPal Sandbox to create a test account", "donation_can"); ?></a>
-                                    </td>
-                                </tr>
-                            </table>
+                    <div id="sandbox-mode-checkbox">
+                        <input type="checkbox" name="debug_mode" value="1"
+                            <?php if ($settings->isDebugEnabled()) { echo "checked"; }?>
+                        />
+                        <?php _e("Enable sandbox mode for testing donations.", "donation_can"); ?>
+                    </div>
+
+
+                    <div class="stuffbox dcan-payment-method-box">
+                        <h3><?php _e("Payment methods", "donation_can");?></h3>
+                        <div class="inside" id="payment-method-div">
+
+                            <!-- TODO: implement saving of selected payment methods! -->
+                            <?php foreach ($payment_methods as $payment_method) : ?>
+                            <div class="dcan-payment-method" id="payment-method_<?php echo $payment_method->getId();?>">
+                                <input type="checkbox"
+                                       name="<?php echo $payment_method->getId(); ?>" value="1"
+                                       <?php echo ($settings->isPaymentMethodEnabled($payment_method->getId())) ? "checked" : ""; ?>
+                                />
+                                <?php echo $payment_method->getName(); ?> 
+
+                                <div class="dcan-payment-method-description">
+                                    <?php echo $payment_method->getDescription(); ?>
+                                </div>
+
+                                <div class="dc-configure-payment-methods">
+                                    <a href="#" onclick="return dc_configurePaymentMethod('<?php echo $payment_method->getId();?>', this);"><?php _e("Configure", "donation_can");?></a>
+                                    <a href="#" style="display:none;" onclick="return dc_configurePaymentMethod('<?php echo $payment_method->getId();?>', this);"><?php _e("Hide configuration", "donation_can");?></a>
+
+                                    <div class="dcan-payment-method-configuration" id="dcan-payment-method-configuration-<?php echo $payment_method->getId();?>" style="display: none;">
+                                        <?php echo $payment_method->getSettingsForm($general_settings); ?>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <?php endforeach; ?>
+
+                        </div>
+                        <div class="dcan-payment-methods-footer">
+                            <?php _e("Not seeing your favorite payment methods?", "donation_can"); ?> <a href="http://treehouseapps.com/donation-can#extend"><?php _e("You can buy more payment methods from the Donation Can web site.", "donation_can"); ?></a>
                         </div>
                     </div>
 
@@ -115,7 +130,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Thank you page:", "donation_can");?></th>
                                     <td>
 					<select name="return_page">
-                                            <option value="-1" <?php if ("-1" == $general_settings["return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default (no return link)", "donation_can");?> --</option>
+                                            <option value="-1" <?php if ("-1" == $general_settings["return_page"]) { echo "selected";}?>>-- <?php _e("No return link", "donation_can");?> --</option>
                                             <?php foreach ($pages as $page) : ?>
                                                     <option value="<?php echo $page->ID;?>" <?php if ($page->ID == $general_settings["return_page"]) { echo "selected";}?>><?php echo $page->post_title;?></option>
                                             <?php endforeach; ?>
@@ -126,7 +141,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Payment cancelled page:", "donation_can");?></th>
                                     <td>
 					<select name="cancel_return_page">
-                                            <option value="-1" <?php if ("-1" == $general_settings["cancel_return_page"]) { echo "selected";}?>>-- <?php _e("Use PayPal Default (no return link)", "donation_can");?> --</option>
+                                            <option value="-1" <?php if ("-1" == $general_settings["cancel_return_page"]) { echo "selected";}?>>-- <?php _e("No return link", "donation_can");?> --</option>
                                             <?php foreach ($pages as $page) : ?>
                                                 <option value="<?php echo $page->ID;?>" <?php if ($page->ID == $general_settings["cancel_return_page"]) { echo "selected";}?>><?php echo $page->post_title;?></option>
                                             <?php endforeach; ?>
@@ -137,7 +152,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <th scope="row" valign="center"><?php _e("Text for continue button:", "donation_can");?></th>
                                     <td>
 					<input type="text" class="regular-text" name="continue_button_text" value="<?php echo $general_settings["continue_button_text"];?>" size="40"/>
-					<br/><span class="description"><?php _e("Applies when thank you page URL is set to something else than 'Use Paypal Default'.", "donation_can");?></span>
+					<br/><span class="description"><?php _e("Applies when thank you page URL is set to something else than 'No return link'.", "donation_can");?></span>
                                     </td>
                                 </tr>
 
@@ -161,7 +176,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                 <tr valign="top">
                                     <td colspan="2" scope="row" valign="center">
                                         <input type="checkbox" name="subtract_fees" value="1" <?php if ($general_settings["subtract_paypal_fees"]) { echo "checked"; }?>/>
-                                        <label for="subtract_fees"><?php _e("Subtract PayPal fees from donation amounts shown to site visitors.", "donation_can");?></label>
+                                        <label for="subtract_fees"><?php _e("Subtract payment provider's fees from donation amounts shown to site visitors.", "donation_can");?></label>
                                     </td>
                                 </tr>
 
@@ -184,86 +199,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                     </div>
 
                     <div class="stuffbox">
-                        <h3><?php _e("PayPal checkout page settings", "donation_can");?></h3>
-                        <div class="inside" id="payment-info-div">
-
-                            <?php
-                            $options = get_option("donation_can_general");
-                            if ($options != null && $options["debug_mode"]) :
-                            ?>
-                                <div class='donation_can_notice'><?php _e("Customizations made to the PayPal checkout page are not visible in PayPal sandbox. To test the changes, turn off sandbox mode.", "donation_can");?></div>
-                            <?php endif; ?>
-
-                            <table class="form-table">
-                                <tr valign="top">
-                                    <th scope="row" valign="center"><?php _e("Business logo (optional):", "donation_can");?></th>
-                                    <td>
-                                        <input type="text" class="regular-text" name="logo_on_paypal_page" value="<?php echo $general_settings["logo_on_paypal_page"];?>" size="40"/>
-                                        <a href="#" class="button" title="Upload image" onclick="return uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
-
-                                        <br/><span class="description">(<?php _e("max size: 150 x 150 px", "donation_can");?>)</span>
-                                    </td>
-                                </tr>
-                                <tr valign="top">
-                                    <th scope="row" valign="center"><?php _e("Header image (optional):", "donation_can");?></th>
-                                    <td>
-                                        <input type="text" class="regular-text" name="header_on_paypal_page" value="<?php echo $general_settings["header_on_paypal_page"];?>" size="40"/>
-                                        <a href="#" class="button" title="Upload image" onclick="return uploadImage(this);"><?php _e("Upload image", "donation_can"); ?></a>
-                                        <br/><span class="description">(<?php _e("max size: 750 x 90 px", "donation_can");?>)</span>
-                                    </td>
-                                </tr>
-                                <tr valign="top">
-                                    <th scope="row" valign="center"><?php _e("Background color:", "donation_can");?></th>
-                                    <td>
-                                        <input type="text" class="regular-text" name="bg_on_paypal_page" value="<?php echo $general_settings["bg_on_paypal_page"];?>" size="40"/>
-                                        <br/><span class="description">(<?php _e("A six digit HTML hex value (e.g. FF0000 for red)", "donation_can");?>)</span>
-                                    </td>
-                                </tr>
-                                <tr valign="top">
-                                    <th scope="row" valign="center"><?php _e("Header background color:", "donation_can");?></th>
-                                    <td>
-                                        <input type="text" class="regular-text" name="header_bg_on_paypal_page" value="<?php echo $general_settings["header_bg_on_paypal_page"];?>" size="40"/>
-                                        <br/><span class="description">(<?php _e("A six digit HTML hex value (e.g. FF0000 for red)", "donation_can");?>)</span>
-                                    </td>
-                                </tr>
-                                <tr valign="top">
-                                    <th scope="row" valign="center"><?php _e("Header border color:", "donation_can");?></th>
-                                    <td>
-                                        <input type="text" class="regular-text" name="header_border_on_paypal_page" value="<?php echo $general_settings["header_border_on_paypal_page"];?>" size="40"/>
-                                        <br/><span class="description">(<?php _e("A six digit HTML hex value (e.g. FF0000 for red)", "donation_can");?>)</span>
-                                    </td>
-                                </tr>
-
-                                <tr valign="top">
-                                    <td scope="row" valign="center" colspan="2">
-                                        <input type="checkbox" name="ask_for_note" value="1" <?php if ($general_settings["ask_for_note"] == '1') { echo "checked"; }?>
-                                               onclick="togglePayPalNoteFields(this);">
-                                        <label for="ask_for_note"><?php _e("Ask the visitor leave a note with her donation.", "donation_can");?></label>
-
-                                    </td>
-                                </tr>
-                                <tr valign="top" id="paypal-note-field-row" <?php if ($general_settings["ask_for_note"] != 1) { echo "style=\"display:none;\""; }?>>
-                                    <th scope="row" valign="center"><?php _e("Label for the note field:", "donation_can");?></th>
-                                    <td>
-                                        <input type="text" class="regular-text" name="note_field_label" value="<?php echo $general_settings["note_field_label"];?>" size="40"/>
-                                    </td>
-        			</tr>
-                                <tr valign="top">
-                                    <th scope="row" valign="center"><?php _e("Ask for shipping address:", "donation_can");?></th>
-                                    <td>
-                                        <select name="require_shipping">
-                                            <option value="0" <?php if ($general_settings["require_shipping"] == 0) { echo "selected"; }?>><?php _e("Prompt for an address, but do not require one.", "donation_can");?></option>
-                                            <option value="1" <?php if ($general_settings["require_shipping"] == 1) { echo "selected"; }?>><?php _e("Do not prompt for an address.", "donation_can"); ?></option>
-                                            <option value="2" <?php if ($general_settings["require_shipping"] == 2) { echo "selected"; }?>><?php _e("Prompt for an address, and require one.", "donation_can"); ?></option>
-                                        </select>
-                                    </td>
-        			</tr>
-
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="stuffbox">
                         <h3><?php _e("Email notification settings", "donation_can");?></h3>
                         <div class="inside" id="email-settings-div">
                             <div class="donation_can_notice">
@@ -279,7 +214,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                                     <li><code>#FEE#</code> <?php _e("PayPal fee.", "donation_can");?></li>
                                     <li><code>#CAUSE_NAME#</code> <?php _e("Name of the cause.", "donation_can");?></li>
                                     <li><code>#CAUSE_CODE#</code> <?php _e("ID of the cause.", "donation_can");?></li>
-                                    <li><code>#TRANSACTION_ID#</code> <?php _e("Unique ID for the donation, generated by <strong>PayPal</strong>.", "donation_can");?></li>
+                                    <li><code>#TRANSACTION_ID#</code> <?php _e("Unique ID for the donation, generated by <strong>payment provider</strong>.", "donation_can");?></li>
                                     <li><code>#ITEM_NUMBER#</code> <?php _e("Unique ID for the donation, generated by Donation Can.", "donation_can");?></li>
                                     <li><code>#DONATION_TIME#</code> <?php _e("Date and time of donation.", "donation_can");?></li>
                                 </ul>

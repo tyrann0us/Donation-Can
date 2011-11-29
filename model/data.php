@@ -390,7 +390,7 @@ function donation_can_reset_goal($goal_id) {
         $goal = $goals[$goal_id];
 
         // Set the current time stamp as reset time
-        $goal["reset_after_date"] = time();
+        $goal["reset_after_date"] = current_time('timestamp');
 
         $goals[$goal_id] = $goal;
         update_option("donation_can_causes", $goals);
@@ -669,7 +669,7 @@ function donation_can_create_cause($post, $unique_id, $id = -1, $check_errors = 
 }
 
 function donation_can_create_item_number($cause_id) {
-    return $cause_id . "-" . time();
+    return $cause_id . "-" . current_time('timestamp');
 }
 
 function donation_can_get_style_element_from_data($element) {
@@ -780,6 +780,11 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
     return $data;
 }
 
+function donation_can_get_selected_payment_method($post_data) {
+    // TODO: implement!
+    return new DonationCanPayPalIPN();
+}
+
 function donation_can_process_start_donation($wp) {
     global $wpdb;
 
@@ -800,249 +805,47 @@ function donation_can_process_start_donation($wp) {
     // Right now, we only support PayPal, but this method can be extended for
     // different payment providers if needed.
 
-    $general_settings = donation_can_get_general_settings();
-
-    // Generate the URL to redirect the payment to
-    $action_url = "https://www.paypal.com/cgi-bin/webscr";
-    if ($general_settings["debug_mode"]) {
-        $action_url = "https://www.sandbox.paypal.com/cgi-bin/webscr";
+    $payment_method = donation_can_get_selected_payment_method($_POST);
+    if (!$payment_method) {
+        w2log("Payment method not found");
+        die("No payment method defined.");
     }
-
-    global $wp_rewrite;
-    $notify_url = "donation_can_ipn/paypal/";
-    if ($wp_rewrite->using_index_permalinks()) {
-        $notify_url = "index.php/" . $notify_url;
-    }
-    $notify_url = get_bloginfo("url") . "/" . $notify_url;
 
     // Generate item number unique to this donation so we can use it to track
     // the rest of the process
     $item_number = donation_can_create_item_number($cause_id);
 
-    // Pick the right paypal email
-    $paypal_email = donation_can_get_paypal_email();
-
-    // Generate parameters to post
-    $paypal_args = array(
-        "business" => $paypal_email,
-        "item_name" => apply_filters('donation_can_item_name', $cause['name']),
-        "item_number" => $item_number,
-        "cmd" => "_donations",
-        "notify_url" => $notify_url,
-        "currency_code" => donation_can_get_currency_for_goal($cause, false),
-        "no_shipping" => $general_settings["require_shipping"],
-        "no_note" => ($general_settings["ask_for_note"] == "0") ? "1" : "0",
-        "amount" => $amount,
-        "charset" => "utf-8",
-
-        // Customization
-        "cpp_payflow_color" => $general_settings["bg_on_paypal_page"],
-        "cpp_headerback_color" => $general_settings["header_bg_on_paypal_page"],
-        "cpp_headerborder_color" => $general_settings["header_border_on_paypal_page"],
-        "cn" => $general_settings["note_field_label"]
-    );
-
-    // Custom logo (add if set)
-    if ($general_settings["logo_on_paypal_page"] != "") {
-        $paypal_args["image_url"] = $general_settings["logo_on_paypal_page"];
-    }
-
-    if ($general_settings["header_on_paypal_page"] != "") {
-        $paypal_args["cpp_header_image"] = $general_settings["header_on_paypal_page"];
-    }
-
-    // Return pages (add if set)
-    $return_page = $general_settings["return_page"];
-    if ($cause["return_page"] != "" && $cause["return_page"] != "-1") {
-        $return_page = $cause["return_page"];
-    }
-
-    $continue_button_text = $general_settings["continue_button_text"];
-    if ($cause["continue_button_text"] != "" && $cause["continue_button_text"] != "-1") {
-        $continue_button_text = $cause["continue_button_text"];
-    }
-            
-    if ($return_page != "" && $return_page != "-1") {
-        $return_page_url = get_permalink($return_page);
-
-        $paypal_args["cbt"] = $continue_button_text;
-        $paypal_args["return"] = $return_page_url;
-    }
-
-    $cancel_return_page = $general_settings["cancel_return_page"];
-    if ($cause["cancel_return_page"] != "" && $cause["cancel_return_page"] != "-1") {
-        $cancel_return_page = $cause["cancel_return_page"];
-    }
-                
-    if ($cancel_return_page != "" && $cancel_return_page != "-1") {
-        $cancel_return_page_url = get_permalink($cancel_return_page);
-        
-        $paypal_args["cancel_return"] = $cancel_return_page_url;
-    }
-
-    w2log("Donation started to " . $cause_id . " - Item Number: " . $item_number);
-
     donation_can_insert_donation($item_number, $cause_id, 'dc_started', $amount, $anonymous);
+    w2log("Inserted to database. Moving control to payment method handler.");
 
-    w2log("Inserted to database. Redirecting to payment provider.");
-
-    // Output the PayPal form and submit
-    // TODO: move to a view?
-    echo "<html><body onload=\"document.getElementById('paypal_form').submit();\">";
-
-    echo "<form id=\"paypal_form\" action=\"" . $action_url . "\" method=\"POST\">";
-
-    foreach ($paypal_args as $key => $value) {
-        echo "<input type=\"hidden\" name=\"" . $key . "\" value=\"" . $value . "\"/>";
-    }
-
-    echo "</form>";
-    echo "</body></html>";
-
-    // Skip rendering the rest of the blog to save some time
-    die();
+    $payment_method->startDonation($cause, $item_number, $amount);
 }
 
 
-/**
- * Processes PayPal IPN notification (= new version of callback.php)
- */
-function donation_can_process_paypal_ipn($wp) {
-    global $wpdb;
-    $general_settings = donation_can_get_general_settings();
-
+function donation_can_process_payment_callback($wp) {
     w2log("IPN notification received");
 
-    // Send a request back to PayPal to confirm the notification
-    $req = 'cmd=_notify-validate';
+    // TODO: how do we know the payment method??? --> id needs to be passed in url
+    $payment_method_id = "paypal_ipn"; // TODO: how do we get this here?
 
-    foreach ($_POST as $key => $value) {
-        $value = urlencode(stripslashes($value));
-        $req .= "&$key=$value";
+    $payment_methods = donation_can_get_payment_methods();
+    if (isset($payment_methods[$payment_method_id])) {
+        $payment_method = $payment_methods[$payment_method_id];
+    }
+    if (!$payment_method) {
+        w2log("Couldn't parse payment method for callback.");
+        die();
     }
 
-    $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
-    $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-    $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
+    $payment_method->processCallback($_POST);
+}
 
-    // Use Sandbox version if debug mode is on
-    $url = "ssl://www.paypal.com";
-    if ($general_settings["debug_mode"]) {
-        $url = "ssl://www.sandbox.paypal.com";
-    }
-
-    $fp = fsockopen ($url, 443, $errno, $errstr, 30);
-
-    // Assign posted variables to data array for saving to database
-    $payer_name = stripslashes($_POST['first_name']);
-    $payer_lastname =  stripslashes($_POST['last_name']);
-
-    $data = array(
-        "item_number" => $_POST["item_number"],
-        "cause_code" => "",
-        "payment_status" => $_POST['payment_status'],
-        "amount" => $_POST['mc_gross'],
-        "transaction_id" => $_POST['txn_id'],
-        "payer_email" => $_POST['payer_email'],
-        "payer_name" => $payer_name,
-        "payer_lastname" => $payer_lastname,
-        "fee" => $_POST['mc_fee'],
-        "time" => current_time('mysql')
-    );
-
-    if ($general_settings["debug_mode"]) {
-        $data["sandbox"] = 1;
-    }
-
-    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s");
-
-    foreach ($data as $k => $v) {
-        w2log("$k: $v");
-    }
-
-    if (!$fp) {
-        w2log("Http error, can't connect to " + $url);
-    } else {
-	fputs ($fp, $header . $req);
-	while (!feof($fp)) {
-            $res = fgets ($fp, 1024);
-            if (strcmp ($res, "VERIFIED") == 0) {
-                w2log("Transaction verified --> ");
-                $table_name = donation_can_get_table_name($wpdb);
-                w2log("Saving donation to $table_name");
-
-                // Check if the transaction has already been saved
-                // and update if payment_status has changed
-                $saved_transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE item_number = %s", $data["item_number"]));
-
-                if ($saved_transaction == null) {
-                    w2log("Error, no transaction found with item_number " . $data["item_number"]);
-                } else {                    
-                    // TODO Depending on the original status, do different updates...
-                    $data["cause_code"] = $saved_transaction->cause_code;
-
-                    if ($data["payment_status"] == "Refunded") {
-                        // Refunds send back the change in the donation amount
-                        $change = intval($data["amount"]);
-                        $fee_change = intval($data["fee"]);
-
-                        $data["amount"] = $saved_transaction->amount + $change;
-                        $data["fee"] = $saved_transaction->fee + $fee_change;
-                    }
-
-                    $wpdb->update($table_name,
-                            $data,
-                            array("item_number" => $data["item_number"]),
-                            $types,
-                            "%s");                
-                }
-
-                w2log("OK");
-
-                // Try to notify via email
-                $goals = get_option("donation_can_causes");
-                $goal = $goals[$data["cause_code"]];
-
-                $emails = split(",", $general_settings["notify_email"]);
-                $goal_emails = split(",", $goal["notify_email"]);
-
-                if (!empty($emails) || !empty($goal_emails)) {
-                    $all_emails = array_merge($emails, $goal_emails);
-
-                    //TODO tässä välissä voisi varmistella vielä, että kaikki on oikein formatoitu...
-                    $to = join(",", $all_emails);
-                    w2log("Sending email to: " . $to);
-
-                    $message = $general_settings["email_template"];
-                    if ($message == null || $message == "") {
-                        // Default version
-                        $message = donation_can_get_default_email_template();
-                    }
-
-                    if ($data["payment_status"] == "Completed") {
-                        $subject = '[Donation Can] New Donation to ' . $goal["name"];
-                        donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data);
-                    } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
-                        $subject = '[Donation Can] Pending Donation to ' . $goal["name"];
-                        donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data);
-                    }
-                }
-
-                // Send a receipt to donor (only if completed)
-                if ($data["payment_status"] == "Completed") {
-                    if ($general_settings["send_receipt"]) {
-                        donation_can_send_receipt($data, $goal);
-                    }
-                }
-            } else if (strcmp ($res, "INVALID") == 0) {
-                // TODO log more info on this into the db?
-                w2log("Invalid");
-            } else {
-                //w2log("Unknown response: " . $res);
-            }
-	}
-	fclose ($fp);
-    }
+/**
+ * Processes a PayPal IPN notification. There will be different callback URL
+ * handlers for other payment
+ */
+function donation_can_process_paypal_ipn($wp) {
+    // TODO: remove...
 }
 
 function donation_can_send_receipt($donation_data, $cause) {
@@ -1196,4 +999,30 @@ function donation_can_number_format($number) {
     return number_format($number, $decimals, $decimal_point, $thousands_separator);
 }
 
+function donation_can_add_payment_method($class_name) {
+    global $donation_can_payment_methods;
+    if ($donation_can_payment_methods == null) {
+        $donation_can_payment_methods = array();
+    }
+    
+    $donation_can_payment_methods []= $class_name;
+}
+
+function donation_can_get_payment_methods() {
+    global $donation_can_payment_methods;
+    if ($donation_can_payment_methods == null) {
+        $donation_can_payment_methods = array();
+    }
+
+    $methods = array();
+
+    foreach ($donation_can_payment_methods as $class_name) {
+        // TODO error handling?
+        $object = new $class_name;
+        $methods[$object->getSortOrder()] = $object;
+    }
+
+    ksort($methods);
+    return $methods;
+}
 ?>

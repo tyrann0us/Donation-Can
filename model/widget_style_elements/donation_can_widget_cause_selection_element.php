@@ -29,7 +29,7 @@ class DonationCanWidgetCauseSelectionElement extends DonationCanWidgetStyleEleme
 
     function render_view($widget_params) {
         // Only show cause selection if the summary option is selected
-        if ($widget_params["goal"]["id"] == "__all__") {            
+        if ($widget_params["goal_id"] == "__all__") {
             $causes = donation_can_get_goals();
 
             require_donation_can_view('widget_blocks/cause_selection', array("element" => $this->element_data, "causes" => $causes, "options" => $widget_params));
@@ -43,7 +43,7 @@ class DonationCanWidgetCauseSelectionElement extends DonationCanWidgetStyleEleme
     function get_widget_options() {
         return array("select_cause_label" => array(
             "type" => "text",
-            "label" => __("Caption for cause selection:", "donation_can"),
+            "label" => __("Title for cause selection:", "donation_can"),
             "default" => __("Select cause", "donation_can")
         ));
     }

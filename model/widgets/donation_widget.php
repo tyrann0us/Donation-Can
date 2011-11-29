@@ -112,7 +112,7 @@ class DonationWidget extends WP_Widget {
                 
                 $donations = array();
 
-                foreach ($goals as $cause_id => $goal) {
+                foreach ($goals as $cause_id => $cause) {
                     $donation_tmp = donation_can_get_donations(0, $num_donations, $cause_id);
                     $donations = array_merge($donations, $donation_tmp);
                 }
