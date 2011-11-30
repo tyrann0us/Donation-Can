@@ -141,7 +141,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                             _e("Offline", "donation_can");                             
                         } else {
                             $payment_method = donation_can_get_payment_method_by_id($donation->payment_method);
-                            if ($payment_metho) {
+                            if ($payment_method) {
                                 echo $payment_method->getName();
                             }
                         } 
