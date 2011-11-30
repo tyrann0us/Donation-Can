@@ -134,7 +134,6 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
     }
 
     function processCallback() {
-        global $wpdb;
         $general_settings = donation_can_get_general_settings();
 
         // TODO: write received params to log

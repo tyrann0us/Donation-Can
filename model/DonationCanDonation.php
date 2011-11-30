@@ -6,17 +6,17 @@ define('DONATION_STATUS_REFUNDED', 10);
 
 class DonationCanDonation {
 
-    private $item_number;
-    private $cause_code;
-    private $transaction_id;
-    private $status;
-    private $amount;
-    private $fee;
-    private $payer_email;
-    private $payer_first_name;
-    private $payer_last_name;
-    private $mysql_time;
-    private $sandbox;
+    var $item_number;
+    var $cause_code;
+    var $transaction_id;
+    var $status;
+    var $amount;
+    var $fee;
+    var $payer_email;
+    var $payer_first_name;
+    var $payer_last_name;
+    var $mysql_time;
+    var $sandbox;
 
     /**
      *

@@ -45,6 +45,8 @@ abstract class DonationCanPaymentMethod {
      * @param DonationCanDonation $donation
      */
     function saveDonation($donation) {
+        global $wpdb;
+
         $table_name = donation_can_get_table_name($wpdb);
         w2log("Updating donation to $table_name");
 
