@@ -98,21 +98,24 @@ abstract class DonationCanPaymentMethod {
                     $send_to []= $email;
                 }
             }
-            $to = join(",", $send_to);
-            w2log("Sending email to: " . $to);
 
-            $message = $general_settings["email_template"];
-            if ($message == null || $message == "") {
-                // Default version
-                $message = donation_can_get_default_email_template();
-            }
+            if (!is_empty($send_to)) {
+                $to = join(",", $send_to);
+                w2log("Sending email to: " . $to);
 
-            if ($data["payment_status"] == "Completed") {
-                $subject = '[Donation Can] New Donation to ' . $goal["name"];
-                donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
-            } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
-                $subject = '[Donation Can] Pending Donation to ' . $goal["name"];
-                donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
+                $message = $general_settings["email_template"];
+                if ($message == null || $message == "") {
+                    // Default version
+                    $message = donation_can_get_default_email_template();
+                }
+
+                if ($data["payment_status"] == "Completed") {
+                    $subject = '[Donation Can] New Donation to ' . $goal["name"];
+                    donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
+                } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
+                    $subject = '[Donation Can] Pending Donation to ' . $goal["name"];
+                    donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
+                }
             }
         }
 

@@ -23,7 +23,7 @@ function donation_can_get_table_name($wpdb) {
 }
 
 function donation_can_get_current_db_version() {
-    return "7.0";
+    return "8.0";
 }
 
 function donation_can_get_current_create_table_row() {
@@ -37,6 +37,7 @@ function donation_can_get_current_create_table_row() {
         "item_number" => "VARCHAR(128) NOT NULL",
         "transaction_id" => "VARCHAR(255) NOT NULL",
         "payment_status" => "VARCHAR(255) NOT NULL",
+        "payment_method" => "VARCHAR(64) DEFAULT 'paypal_ipn' NOT NULL",
         "time timestamp" => "NOT NULL",
         "payer_email" => "VARCHAR(128) NOT NULL",
         "payer_name" => "VARCHAR(255) NOT NULL",
@@ -740,7 +741,8 @@ function w2log($msg) {
 }
 
 function donation_can_insert_donation($item_number, $cause_code, $status, $amount, $anonymous,
-        $time = "", $fee = 0, $payer_email = "", $payer_name = "", $payer_lastname = "", $transaction_id = "", $offline = 0) {
+        $time = "", $fee = 0, $payer_email = "", $payer_name = "", $payer_lastname = "", $transaction_id = "", $offline = 0,
+        $payment_method = "offline") {
     global $wpdb;
 
     if ($time == "") {
@@ -760,7 +762,8 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
         "fee" => $fee,
         "anonymous" => $anonymous ? 1 : 0,
         "time" => $time,
-        "offline" => $offline ? 1 : 0
+        "offline" => $offline ? 1 : 0,
+        "payment_method" => $payment_method
     );
 
     if ($general_settings["debug_mode"]) {
@@ -770,7 +773,7 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
     // Let sub plugins add their own fields if necessary
     $data = apply_filters("donation_can_transaction_data", $data);
 
-    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s", "%s", "%d");
+    $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s", "%s", "%d", "%s");
     $types = apply_filters("donation_can_transaction_types", $types);
 
     $table_name = donation_can_get_table_name($wpdb);
@@ -815,7 +818,8 @@ function donation_can_process_start_donation($wp) {
     // the rest of the process
     $item_number = donation_can_create_item_number($cause_id);
 
-    donation_can_insert_donation($item_number, $cause_id, 'dc_started', $amount, $anonymous);
+    donation_can_insert_donation($item_number, $cause_id, 'dc_started', $amount, $anonymous,
+            "", 0, "", "", "", "", 0, $payment_method->getId());
     w2log("Inserted to database. Moving control to payment method handler.");
 
     $payment_method->startDonation($cause, $item_number, $amount);
@@ -1027,5 +1031,15 @@ function donation_can_get_payment_methods() {
 
     ksort($methods);
     return $methods;
+}
+
+function donation_can_get_payment_method_by_id($id) {
+    $methods = donation_can_get_payment_methods();
+    foreach ($methods as $m_id => $method) {
+        if ($method->getId() == $id) {
+            return $method;
+        }
+    }
+    return null;
 }
 ?>
