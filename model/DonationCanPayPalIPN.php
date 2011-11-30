@@ -169,6 +169,8 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
 
                     $status = $this->convertStatusCodeToStatus($_POST["payment_status"]);
 
+                    w2log("Status: $status");
+
                     $donation = new DonationCanDonation($_POST["item_number"], $_POST["txn_id"], "",
                             $status, $_POST["mc_gross"], $_POST["mc_fee"], $_POST["payer_email"],
                             stripslashes($_POST["first_name"]), stripslashes($_POST["last_name"]),

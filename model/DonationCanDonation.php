@@ -16,6 +16,7 @@ class DonationCanDonation {
     private $payer_first_name;
     private $payer_last_name;
     private $mysql_time;
+    private $sandbox;
 
     /**
      *
@@ -77,6 +78,10 @@ class DonationCanDonation {
         return $this->fee;
     }
 
+    function setSandbox($value) {
+        $this->sandbox = $value;
+    }
+
     function getDataAsArray() {
         $data = array(
             "item_number" => $this->item_number,
@@ -88,7 +93,8 @@ class DonationCanDonation {
             "payer_lastname" => $this->payer_last_name,
             "cause_code" => $this->cause_code,
             "amount" => $this->amount,
-            "fee" => $this->fee
+            "fee" => $this->fee,
+            "sandbox" => $this->sandbox ? 1 : 0
         );
         $types = array(
             "%s",
@@ -100,7 +106,8 @@ class DonationCanDonation {
             "%s",
             "%s",
             "%f",
-            "%f"
+            "%f",
+            "%d"
         );
 
         // Write to log for saving
