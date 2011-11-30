@@ -30,10 +30,11 @@ class DonationCanDonation {
      * @param string $payer_last_name
      * @param string $mysql_time
      */
-    function __construct($item_number, $transaction_id, $status,
+    function __construct($item_number, $transaction_id, $status, $cause_code,
             $amount, $fee, $payer_email, $payer_first_name, $payer_last_name, $mysql_time) {
         
         // Save the data
+        $this->cause_code = $cause_code;
         $this->item_number = $item_number;
         $this->transaction_id = $transaction_id;
         $this->amount = $amount;

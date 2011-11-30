@@ -92,7 +92,13 @@ abstract class DonationCanPaymentMethod {
             $all_emails = array_merge($emails, $goal_emails);
 
             //TODO tässä välissä voisi varmistella vielä, että kaikki on oikein formatoitu...
-            $to = join(",", $all_emails);
+            $send_to = array();
+            foreach ($emails as $email) {
+                if (is_email($email)) {
+                    $send_to []= $email;
+                }
+            }
+            $to = join(",", $send_to);
             w2log("Sending email to: " . $to);
 
             $message = $general_settings["email_template"];
