@@ -40,50 +40,46 @@ abstract class DonationCanPaymentMethod {
     /**
      * Common code for saving donations from payment methods.
      * 
-     * @param <type> $donation 
+     * @param DonationCanDonation $donation
      */
     function saveDonation($donation) {
-        /*        $types = array('%s', '%s', '%s', "%f", "%s", "%s", "%s", "%s", "%f", "%s");
-
-        foreach ($data as $k => $v) {
-            w2log("$k: $v");
-        }*/
-
-
         $table_name = donation_can_get_table_name($wpdb);
-        w2log("Saving donation to $table_name");
+        w2log("Updating donation to $table_name");
 
         // Check if the transaction has already been saved
         // and update if payment_status has changed
-        $saved_transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE item_number = %s", $data["item_number"]));
+        $saved_transaction = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE item_number = %s", $donation->getItemNumber()));
 
         if ($saved_transaction == null) {
-            w2log("Error, no transaction found with item_number " . $data["item_number"]);
-        } else {
-            // TODO Depending on the original status, do different updates...
-            $data["cause_code"] = $saved_transaction->cause_code;
-
-            if ($data["payment_status"] == "Refunded") {
-                // Refunds send back the change in the donation amount
-                $change = intval($data["amount"]);
-                $fee_change = intval($data["fee"]);
-
-                $data["amount"] = $saved_transaction->amount + $change;
-                $data["fee"] = $saved_transaction->fee + $fee_change;
-            }
-
-            $wpdb->update($table_name,
-                    $data,
-                    array("item_number" => $data["item_number"]),
-                    $types,
-                    "%s");
+            w2log("Error, no transaction found with item_number " . $donation->getItemNumber());
+            return;
         }
+
+        // TODO Depending on the original status, do different updates...
+        $donation->setCauseCode($saved_transaction->cause_code);
+
+        if ($donation->isRefund()) {
+            // Refunds send back the change in the donation amount
+            $change = floatval($donation->getAmount());
+            $fee_change = floatval($donation->getFee());
+
+            $donation->setAmount($saved_transaction->amount + $change);
+            $donation->setFee($saved_transaction->fee + $fee_change);
+        }
+
+        // Update the database row
+        $data = $donation->getDataAsArray();
+        $wpdb->update($table_name,
+                $data["data"],
+                array("item_number" => $donation->getItemNumber()),
+                $data["types"],
+                "%s");
 
         w2log("OK");
 
         // Try to notify via email
         $goals = get_option("donation_can_causes");
-        $goal = $goals[$data["cause_code"]];
+        $goal = $goals[$donation->getCauseCode()];
 
         $emails = split(",", $general_settings["notify_email"]);
         $goal_emails = split(",", $goal["notify_email"]);
@@ -103,17 +99,17 @@ abstract class DonationCanPaymentMethod {
 
             if ($data["payment_status"] == "Completed") {
                 $subject = '[Donation Can] New Donation to ' . $goal["name"];
-                donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data);
+                donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
             } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
                 $subject = '[Donation Can] Pending Donation to ' . $goal["name"];
-                donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data);
+                donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
             }
         }
 
         // Send a receipt to donor (only if completed)
         if ($data["payment_status"] == "Completed") {
             if ($general_settings["send_receipt"]) {
-                donation_can_send_receipt($data, $goal);
+                donation_can_send_receipt($data["data"], $goal);
             }
         }
     }

@@ -1,4 +1,25 @@
 <?php
+/*
+Copyright (c) 2009-2011, Jarkko Laine.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+/**
+ * The payment method class for default PayPal payments.
+ */
 class DonationCanPayPalIPN extends DonationCanPaymentMethod {
 
     function getSortOrder() {
@@ -96,11 +117,9 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
 
         w2log("Donation started to " . $cause["id"] . " - Item Number: " . $item_number);
 
-
         // Output the PayPal form and submit
         // TODO: move to a view?
         echo "<html><body onload=\"document.getElementById('paypal_form').submit();\">";
-
         echo "<form id=\"paypal_form\" action=\"" . $action_url . "\" method=\"POST\">";
 
         foreach ($paypal_args as $key => $value) {
@@ -148,8 +167,10 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
                 if (strcmp ($res, "VERIFIED") == 0) {
                     w2log("Transaction verified --> ");
 
+                    $status = $this->convertStatusCodeToStatus($_POST["payment_status"]);
+
                     $donation = new DonationCanDonation($_POST["item_number"], $_POST["txn_id"], "",
-                            $_POST["payment_status"], $_POST["mc_gross"], $_POST["mc_fee"], $_POST["payer_email"],
+                            $status, $_POST["mc_gross"], $_POST["mc_fee"], $_POST["payer_email"],
                             stripslashes($_POST["first_name"]), stripslashes($_POST["last_name"]),
                             current_time('mysql'));
 
@@ -157,8 +178,8 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
                         $donation->setSandbox(true);
                     }
 
+                    // Let the super class save the donation (create or update)
                     $this->saveDonation($donation);
-
                 } else if (strcmp ($res, "INVALID") == 0) {
                     // TODO log more info on this into the db?
                     w2log("Invalid");
@@ -167,6 +188,22 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
                 }
             }
             fclose ($fp);
+        }
+    }
+
+    function convertStatusCodeToStatus($status) {
+        switch ($status) {
+            case "Completed":
+                return DONATION_STATUS_COMPLETED;
+
+            case "Pending":
+                return DONATION_STATUS_PENDING;
+
+            case "Refunded":
+                return DONATION_STATUS_REFUNDED;
+
+            default:
+                return DONATION_STATUS_UNKNOWN;
         }
     }
 
