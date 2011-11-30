@@ -823,12 +823,18 @@ function donation_can_process_start_donation($wp) {
 
 
 function donation_can_process_payment_callback($wp, $payment_method_id) {
-    w2log("IPN notification received");
+    w2log("IPN notification received for payment method: " . $payment_method_id);
 
     $payment_methods = donation_can_get_payment_methods();
-    if (isset($payment_methods[$payment_method_id])) {
-        $payment_method = $payment_methods[$payment_method_id];
+
+    $payment_method = NULL;
+    foreach ($payment_methods as $id => $method) {
+        if ($method->getId() == $payment_method_id) {
+            $payment_method = $method;
+            break;
+        }
     }
+
     if (!$payment_method) {
         w2log("Couldn't parse payment method for callback.");
         die();
