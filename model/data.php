@@ -822,11 +822,8 @@ function donation_can_process_start_donation($wp) {
 }
 
 
-function donation_can_process_payment_callback($wp) {
+function donation_can_process_payment_callback($wp, $payment_method_id) {
     w2log("IPN notification received");
-
-    // TODO: how do we know the payment method??? --> id needs to be passed in url
-    $payment_method_id = "paypal_ipn"; // TODO: how do we get this here?
 
     $payment_methods = donation_can_get_payment_methods();
     if (isset($payment_methods[$payment_method_id])) {

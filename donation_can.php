@@ -131,7 +131,7 @@ function donation_can_parse_request($wp) {
                 break;
 
             case 'paypal':
-                donation_can_process_paypal_ipn($wp);
+                donation_can_process_payment_callback($wp, 'paypal_ipn');
                 break;
 
             default:
