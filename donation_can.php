@@ -45,27 +45,29 @@ require_once("theme_methods.php");
 require_once("ajax.php");
 
 // Adds the style sheet definition to head
-function donation_can_head_filter() {   
-    echo "<style type=\"text/css\" media=\"screen\">\n";
+function donation_can_head_filter() {
+    if (!defined('DONATION_CAN_NO_CSS')) {
+        echo "<style type=\"text/css\" media=\"screen\">\n";
 
-    $styles = donation_can_get_widget_styles();
-    foreach ($styles as $style) {
-        if (isset($style["css"])) {
-            foreach ($style["css"] as $element => $css_definition) {
-                echo ".donation-can-widget." . $style["id"] . " " . $element . " {\n";
-                echo $css_definition;
-                echo "\n}";
+        $styles = donation_can_get_widget_styles();
+        foreach ($styles as $style) {
+            if (isset($style["css"])) {
+                foreach ($style["css"] as $element => $css_definition) {
+                    echo ".donation-can-widget." . $style["id"] . " " . $element . " {\n";
+                    echo $css_definition;
+                    echo "\n}";
+                }
             }
         }
-    }
-    
-    // Deprecated, but let's keep it for a while in case people are relying on it
-    $options = get_option("donation_can_general");
-    if ($options != null && isset($options["custom"])) {
-        echo $options["custom"];
-    }
 
-    echo "</style>";
+        // Deprecated, but let's keep it for a while in case people are relying on it
+        $options = get_option("donation_can_general");
+        if ($options != null && isset($options["custom"])) {
+            echo $options["custom"];
+        }
+
+        echo "</style>";
+    }
 }
 
 /**
@@ -180,20 +182,27 @@ function donation_can_admin_notices() {
 
 function donation_can_init(){
     load_plugin_textdomain("donation_can", false, "donation-can");
+    
+    if (!defined("DONATION_CAN_NO_CSS") || is_admin()) {
+        wp_enqueue_style('donation-can', plugins_url("/donation-can/view/style.css"), false,'1.0','all');        
+    }
 
-    wp_enqueue_style('donation-can', plugins_url("/donation-can/view/style.css"), false,'1.0','all');
+    if (!defined("DONATION_CAN_NO_JS")) {
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-ui-core');
+    }
 
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('jquery-ui-core');
+    if (!defined("DONATION_CAN_NO_JS") || is_admin()) {
+        // Generic Donation Can scripts, enqueued for both admin and site,
+        // except if DONATION_CAN_NO_JS is set (then not enqueued for the site)
+        wp_enqueue_script('donation-can-scripts', plugins_url("/donation-can/view/scripts.js"));
+        wp_localize_script('donation-can-scripts', 'DonationCanData', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
 
-    // Generic Donation Can scripts, enqueued for both admin and site
-    wp_enqueue_script('donation-can-scripts', plugins_url("/donation-can/view/scripts.js"));
-    wp_localize_script('donation-can-scripts', 'DonationCanData', array(
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-
-        // Localization
-        'text_currencyFormat' => __("%CURRENCY% %SUM%", "donation_can")
-    ));
+            // Localization
+            'text_currencyFormat' => __("%CURRENCY% %SUM%", "donation_can")
+        ));
+    }
 
     if (is_admin()) {
         wp_enqueue_style('thickbox');

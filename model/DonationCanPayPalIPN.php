@@ -198,6 +198,7 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
                 return DONATION_STATUS_COMPLETED;
 
             case "Pending":
+            case "Created":
                 return DONATION_STATUS_PENDING;
 
             case "Refunded":

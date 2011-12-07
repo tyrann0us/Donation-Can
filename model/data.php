@@ -745,7 +745,7 @@ function donation_can_insert_donation($item_number, $cause_code, $status, $amoun
         $payment_method = "offline") {
     global $wpdb;
 
-    if ($time == "") {
+    if ($time == "") {  
         $time = current_time('mysql');
     }
 

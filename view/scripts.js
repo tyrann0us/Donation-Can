@@ -98,3 +98,10 @@ function showOtherTextField(element, value) {
         span.hide();
     }
 }
+
+// Used with the link donation options
+function submitDonation(element, sum) {
+    var form = jQuery(element).closest('form');
+    form.find("input[name=amount]").val(sum);
+    form.submit();
+}

@@ -109,10 +109,10 @@ abstract class DonationCanPaymentMethod {
                     $message = donation_can_get_default_email_template();
                 }
 
-                if ($data["payment_status"] == "Completed") {
+                if ($donation->isCompleted()) {
                     $subject = '[Donation Can] New Donation to ' . $goal["name"];
                     donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
-                } else if ($data["payment_status"] == "Pending" || $data["payment_status"] == "Created") {
+                } else if ($donation->isPending()) {
                     $subject = '[Donation Can] Pending Donation to ' . $goal["name"];
                     donation_can_send_email($to, $subject, $message, $general_settings, $goal, $data["data"]);
                 }
@@ -120,7 +120,7 @@ abstract class DonationCanPaymentMethod {
         }
 
         // Send a receipt to donor (only if completed)
-        if ($data["payment_status"] == "Completed") {
+        if ($donation->isCompleted()) {
             if ($general_settings["send_receipt"]) {
                 donation_can_send_receipt($data["data"], $goal);
             }

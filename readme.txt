@@ -128,6 +128,7 @@ This version contains many improvements that make Donation Can easier to use.
 * Bug fix: Fixed selecting a cause in "Summary (all causes)" widgets, which was broken in the 1.5.7 update.
 * Bug fix: Resetting donations for a cause caused some future donations to not show when the blog's time zone was different from the server's time zone.
 * Tested compatibility with the JetPack plugin. Everything seems to be working fine now.
+* For hackers only: Added constants DONATION_CAN_NO_CSS and DONATION_CAN_NO_JS for disabling any Donation Can JavaScript and CSS from being loaded. You can enable these constants in your theme's functions.php but that means you'll have to do all the styling yourself -- and some functionality will be missing.
 
 = 1.5.7.2 =
 * Another quick fix release to 1.5.7

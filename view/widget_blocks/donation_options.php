@@ -3,22 +3,14 @@
     <?php if (($donation_sums != null && count($donation_sums) > 0) || $cause_id == "__all__") : ?>
         <?php
         $label = __("Choose donation amount:", "donation_can");
-        if (isset($options["label"]) && strlen(trim($options["label"])) > 0) {
-            $label = $options["label"];
+        if (isset($options["donation_options_label"]) && strlen(trim($options["label"])) > 0) {
+            $label = $options["donation_options_label"];
         }
         ?>
-
-        <span class="donation-callout"><?php echo $label; ?></span>
+    
+        <?php if ($label) : ?><span class="donation-callout"><?php echo $label; ?></span><?php endif; ?>
 
         <?php if ($element["list-format"] == "buttons") : ?>
-
-            <script type="text/javascript">
-                function submitDonation(element, sum) {
-                    var form = jQuery(element).closest('form');
-                    form.find("input[name=amount]").val(sum);
-                    form.submit();
-                }
-            </script>
 
             <div class="donation-button-list">
                 <input type="hidden" name="amount"/>

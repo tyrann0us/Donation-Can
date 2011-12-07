@@ -63,6 +63,14 @@ class DonationCanDonation {
         return ($this->status == DONATION_STATUS_REFUNDED);
     }
 
+    function isCompleted() {
+        return ($this->status == DONATION_STATUS_COMPLETED);
+    }
+
+    function isPending() {
+        return ($this->status == DONATION_STATUS_PENDING);
+    }
+
     function setAmount($amount) {
         $this->amount = $amount;
     }

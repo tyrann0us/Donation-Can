@@ -45,7 +45,7 @@ class DonationCanWidgetDonationOptionsElement extends DonationCanWidgetStyleElem
     }
 
     function get_widget_options() {
-        return array("label" => array(
+        return array("donation_options_label" => array(
             "label" => __("Title for donation options (leave empty for default):", "donation_can"),
             "type" => "text"
         ));
