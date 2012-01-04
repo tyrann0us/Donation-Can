@@ -430,7 +430,7 @@ function donation_can_get_donations($offset = 0, $limit = 0,
     }
 
     if (!$include_empty) {
-        $query = " amount > 0 AND ";
+        $query .= " amount > 0 AND ";
     }
 
     // For now, we simply exclude the started donations from every request.
