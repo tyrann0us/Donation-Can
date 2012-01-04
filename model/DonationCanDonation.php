@@ -3,6 +3,7 @@ define('DONATION_STATUS_UNKNOWN', 0);
 define('DONATION_STATUS_COMPLETED', 1);
 define('DONATION_STATUS_PENDING', 2);
 define('DONATION_STATUS_REFUNDED', 10);
+define('DONATION_STATUS_FAILED', 11);
 
 class DonationCanDonation {
 
