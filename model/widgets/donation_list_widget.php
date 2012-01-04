@@ -70,7 +70,9 @@ class DonationListWidget extends WP_Widget {
                 $donations = array();
 
                 foreach ($goals as $cause_id => $goal) {
-                    $donation_tmp = donation_can_get_donations(0, $num_donations, $cause_id);
+                    $donation_tmp = donation_can_get_donations(0, $num_donations, $goal_id,
+                            false, 0, 0, false, false);
+
                     $donations = array_merge($donations, $donation_tmp);
                 }
 
@@ -82,7 +84,9 @@ class DonationListWidget extends WP_Widget {
                 if ($title == null || $title == "") {
                     $title = "Latest Donations for " . $goal["name"];
                 }
-                $donations = donation_can_get_donations(0, $num_donations, $goal_id);
+                $donations = donation_can_get_donations(0, $num_donations, $goal_id,
+                        false, 0, 0, false, false);
+
             }
 
             echo $before_widget;

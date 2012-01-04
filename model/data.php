@@ -417,7 +417,8 @@ function donation_can_delete_donation($id) {
 
 function donation_can_get_donations($offset = 0, $limit = 0,
         $goal_id = null, $include_donations_before_reset = false,
-        $start_time = 0, $end_time = 0, $include_deleted = false) {
+        $start_time = 0, $end_time = 0, $include_deleted = false,
+        $include_empty = true) {
     global $wpdb;
 
     $query = "SELECT * FROM " . donation_can_get_table_name($wpdb);
@@ -426,6 +427,10 @@ function donation_can_get_donations($offset = 0, $limit = 0,
         $query .= " WHERE deleted = 0 AND";
     } else {
         $query .= " WHERE";
+    }
+
+    if (!$include_empty) {
+        $query = " amount = 0 AND ";
     }
 
     // For now, we simply exclude the started donations from every request.

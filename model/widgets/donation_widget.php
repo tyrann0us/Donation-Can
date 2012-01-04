@@ -113,7 +113,9 @@ class DonationWidget extends WP_Widget {
                 $donations = array();
 
                 foreach ($goals as $cause_id => $cause) {
-                    $donation_tmp = donation_can_get_donations(0, $num_donations, $cause_id);
+                    $donation_tmp = donation_can_get_donations(0, $num_donations, $goal_id,
+                            false, 0, 0, false, false);
+
                     $donations = array_merge($donations, $donation_tmp);
                 }
 
@@ -123,6 +125,8 @@ class DonationWidget extends WP_Widget {
                 
             } else {
                 $donations = donation_can_get_donations(0, $num_donations, $goal_id);
+                $donations = donation_can_get_donations(0, $num_donations, $goal_id,
+                        false, 0, 0, false, false);
                 $donation_currency = donation_can_get_currency_for_goal($goals[$goal_id]);
             }
 
