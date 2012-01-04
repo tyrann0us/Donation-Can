@@ -936,7 +936,9 @@ function donation_can_nicedate($date) {
     $time_string = mysql2date(__("g:i A", "donation_can"), $date);
 
     $date_data = date_parse($date_string);
-    $now_data = getdate();
+
+    $now = current_time('timestamp');
+    $now_data = getdate($now);
 
     if ($date_data["year"] == $now_data["year"]
             && $date_data["month"] == $now_data["mon"]) {
