@@ -4,6 +4,7 @@ define('DONATION_STATUS_COMPLETED', 1);
 define('DONATION_STATUS_PENDING', 2);
 define('DONATION_STATUS_REFUNDED', 10);
 define('DONATION_STATUS_FAILED', 11);
+define('DONATION_STATUS_REFUND_CANCELLED', 12);
 
 class DonationCanDonation {
 
@@ -58,6 +59,10 @@ class DonationCanDonation {
 
     function getCauseCode() {
         return $this->cause_code;
+    }
+
+    function isChange() {
+        return ($this->isRefund() || $this->status == DONATION_STATUS_REFUND_CANCELLED);
     }
 
     function isRefund() {

@@ -62,14 +62,14 @@ abstract class DonationCanPaymentMethod {
         // TODO Depending on the original status, do different updates...
         $donation->setCauseCode($saved_transaction->cause_code);
 
-/*        if ($donation->isRefund()) {*/
+        if ($donation->isChange()) {
             // Refunds send back the change in the donation amount
-        $change = floatval($donation->getAmount());
-        $fee_change = floatval($donation->getFee());
+            $change = floatval($donation->getAmount());
+            $fee_change = floatval($donation->getFee());
 
-        $donation->setAmount($saved_transaction->amount + $change);
-        $donation->setFee($saved_transaction->fee + $fee_change);
-/*}*/
+            $donation->setAmount($saved_transaction->amount + $change);
+            $donation->setFee($saved_transaction->fee + $fee_change);
+        }
 
         // Update the database row
         $data = $donation->getDataAsArray();

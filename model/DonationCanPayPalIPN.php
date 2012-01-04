@@ -242,9 +242,11 @@ class DonationCanPayPalIPN extends DonationCanPaymentMethod {
 
         switch ($status) {
             case "Completed":
-            case "Canceled_Reversal":
             case "Processed":
                 return DONATION_STATUS_COMPLETED;
+
+            case "Canceled_Reversal":
+                return DONATION_STATUS_REFUND_CANCELLED;
 
             case "Pending":
             case "Created":
